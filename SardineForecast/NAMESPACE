@@ -1,0 +1,13 @@
+## export functions
+export(
+makedat,
+lagged,
+maker2qs,
+forecast_figure1,
+retfit.qtr,
+retfit
+)
+
+## Imports
+importFrom(Rdpack,reprompt)
+importFrom(forecast,ets)
