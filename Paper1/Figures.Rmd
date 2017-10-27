@@ -1,0 +1,209 @@
+---
+title: "Use of satellite data for understanding and predicting oil sardine (*Sardinella longiceps*) catch variability along the southwest coast of India"
+date: '`r format(Sys.time(), "%d %B, %Y")`'
+output:
+  word_document: default
+  html_document:
+    fig_caption: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Figures
+
+Things to change
+
+* Precip only show PrecipGPCP and show correlation with land
+* Add SSH inshore - offshore as another upwelling index
+* When showing r2 versus time, group the upwelling indexes together or group by index that affect similar age groups
+* Check the size/age structure of the fishery by qtr
+* Make a cartoon of the life-history
+* Use catch anomalies
+* Use 1- and 2-year lags
+* move the spatial correlation plot to appendix
+* Dave said that Pacific sardine uses 3-yr running mean of SST at 5-15m over whole CalCOFI region as an index of recruitment.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+# Set up
+library(SardineForecast)
+```
+
+
+```{r, out.width = "400px", fig.align='center', echo=FALSE, fig.cap="Close up of the Kerala district (see inset of India for overall location).  The boxes show the regions over which the satellite data were averaged.  The Kerala district is marked in grey and the oil sardine catch from this region is being modelled.",message=FALSE,warning=FALSE}
+figfile = system.file("docs", "kerala_study_area_with_inset.jpg", package="SardineForecast")
+knitr::include_graphics(figfile)
+```
+
+```{r, results="asis", echo=FALSE}
+cat("\\clearpage")
+```
+
+```{r fig2b, echo=FALSE,fig.cap="Quarterly catch data 1956-2014 from Kerala.  The catches have a strong seasonal pattern with the highest catches in quarter 4. Note that Quarter 3 is July-Sept and that the fishery is closed July 1 to Aug 15, thus the fishery is only open 1.5 months in quarter 3. The per month catch rate is second highest in quarter 3.",fig.width=8,fig.height=6,message=FALSE,warning=FALSE}
+### FIGURE 2 Alternate 1
+par(mfrow=c(2,1),mar=c(5,3,1,1))
+dat=oilsardine_qtr
+
+#Panel 1 summary of the yearly catch
+tmp=aggregate(dat$Kerala/1000,list(Year=dat$Year),sum)
+plot(tmp,type="l",ylab="Total Catch (1000 kgs)",
+     xlim=c(1956,2014),xlab="", col=1, bty="L")
+tmp=aggregate(dat$Goa/1000,list(Year=dat$Year),sum)
+lines(tmp,lty=2, col=1)
+tmp=aggregate(dat$Karnataka/1000,list(Year=dat$Year),sum)
+lines(tmp,lty=3, col=1)
+legend("topleft",c("Kerala","Goa","Karnataka"),lty=1:3,bty="n",cex=.75)
+
+#Panel 2 Kerala quarterly
+dat=oilsardine_qtr
+plot(ts(dat$Kerala/1000,start=1956, frequency=4),ylab="Kerala Catch (1000 kg)",xlab="",bty="L")
+oldpar=par(fig = c(0.6, 1, 0.3, .57), new = T)  
+catchmeans=tapply(dat$Kerala, dat$Qtr, mean, na.rm=TRUE)
+names(catchmeans)=paste("Q",1:4,sep="")
+barplot(catchmeans/1000,ylab="",col="grey",cex.axis=.75,cex.names=.75)
+title("Mean Qtrly Catch",cex.main=.75)
+par(oldpar)
+```
+
+```{r, results="asis", echo=FALSE}
+cat("\\clearpage")
+```
+
+```{r rainfall.mon, echo=FALSE,fig.cap="Monthly rainfall 1956-2014 from Kerala. The upper plot shows the precipitation measured with land gauges in Kerala.  The bottom plot shows the remote sensing estimates over the coastal waters off Kerala using data from the Global Precipitation Climatology Project.", fig.width=8,fig.height=8,message=FALSE,warning=FALSE}
+### FIGURE 2 Alternate 1
+par(mfrow=c(2,1), mar=c(2,5,2,2))
+dat=seio_covariates_mon$Precip.Kerala
+datmon=seio_covariates_mon$Month
+datts=ts(dat,start=1956, frequency=12)
+plot(datts,ylab="Monthly precipitation over land (mm)",xlab="",bty="n")
+
+dat=seio_covariates_mon$precip.gpcp.kerala
+datts=ts(dat,start=1956, frequency=12)
+plot(datts,ylab="Monthly precipitation off Kerala coast",xlab="",bty="n")
+
+#lines(ts(filter(dat,rep(1,24))/24,start=1956,frequency=12),lwd=2)
+oldpar=par(fig = c(0.5, .93, 0.8, 1), new = T)  
+dat=seio_covariates_mon$Precip.Kerala
+catchmeans=tapply(dat, datmon, mean, na.rm=TRUE)
+names(catchmeans)=1:12
+barplot(catchmeans,ylab="",cex.axis=.75,cex.names=.75, col="grey", xaxt="n")
+title("Mean Monthly Precip",cex.main=.75)
+par(oldpar)
+
+dat=seio_covariates_mon$precip.gpcp.kerala
+oldpar=par(fig = c(0.5, .93, .3, .5), new = T)  
+catchmeans=tapply(dat, datmon, mean, na.rm=TRUE)
+names(catchmeans)=1:12
+barplot(catchmeans,ylab="", cex.axis=.75,cex.names=.75, col="grey", xaxt="n")
+title("Mean Monthly Precip",cex.main=.75)
+
+par(oldpar)
+```
+
+```{r, results="asis", echo=FALSE}
+cat("\\clearpage")
+```
+
+```{r upw.mon, echo=FALSE,fig.cap="Monthly Upwelling Index 1981-2012 off the Kerala coast. The upwelling index is the difference between the near-shore and off-shore sea surface temperature.", fig.width=8,fig.height=8,message=FALSE,warning=FALSE}
+### FIGURE Upwelling
+oldpar=par(mfrow=c(2,2), mar=c(2,5,2,0))
+for(i in 2:5){
+  covname=paste("SST.UPW.",i,sep="")
+dat=seio_covariates_mon[[covname]]
+datmon=seio_covariates_mon$Month
+datts=ts(dat,start=1956, frequency=12)
+plot(datts,ylab=paste("SST Upwelling Index Box",i),xlab="",bty="n",ylim=c(-2,5),xlim=c(1960,2015))
+#lines(ts(filter(dat,rep(1,24))/24,start=1956,frequency=12),lwd=2,col="red")
+}
+for(i in 2:5){
+  covname=paste("SST.UPW.",i,sep="")
+dat=seio_covariates_mon[[covname]]
+datmon=seio_covariates_mon$Month
+if(i==2) oldpar=par(fig = c(0.05, .25, 0.8, 1), new = T)  
+if(i==3) oldpar=par(fig = c(0.05+.5, .25+.5, 0.8, 1), new = T)  
+if(i==4) oldpar=par(fig = c(0.05, .25, 0.8-.5, 1-.5), new = T)  
+if(i==5) oldpar=par(fig = c(0.05+.5, .25+.5, 0.8-.5, 1-.5), new = T)  
+catchmeans=tapply(dat, datmon, mean, na.rm=TRUE)
+names(catchmeans)=1:12
+barplot(catchmeans,ylab="",cex.axis=.75,cex.names=.75,ylim=c(0,2), col="grey", xaxt="n")
+title("Mean Mthly\nIndex",cex.main=.75)
+}
+library(maps)
+library(mapdata)
+ mymap=map('worldHires','india',xlim=c(74.5,80),ylim=c(7,14),plot=FALSE)
+  botlats=c(12:8,12:8,9,8,8); toplats=botlats+1
+  cenlats=botlats+.5
+  tmp= c(74.2,74.9,75.3,75.5,76.3)     
+  leftlons=c(tmp,tmp-1,73.5,74.3,73.3);rightlons=leftlons+1
+  cenlons=leftlons+.5
+for(i in 2:5){
+  if(i==2) oldpar=par(fig = c(0.05, .25, .55, .75), new = T)  
+if(i==3) oldpar=par(fig = c(0.05+.5, .25+.5, .55, .75), new = T)  
+if(i==4) oldpar=par(fig = c(0.05, .25, 0.05, .25), new = T)  
+if(i==5) oldpar=par(fig = c(0.05+.5, .25+.5, 0.05, .25), new = T)  
+   plot(mymap$x,mymap$y,type="l",bty="n",xaxt="n",yaxt="n",ylab="",xlab="")
+    botlat=botlats[i]; toplat=botlat+1
+    leftlon=leftlons[i]; rightlon=leftlon+1
+    y=c(botlat,toplat,toplat,botlat,botlat)
+    x=c(leftlon,leftlon,rightlon,rightlon,leftlon)
+    polygon(x,y)
+  }
+par(oldpar)
+```
+
+```{r, results="asis", echo=FALSE}
+cat("\\clearpage")
+```
+
+```{r chl.mon, echo=FALSE,fig.cap="Monthly Chl-a 1997-2017 off the Kerala coast. The upwelling index is the difference between the near-shore and off-shore sea surface temperature.", fig.width=8,fig.height=8,message=FALSE,warning=FALSE}
+### FIGURE Upwelling
+oldpar=par(mfrow=c(2,2), mar=c(2,5,2,0))
+for(i in 2:5){
+  covname=paste("CHL.",i,sep="")
+dat=seio_covariates_mon[[covname]]
+datmon=seio_covariates_mon$Month
+datts=ts(dat,start=1956, frequency=12)
+plot(datts,ylab=paste("Surface Chl-a Box",i),xlab="",bty="n",ylim=c(0,35),xlim=c(1980,2020))
+#lines(ts(filter(dat,rep(1,24))/24,start=1956,frequency=12),lwd=2,col="red")
+}
+for(i in 2:5){
+  covname=paste("CHL.",i,sep="")
+dat=seio_covariates_mon[[covname]]
+datmon=seio_covariates_mon$Month
+if(i==2) oldpar=par(fig = c(0.05, .25, 0.8, 1), new = T)  
+if(i==3) oldpar=par(fig = c(0.05+.5, .25+.5, 0.8, 1), new = T)  
+if(i==4) oldpar=par(fig = c(0.05, .25, 0.8-.5, 1-.5), new = T)  
+if(i==5) oldpar=par(fig = c(0.05+.5, .25+.5, 0.8-.5, 1-.5), new = T)  
+catchmeans=tapply(dat, datmon, mean, na.rm=TRUE)
+names(catchmeans)=1:12
+barplot(catchmeans,ylab="",cex.axis=.75,cex.names=.75,ylim=c(0,12),col="grey", xaxt="n")
+title("Mean Mthly\nChl-a",cex.main=.75)
+}
+library(maps)
+library(mapdata)
+ mymap=map('worldHires','india',xlim=c(74.5,80),ylim=c(7,14),plot=FALSE)
+  botlats=c(12:8,12:8,9,8,8); toplats=botlats+1
+  cenlats=botlats+.5
+  tmp= c(74.2,74.9,75.3,75.5,76.3)     
+  leftlons=c(tmp,tmp-1,73.5,74.3,73.3);rightlons=leftlons+1
+  cenlons=leftlons+.5
+for(i in 2:5){
+  if(i==2) oldpar=par(fig = c(0.05, .25, .55, .75), new = T)  
+if(i==3) oldpar=par(fig = c(0.05+.5, .25+.5, .55, .75), new = T)  
+if(i==4) oldpar=par(fig = c(0.05, .25, 0.05, .25), new = T)  
+if(i==5) oldpar=par(fig = c(0.05+.5, .25+.5, 0.05, .25), new = T)  
+plot(mymap$x,mymap$y,type="l",bty="n",xaxt="n",yaxt="n",ylab="",xlab="")
+    botlat=botlats[i]; toplat=botlat+1
+    leftlon=leftlons[i]; rightlon=leftlon+1
+    y=c(botlat,toplat,toplat,botlat,botlat)
+    x=c(leftlon,leftlon,rightlon,rightlon,leftlon)
+    polygon(x,y)
+  }
+par(oldpar)
+```
+
+```{r, results="asis", echo=FALSE}
+cat("\\clearpage")
+```
+

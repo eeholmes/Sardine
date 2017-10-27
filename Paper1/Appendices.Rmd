@@ -1,0 +1,83 @@
+---
+title: "Use of satellite data for understanding and predicting oil sardine (*Sardinella longiceps*) catch variability along the southwest coast of India"
+date: '`r format(Sys.time(), "%d %B, %Y")`'
+output:
+  word_document: default
+  html_document:
+    fig_caption: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r cov-correlation, fig.cap="Correlation of the covariates across boxes.  Correlation is shown by the width of the lines between neighboring boxes.",fig.width=6,fig.height=8.5,message=FALSE,warning=FALSE}
+library(maps)
+library(mapdata)
+par(mfrow=c(2,2),mar=c(0,1,1,1))
+for(k in 1:4){
+  vari=c("PrecipTRMM","CHL.","SST.","SSH.")[k]
+  var.title=c("Precipitation","Chlorophyll","SST","SSH")[k]
+  a=makedat(covname=vari) #create anomalies for all boxes
+a=a[,paste(vari,1:14,sep="")]
+corra=cor(na.omit(a))
+mymap=map('worldHires','india',xlim=c(73,80),ylim=c(7,14),col="blue",lwd=2)
+botlats=c(12:8,12:8,9,8,8); toplats=botlats+1
+cenlats=botlats+.5
+tmp= c(74.2,74.9,75.3,75.5,76.3)     
+leftlons=c(tmp,tmp-1,73.5,74.3,73.3);rightlons=leftlons+1
+cenlons=leftlons+.5
+#plot the polygons
+for(i in 1:13){
+botlat=botlats[i]; toplat=botlat+1
+leftlon=leftlons[i]; rightlon=leftlon+1
+y=c(botlat,toplat,toplat,botlat,botlat)
+x=c(leftlon,leftlon,rightlon,rightlon,leftlon)
+polygon(x,y)
+}
+
+breaks=seq(0,1,.2)
+wids=c(0,0,2,3,4)
+neighbors=matrix(c(
+  1, 2, 
+  1, 6,
+  1, 7,
+  2, 3,
+  2, 7,
+  2, 8,
+  3, 4,
+  3, 8,
+  3, 9,
+  4, 5,
+  4, 9,
+  4, 10,
+  5, 10,
+  6, 7,
+  7, 8,
+  8, 9,
+  8, 11,
+  9, 10,
+  9, 11,
+  9, 12,
+  10, 12,
+  11, 12,
+  11, 13,
+  12, 13),ncol=2,byrow=TRUE) 
+for(i in 1:nrow(neighbors)){
+  from=neighbors[i,1]
+  to=neighbors[i,2]
+  val=corra[from,to]
+  col=ifelse(val<0,"red","black")
+  wid=wids[as.numeric(cut(abs(val),breaks))]
+  if(wid!=0) lines(cenlons[c(from,to)],cenlats[c(from,to)],col=col,lwd=wid)
+}
+title(var.title)
+}
+```
+
+
+
+```{r, results="asis", echo=FALSE}
+cat("\\clearpage")
+```
+
