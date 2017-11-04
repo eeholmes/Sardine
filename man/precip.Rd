@@ -10,8 +10,8 @@
   \item{Month}{}
   \item{precip.gpcp.kerala}{Monthly GPCP precipitation in the box off the Kerala coast.}
   \item{precip.gpcp.karnataka}{Monthly GPCP precipitation in the box off the Karnataka coast.}
-  \item{PrecipTRMM#}{Monthly TRMM precipitation in the boxes used for the other satellite data.}
-  \item{Precip.Kerala}{Monthly precipitation from the land gauges.}
+  \item{PrecipTRMM}{Monthly precipitation estimates from the Tropical Rainfall Measuring Mission (TRMM).  Data are averaged in the boxes used for the other satellite data.}
+  \item{Precip.Kerala}{Monthly precipitation (mm) from landgauges.}
 }}
 \usage{
 precip
@@ -20,11 +20,22 @@ precip
 Three precipition datasets off the SW coast of India.  Two are satellite derived and one is based on land gauges.
 }
 \details{
-GPCP Precipitation data provided by the NOAA/NCEI Global Precipitation Climatology Project from their Web site at \url{https://www.ncei.noaa.gov/data/global-precipitation-climatology-project-gpcp-monthly}.  The data are on a 2.5 x 2.5 grid.  Two boxes are defined, one off the Kerala coast and one off the Karnataka coast.
+The National Climatic Data Center provides basic information on the GPCP Precipitation dataset.  The dataset consists of monthly precipitation estimates (average mm/day) from January 1979 to the present. The precipitation estimates merge several satellite and in situ sources into a final product. Data are provided on a 2.5 degree grid.  The GPCP Precipitation data are provided by the NOAA/NCEI Global Precipitation Climatology Project and were downloaded from \url{https://www.ncei.noaa.gov/data/global-precipitation-climatology-project-gpcp-monthly}.  Two boxes were defined, one off the Kerala coast and one off the Karnataka coast, and the average values of all grid points within these boxes were used.
 \preformatted{
 The boxes are 
 Kerala Lat(8.75,  11.25), Lon(73.25,  75.75)
 Karnataka Lat(13.75,  16.25), Lon(71.25,  73.75)
 }
+
+The land gauge data is monthly, seasonal and annual rainfall (in mm) area weighted average for each state in India starting from 1901 onwards. This data set is based on rain guages.  The data are provided by the India Meteorological Department (Ministry of Earth Sciences).  The 1901 to 2014 data were downloaded from the Open Government Data Platform India \url{https://data.gov.in}.  The raw data are in the file 'Area_Weighted_Monthly_Seasonal_And_Annual_Rainfall_0.csv' in the extdata folder.  The 2015 and 2016 data were extracted from the yearly Rainfall Statistics reports (see references).
+
+NASA's Tropical Rainfall Measuring Mission (TRMM) website provides background on the TRMM data (\url{https://pmm.nasa.gov/}).  1997 to 2015 monthly precipitation estimates on a 0.25 degree grid were downloaded from the Tropical Rainfall Measuring Mission (TRMM) website.  The data are averaged in the 2.5 x 2.5 degree boxes used for the other satellite data.
+}
+\references{
+\insertRef{Adleretal2003}{SardineForecast}
+
+\insertRef{Adleretal2016}{SardineForecast}
+
+\insertRef{PurohitKaur2016}{SardineForecast}
 }
 \keyword{datasets}

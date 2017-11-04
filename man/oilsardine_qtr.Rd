@@ -7,7 +7,7 @@
 \format{A data frame 'oilsardine_qtr' with 6 variables:
 \describe{
   \item{Site}{Kerala, Karnataka, Goa}
-  \item{Year}{}
+  \item{Year}{Year}
   \item{Q1}{Quarter 1 landings}
   \item{Q1}{Quarter 2 landings}
   \item{Q1}{Quarter 3 landings}
@@ -20,6 +20,8 @@ oilsardine_qtr
 A dataset containing the landings (in metric tons) of oil sardines in Kerala, Karnataka and Goa states 1956-2016.  The data are collected and processed into a total landings estimates based on a stratified sampling of landing sites along the SW coast of India throughout the year.  The program is run by the Central Marine Fisheries Research Institute (CMFRI) in Cochin, India.  The data were obtained from reports published by CMFRI; see references.
 }
 \references{
+CMFRI reports were downloaded from the CMFRI Publication repository \url{http://www.cmfri.org.in}.
+
 1956-1968 (Note Mysore which later becomes Karnataka) \insertRef{Raja1969}{SardineForecast}
 
 1968-1978 \insertRef{Pillai1982}{SardineForecast}
@@ -28,6 +30,6 @@ A dataset containing the landings (in metric tons) of oil sardines in Kerala, Ka
 
 1975-1984 Kernataka \insertRef{Kurupetal1987}{SardineForecast}
 
-1985-2014 Provided by CMFRI directly \url{http://www.cmfri.org.in}
+1985-2014 Provided by CMFRI directly via a data request.
 }
 \keyword{datasets}
