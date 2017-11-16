@@ -15,13 +15,13 @@
 #' if(!exists(".rmdenvir")) .rmdenvir = environment()
 #' .rmdenvir and .refctr will be created in the Rmd environment
 #' 
-ref <- function(useName) {
+ref <- function(useName, pre="", app="") {
   require(stringr)
   if(!exists(".refctr")) .refctr <- c(`_` = 0)
   if(any(names(.refctr)==useName)) return(.refctr[useName])
   type=str_split(useName,":")[[1]][1]
   nObj <- sum(str_detect(names(.refctr),type))
-  useNum <- nObj + 1
+  useNum <- paste(pre,nObj + 1,app,sep="")
   newrefctr <- c(.refctr, useNum)
   names(newrefctr)[length(.refctr) + 1] <- useName
   assign(".refctr", newrefctr, envir=.rmdenvir)
