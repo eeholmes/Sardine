@@ -22,8 +22,12 @@ ref <- function(useName, pre="", app="") {
   if(!exists(".refctr")) .refctr <- c(`_` = 0)
   if(any(names(.refctr)==useName)) return(.refctr[useName])
   type=str_split(useName,":")[[1]][1]
+<<<<<<< HEAD
   reftypes=unlist(lapply(str_split(names(.refctr),":"),function(x){x[1]}))
   nObj <- sum(reftypes==type)
+=======
+  nObj <- sum(str_detect(names(.refctr),type))
+>>>>>>> 562c611a6be6fd135226085f5b3b9a8a17090cab
   useNum <- paste(pre,nObj + 1,app,sep="")
   newrefctr <- c(.refctr, useNum)
   names(newrefctr)[length(.refctr) + 1] <- useName
