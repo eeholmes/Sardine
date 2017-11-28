@@ -128,16 +128,13 @@ erdPH2sstnmday=getdat(parameter, id, tag, boxes14[,12:14], width)
 
 # Define parameters for the sst 3 dataset 
 #https://coastwatch.pfeg.noaa.gov/erddap/info/erdAGsstamday/index.html; avhrr 2003 to 2016; Day and Night
-# parameter <-'sst' 
-# id <- 'erdAGsstamday_LonPM180'
-# tag <- "SST."
-# erdAGsstamday=getdat(parameter, id, tag, include.z=TRUE)
 parameter <-'sst' 
 id <- 'erdAGsstamday'
 tag <- "SST."
 erdAGsstamday=getdat(parameter, id, tag, boxes14, width)
 
 # ICOADS sst 1960 onward
+# Poor coastal estimates so not very useful for our purposes
 parameter <-'sst' 
 id <- 'esrlIcoads1ge' 
 tag <- "SST."
@@ -152,6 +149,7 @@ erdTAsshmday=getdat(parameter, id, tag, boxes14, width, include.z=TRUE)
 
 # Define parameters for the wind based upwelling 1 dataset 
 #https://coastwatch.pfeg.noaa.gov/erddap/info/erdQSstressmday/index.html
+# not wind-based upwelling indices not used in paper
 parameter <-'upwelling' 
 id <- 'erdQSstressmday'
 tag <- "UPW."
@@ -167,12 +165,13 @@ parameter <-'upwelling'
  
  #Salinity
  # https://coastwatch.pfeg.noaa.gov/erddap/info/nceiSMOS30sssMonthly/index.html
+ # note salinity not used in paper
  parameter <-'sss1' 
  id <- 'nceiSMOS30sssMonthly'
  tag <- "SAL."
  erdQAstressmday=getdat(parameter, id, tag, boxes14, width, include.z=FALSE)
  
- # UPW SST based index using
+ #### Create the SST based upwelling index using 3 degree offshore minus inshore SST
  # Create boxes for inshore and 3 deg offshore
  boxes.upw<-matrix(c(74.7, 12.5,
                75.4, 11.5,
@@ -186,6 +185,7 @@ parameter <-'upwelling'
                73.8, 8.5),ncol=10,nrow=2)
  width=rep(.5,10)
  
+ # SST in offshore minus inshore.  Positive value means upwelling
  parameter <-'sst' 
  id <- 'esrlIcoads1ge' 
  tag <- "SST."
@@ -201,7 +201,8 @@ parameter <-'upwelling'
  upw.sst.icoad=upw.sst
  write.csv(upw.sst, paste("upw-sst","-", id,"-",yr1,"-",yr2,".csv",sep=""),row.names=FALSE)
  
- #Pathfinder night
+ #https://coastwatch.pfeg.noaa.gov/erddap/info/erdPH2sstnmday/index.html; Pathfinder night
+ #not used
  parameter <-'sea_surface_temperature' 
  id <- 'erdPH2sstnmday'
  tag <- "SST."
@@ -217,7 +218,8 @@ parameter <-'upwelling'
  upw.sst.PH=upw.sst
  write.csv(upw.sst, paste("upw-sst","-", id,"-",yr1,"-",yr2,".csv",sep=""),row.names=FALSE)
 
- #Pathfinder day and night
+ #https://coastwatch.pfeg.noaa.gov/erddap/info/erdPH2sstamday/index.html; Pathfinder day and night
+ #this is the dataset used for the upwelling index for 1981-2002
  parameter <-'sea_surface_temperature' 
  id <- 'erdPH2sstamday'
  tag <- "SST."
@@ -233,6 +235,8 @@ parameter <-'upwelling'
  upw.sst.PH=upw.sst
  write.csv(upw.sst, paste("upw-sst","-", id,"-",yr1,"-",yr2,".csv",sep=""),row.names=FALSE)
  
+ #https://coastwatch.pfeg.noaa.gov/erddap/info/erdAGsstamday/index.html; avhrr day and night
+ #this is the dataset used for the upwelling index for 2003-2016
  parameter <-'sst' 
  id <- 'erdAGsstamday'
  tag <- "SST."
@@ -248,21 +252,3 @@ parameter <-'upwelling'
  upw.sst.AG=upw.sst
  write.csv(upw.sst, paste("upw-sst","-", id,"-",yr1,"-",yr2,".csv",sep=""),row.names=FALSE)
  
- #TEMPORARY 9-26-17 the pathfinder dataset is not loading; for now use data from our 1-14 boxes
- #Pathfinder night
- id <- 'erdPH2sstnmday'
- sstupwelling=read.csv("sea_surface_temperature-erdPH2sstnmday-1981-2012.csv")
- upw.sst = with(sstupwelling, 
-                data.frame(Year=Year, Month=Month, 
-                           UPW.1=SST.6-SST.1, 
-                           UPW.2=SST.7-SST.2,
-                           UPW.3=SST.8-SST.3,
-                           UPW.4=SST.11-SST.4,
-                           UPW.5=SST.13-SST.5))
- yr1=min(upw.sst$Year); yr2=max(upw.sst$Year)
- write.csv(upw-sst, paste("upw-sst","-", id,"-",yr1,"-",yr2,".csv",sep=""),row.names=FALSE)
- 
- 
- # save(erdSW1chlamday, erdMH1chlamday, erdPH2sstnmday, 
- #      erdAGsstamday, esrlIcoads1ge, erdTAsshmday, 
- #      erdQSstressmday, erdQAstressmday, file="SatelliteData")
