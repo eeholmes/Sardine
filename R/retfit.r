@@ -3,7 +3,7 @@
 #' Fit a linear regression model where the covariate value used as explanatory variable is lagged by a 
 #' user specified number of quarters.  The effect of a covariate can be specified to be
 #' quarter specific, that is catch in Q1 may respond differently to the covariate than
-#' catch in Q4. 
+#' catch in Q4. Note: this is an outdated function not used since I switched to GAMs.
 #' 
 #' @param covname name of the covariate.  Must be a colname in seio_covariates_qtr.  If one of the covariates is from the boxes, then specify the part of the name in front of the number.
 #' @param lag the lag specified in number of quarters. 0 means no lag.
@@ -19,6 +19,7 @@
 #' #Effect of precip in box 5 in qtr 1 in the previous year on catch
 #' retfit("Precip", lag=1, boxes=5)
 #' 
+#' @keywords internal
 retfit=function(covname, catch.qtr=1:4, lag=0, boxes=1:14, qtr.effect=FALSE, startyear=1956, endyear=2016){
   #return catch anomalies
   dat.sub=makedat(covname=covname, lag=0, boxes=boxes, rm.trend=TRUE, rm.season=TRUE, startyear=1956, endyear=2016)

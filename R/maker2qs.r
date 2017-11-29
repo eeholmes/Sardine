@@ -1,9 +1,24 @@
-# This function gets the R2 values for a
-# linear regression of log catch anomaly ~ covariate anomalies at different lags
-# covariates are turned into anomalies by removing year and qtr effect
-# covariate anomalies are lagged and z-scored
-# catch anomalies are logged and z-scored
-
+#' Get R2 values for linear regression of log catch anomalies vs covariates
+#' 
+#' This function gets the R2 values for a linear regression of 
+#' log catch anomaly ~ covariate anomalies at lags of 0 to 10. Covariates are turned into 
+#' anomalies by removing year and qtr effect and then lagged and z-scored.
+#' Catch anomalies are logged and z-scored.  Note: this is an old function and not used after I
+#' switched to using GAMs.
+#' 
+#' @param region region ("Kerala", "Karnataka", "Goa") in quotes.
+#' @param covname name of the covariate.  Must be a colname in seio_covariates_qtr.  If one of the covariates
+#'  is from the boxes, then specify the part of the name in front of the number.  For example "SST.".
+#' @param boxes for covariate from a box, the box number or numbers to use
+#' @param rm.trend remove year effect from catch and covariates
+#' @param rm.season remove season effect from catch and covariates
+#' 
+#' @return A data.frame of R2's for each lag 0 to 10.
+#'
+#' @examples
+#' maker2qs(region="Kerala", covname="SST.", boxes=5)
+#' 
+#' @keywords internal
 maker2qs=function(region="Kerala", covname="Precip", boxes=1:14, rm.trend=TRUE, rm.season=TRUE){
   dat.sub=makedat(region=region, covname=covname, rm.trend=rm.trend, rm.season=rm.season)
   covnames=paste(rep(covname,each=length(boxes)),boxes,sep="")
