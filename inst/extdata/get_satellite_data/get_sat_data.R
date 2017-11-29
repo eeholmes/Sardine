@@ -92,6 +92,7 @@ getdat = function(parameter, id, tag, box, width, clean=TRUE, save.csv=TRUE, inc
 }
 
 # Define parameters for the chlorophyll dataset 
+#https://coastwatch.pfeg.noaa.gov/erddap/info/erdSW1chlamday/index.html
 parameter <-'chlorophyll' 
 id <- 'erdSW1chlamday'
 tag <- "CHL."
