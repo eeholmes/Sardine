@@ -14,7 +14,7 @@
 # set the working directory since these scripts download files
 setwd("inst/extdata/get_satellite_data")
 #source("get_sat_data.r") #downloads; commented to prevent accidental running
-source("create_satellite_covariates_csv.r")
+source("create_satellite_covariates_csv.r") #create Satellite_Covariates.csv
 #source("get_gpcp_precip_data.r") #downloads and creates precipitation_gpcp.csv file
 setwd("../../..") #back to root
 
@@ -28,6 +28,7 @@ source("inst/extdata/raw data files and code/create_precip_kerala_csv.r")
 
 #2 Create a monthly covariate csv file with the satellite data, enso indices, and other non-satellite covariates
 # enso, land-based rain over Kerala, etc
+# assumes wd is base package dir
 source("inst/extdata/raw data files and code/create_monthly_covariates_csv.r")
 
 #3 Create all the rdata files in the data dir
