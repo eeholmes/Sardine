@@ -91,7 +91,7 @@
 "precip"
 
 
-#' India Monsoon Onset Dates
+#' India monsoon onset dates
 #' 
 #' @description
 #' India monsoon onset dates relative to average June 1st arrival date into SW India.  
@@ -105,6 +105,61 @@
 #'   \item{Onset}{The arrival date relative to June 1st.  Monsoon arrival is defined in the monsoon reports.}
 #' }
 #' 
-#' #' @reference 
-#' Pai, D. S. and Bhan, S. C., editors. 2016. Monsoon: a report 2015. National Climate Centre. India Meteorological Department.
+#' @references 
+#' 
+#' \insertRef{PaiandBhan2016}{SardineForecast}
 "onset"
+
+#' Sea surface temperature data from remote-sensing products
+#'
+#' @description The SST satellite data were downloaded from the NOAA ERDDAP server using R Mendels
+#' \code{rerddapXtracto} R package which uses the ropensci \code{rerddap} R package.  The R code used
+#' to download the data is in the \code{extdata/get_satelite_data} folder.  See examples for how to find
+#' the file.
+#' 
+#' @details
+#' For 1981 to 2002, We used the Pathfinder Version 5.2
+#'    (L3C) monthly day and night product on a 0.0417 degree grid.  These SST data use the Advanced Very-High Resolution
+#'   Radiometer (AVHRR) instrument on the Pathfinder satellites.  These data were provided by GHRSST
+#'   and the US National Oceanographic Data Center. This project
+#'   was supported in part by a grant from the NOAA Climate Data Record (CDR) Program for satellites.
+#'    
+#'    For 2003 to 2016, we used the NOAA CoastWatch sea surface temperature (SST) products 
+#'    derived from NOAA's Polar Operational Environmental Satellites (POES). The SST estimates use the
+#'    Advanced Very-High Resolution Radiometer (AVHRR) instruments on the POES satellites and are 
+#'    on a 0.1 degree grid.  
+#'    
+#'    Both SST data sets were downloaded from the NOAA ERDDAP server. See
+#'     \url{https://coastwatch.pfeg.noaa.gov/erddap/info/erdAGsstamday/index.html} and 
+#'     \url{https://coastwatch.pfeg.noaa.gov/erddap/info/erdPH2sstamday/index.html}.
+#'    
+#'    The R code used
+#' to download the data is in the \code{extdata/get_satelite_data} folder.  See examples
+#'  for how to find and view the files.  The SST values were averaged across thirteen
+#'   1 degree by 1 degree boxes 
+#'   which roughly parallel the bathymetry.  See the figure in the examples below which shows
+#'    the boxes. 
+#' 
+#' @format A data frame with:
+#' \describe{
+#'   \item{Year}{The year}
+#'   \item{Month}{The month}
+#'   \item{SST.1 to SST.13}{Average monthly SST averaged over boxes 1 to 13.}
+#' }
+#' 
+#' @references
+#' \insertRef{Caseyetal2010}{SardineForecast}
+#' 
+#' @examples
+#' \dontrun{
+#' # Show the R code that downloaded the data
+#' file.show(system.file("extdata/get_satellite_data", "get_sat_data.R", package="SardineForecast"))
+#' 
+#' # Show the background files on each data set at the time the data were downloaded
+#' browseURL(system.file("extdata/get_satellite_data/ERDDAP_background", "erdAGsstamday.html", package="SardineForecast"))
+#' browseURL(system.file("extdata/get_satellite_data/ERDDAP_background", "erdPH2sstamday.html", package="SardineForecast"))
+#' 
+#' # Show the boxes
+#' browseURL(system.file("docs", "kerala_study_area_with_inset.jpg", package="SardineForecast"))
+#' }
+"sst"
