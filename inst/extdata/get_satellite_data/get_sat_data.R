@@ -36,7 +36,7 @@ boxes14<-matrix(c(74.7, 12.5,
               74.8, 8.5,
               73.8, 8.5,
               74.5, 14.5),ncol=14,nrow=2)
-width<-rep(.5,times=14)
+width<-rep(.5,times=14) #this is 1/2 width
 width[14]<-1.5
 
 # Define function for downloading and saving data
