@@ -29,10 +29,11 @@ An lm object of the fit
 Fit a linear regression model where the covariate value used as explanatory variable is lagged by a 
 user specified number of quarters.  The effect of a covariate can be specified to be
 quarter specific, that is catch in Q1 may respond differently to the covariate than
-catch in Q4.
+catch in Q4. Note: this is an outdated function not used since I switched to GAMs.
 }
 \examples{
 #Effect of precip in box 5 in qtr 1 in the previous year on catch
 retfit("Precip", lag=1, boxes=5)
 
 }
+\keyword{internal}

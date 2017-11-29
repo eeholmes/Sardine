@@ -28,10 +28,11 @@ Fit a linear regression model where the covariate value in specific quarter is t
 that explains all quarters of catch in a specific year.  A 'year' for sardine starts in 
 Q3 and goes to Q2 of the next year.  The effect of a covariate can be specified to be
 quarter specific, that is catch in Q1 may respond differently to the covariate than
-catch in Q4.
+catch in Q4. Note: this is an outdated function not used once I switched to GAMs.
 }
 \examples{
 #Effect of precip in box 5 in qtr 1 in the previous year on catch
 retfit.qtr("Precip", yearlag=1, cov.qtr=1, boxes=5)
 
 }
+\keyword{internal}
