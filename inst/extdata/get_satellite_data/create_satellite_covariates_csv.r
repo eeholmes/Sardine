@@ -15,9 +15,11 @@ for(fil in covfiles){
   dat=read.csv(fil)
   covs=colnames(dat)[!(colnames(dat)%in%c("Year","Month","Dates"))]
   for(icol in covs) if(is.null(monthly_cov[[icol]])) monthly_cov[[icol]]=NA
-  for(i in 1:dim(dat)[1])
-    monthly_cov[monthly_cov$Year==dat$Year[i] & monthly_cov$Month==dat$Month[i],covs]=
-    dat[i,covs]
+  for(i in 1:dim(dat)[1]){
+    #don't use 2003 from POES data since only has 3 months in 2003
+    if(!(fil=="sst-erdAGsstamday-2003-2016.csv" & dat$Year[i]==2003))
+    monthly_cov[monthly_cov$Year==dat$Year[i] & monthly_cov$Month==dat$Month[i],covs]=dat[i,covs]
+}
 }
 
 #SSH
@@ -72,9 +74,11 @@ for(fil in covfiles){
   covs=colnames(dat)[!(colnames(dat)%in%c("Year","Month","Dates"))]
   covs.uniq=paste("SST.",covs,sep="")
   for(icol in covs.uniq) if(is.null(monthly_cov[[icol]])) monthly_cov[[icol]]=NA
-  for(i in 1:dim(dat)[1])
-    monthly_cov[monthly_cov$Year==dat$Year[i] & monthly_cov$Month==dat$Month[i],covs.uniq]=
-    dat[i,covs]
+  for(i in 1:dim(dat)[1]){
+    #use POES from 2004 onward since 2003 only has 3 months
+    if(!(fil=="upw-sst-erdAGsstamday-2003-2016.csv" & dat$Year[i]==2003))
+    monthly_cov[monthly_cov$Year==dat$Year[i] & monthly_cov$Month==dat$Month[i],covs.uniq]=dat[i,covs]
+  }
 }
 
 
