@@ -1,4 +1,4 @@
-#set 'raw data files and code' dir as wd before running
+#Code assumes you are at the package root as wd
 
 #Put all the covariate data into one data frame
 # Satellite_covariates.csv created by create_satellite_master_file.r in get_satellite_data folder
@@ -48,10 +48,10 @@ for(covn in cov.names){
 }
 
 fil="monthly_covariates_with_anomalies.csv"
-filename=read.csv(paste("inst/extdata/raw data files and code/",fil,sep=""))
-write.csv(precip_kerala, file=filename,row.names=FALSE)
+filename=paste("inst/extdata/raw data files and code/",fil,sep="")
+write.csv(dat, file=filename,row.names=FALSE)
 
 seio_covariates_mon = dat
-save(seio_covariates_mon, file="../seio_covariates_mon.rdata")
+save(seio_covariates_mon, file="data/seio_covariates_mon.rdata")
 
 
