@@ -2,9 +2,10 @@
 # run getdata_sat_data.R
 # to download the sat data from the servers and process
 
-# The file create_satellite_covariates_master_file.r
+# The file create_satellite_covariates_csv.r
 # takes the files created from getdata_sat_data.R and makes 
-# a master file with SST, SSH, CHL, Wind.UPW, and SST.UPW.
+# a master csv file with SST, SSH, CHL, Wind.UPW, and SST.UPW.
+# and puts in 'raw data files and code' folder
 
 # run get_gpcp_precip_data.R
 # to download the gpcp precipitation data
