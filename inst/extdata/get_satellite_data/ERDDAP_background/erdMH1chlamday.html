@@ -1,0 +1,954 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en-US">
+<head>
+<title>ERDDAP - Information about Chlorophyll-a, Aqua MODIS, NPP, L3SMI, Global, 4km, Science Quality, 2003-present (Monthly Composite), from NASA/GSFC OBPG</title>
+<link rel="shortcut icon" href="https://coastwatch.pfeg.noaa.gov/erddap/images/favicon.ico">
+<link href="https://coastwatch.pfeg.noaa.gov/erddap/images/erddap.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<table bgcolor="#128CB5" border="0" cellpadding="2" cellspacing="0" width="100%"> 
+  <tr> 
+    <td align="center" style="width:80px;"><a 
+    href="http://www.noaa.gov/"><img 
+    title="National Oceanic and Atmospheric Administration" 
+    src="https://coastwatch.pfeg.noaa.gov/erddap/images/noaab.png" alt="NOAA"
+    align="middle"></a></td> 
+    <td align="left">
+      <font color="#FFFFFF">
+      <font size="+2"><b>ERDDAP</b></font>
+      <br>Easier access to scientific data</font>
+      </td> 
+    <td align="right"><font size="-1"> 
+      <a href="https://coastwatch.pfeg.noaa.gov/erddap/login.html">log in</a> &nbsp; &nbsp;
+      <br>Brought to you by 
+      <a title="National Oceanic and Atmospheric Administration" rel="bookmark" href="http://www.noaa.gov">NOAA</a>  
+      <a title="National Marine Fisheries Service" rel="bookmark"            href="http://www.nmfs.noaa.gov">NMFS</a>  
+      <a title="Southwest Fisheries Science Center" rel="bookmark"              href="https://swfsc.noaa.gov">SWFSC</a>  
+      <a title="Environmental Research Division" rel="bookmark" href="https://swfsc.noaa.gov/textblock.aspx?Division=ERD&amp;id=1315&amp;ParentMenuId=200">ERD</a>  
+      &nbsp; &nbsp;&nbsp;
+      </font></td> 
+  </tr> 
+</table>
+<!-- Big HTML tooltips are generated with wz_tooltip from 
+    http://wztip.info/index.php/Main_Page (LGPL license) -->
+<script type="text/javascript" src="https&#x3a;&#x2f;&#x2f;coastwatch&#x2e;pfeg&#x2e;noaa&#x2e;gov&#x2f;erddap&#x2f;images&#x2f;wz_tooltip.js"></script>
+
+
+<h1><a title="Click here to return to the ERDDAP home page." 
+rel="start" href="https://coastwatch.pfeg.noaa.gov/erddap/index.html">ERDDAP</a>
+ &gt; <a rel="contents" rev="chapter" href="https&#x3a;&#x2f;&#x2f;coastwatch&#x2e;pfeg&#x2e;noaa&#x2e;gov&#x2f;erddap&#x2f;info&#x2f;index&#x2e;html&#x3f;page&#x3d;1&#x26;itemsPerPage&#x3d;1000">info</a>
+ &gt; erdMH1chlamday</h1>
+<table class="erd commonBGColor" cellspacing="0">
+<tr>
+<th>Grid<br>DAP<br>Data
+<th>Sub-<br>set
+<th>Table<br>DAP<br>Data
+<th>Make<br>A<br>Graph
+<th>W<br>M<br>S
+<th>Source<br>Data<br>Files
+<th>Acces-<br>sible<br><img src="https&#x3a;&#x2f;&#x2f;coastwatch&#x2e;pfeg&#x2e;noaa&#x2e;gov&#x2f;erddap&#x2f;images&#x2f;QuestionMark&#x2e;jpg" alt="&#x3f;" onmouseover="Tip('<b>Is this dataset accessible to you?</b>&nbsp;&nbsp; <br>&quot;public&quot; = Yes. It is accessible to anyone (logged in or not logged in).<br>&quot;graphs&quot; = You have access to graphs and metadata, but not the actual data.')" onmouseout="UnTip()"  >
+
+<th>Title
+<th>Sum-<br>mary
+<th>FGDC,<br>ISO,<br>Metadata
+<th>Back-<br>ground<br>Info
+<th>RSS
+<th>E<br>mail
+<th>Institution
+<th>Dataset ID
+</tr>
+<tr>
+<td nowrap>&nbsp;<a rel="chapter" rev="contents" href="https://coastwatch.pfeg.noaa.gov/erddap/griddap/erdMH1chlamday.html" title="Click to see a griddap Data Access Form for this dataset so that you can request data." >data</a>&nbsp;
+<td nowrap>&nbsp;
+<td nowrap>&nbsp;
+<td nowrap> &nbsp;<a rel="chapter" rev="contents" href="https://coastwatch.pfeg.noaa.gov/erddap/griddap/erdMH1chlamday.graph" title="Click to see Make A Graph for this dataset." >graph</a>
+<td nowrap>&nbsp;<a rel="chapter" rev="contents" href="https://coastwatch.pfeg.noaa.gov/erddap/wms/erdMH1chlamday/index.html" title="Click to find out about making maps of this data via this dataset's Web Map Service." >M</a>&nbsp;
+<td nowrap>&nbsp;&nbsp;<a rel="chapter" rev="contents" href="https://coastwatch.pfeg.noaa.gov/erddap/files/erdMH1chlamday/" title="Click to browse and download the source data files for this dataset." >files</a>&nbsp;
+<td nowrap>public
+<td nowrap>Chlorophyll-a, Aqua MODIS, NPP, L3SMI, Global, 4km, Science Quality, 2003-present (Monthly <br>Composite)
+<td nowrap>&nbsp;&nbsp;&nbsp;<img src="https&#x3a;&#x2f;&#x2f;coastwatch&#x2e;pfeg&#x2e;noaa&#x2e;gov&#x2f;erddap&#x2f;images&#x2f;QuestionMark&#x2e;jpg" alt="&#x3f;" onmouseover="Tip('This dataset has Level 3, Standard Mapped Image, 4km, chlorophyll-a concentration data from NASA\&#39;s<br>Aqua Spacecraft.&nbsp;&nbsp;Measurements are gathered by the Moderate Resolution Imaging Spectroradiometer<br>(MODIS) carried aboard the spacecraft.&nbsp;&nbsp;This is Science Quality data.&nbsp;&nbsp;This is the August 2015<br>version of this dataset.<br><br>cdm_data_type = Grid<br>VARIABLES (all of which use the dimensions [time][latitude][longitude]):<br>chlorophyll (Mean Chlorophyll a Concentration, mg m^-3)<br>')" onmouseout="UnTip()"  >
+
+<td nowrap>
+&nbsp;&nbsp;<a rel="chapter" rev="contents" href="https://coastwatch.pfeg.noaa.gov/erddap/metadata/fgdc/xml/erdMH1chlamday_fgdc.xml" title="Click&#x20;to&#x20;download&#x20;FGDC&#x20;metadata&#x2e;" >F</a>
+&nbsp;<a rel="chapter" rev="contents" href="https://coastwatch.pfeg.noaa.gov/erddap/metadata/iso19115/xml/erdMH1chlamday_iso19115.xml" title="Click&#x20;to&#x20;download&#x20;ISO&#x20;19115&#x2d;2&#x2f;19139&#x20;metadata&#x2e;" >&nbsp;I&nbsp;</a>
+&nbsp;<a rel="chapter" rev="contents" href="https://coastwatch.pfeg.noaa.gov/erddap/info/erdMH1chlamday/index.html" title="Click to see a list of this dataset's variables and the complete list of metadata attributes." >M</a>
+&nbsp;
+<td nowrap><a rel="bookmark" href="https://coastwatch.pfeg.noaa.gov/infog/MH1_chla_las.html" title="Click to see background information from the source of this dataset." >background<img
+    src="https://coastwatch.pfeg.noaa.gov/erddap/images/external.png" align="bottom" alt=" (external link)"
+    title="This link to an external web site does not constitute an endorsement."/></a>
+<td nowrap><a rel="alternate" type="application/rss+xml"   href="http://coastwatch.pfeg.noaa.gov/erddap/rss/erdMH1chlamday.rss" 
+  title=""><img alt="RSS" align="bottom" 
+    title="Subscribe to the RSS feed for this dataset..." 
+    src="https://coastwatch.pfeg.noaa.gov/erddap/images/rss.gif" ></a>
+<td nowrap><a rel="alternate" 
+  href="https://coastwatch.pfeg.noaa.gov/erddap/subscriptions/add.html?datasetID=erdMH1chlamday&amp;showErrors=false&amp;email=" 
+  title=""><img alt="Subscribe" align="bottom" 
+    title="Get&#x20;an&#x20;email&#x20;immediately&#x20;whenever&#x20;this&#x20;dataset&#x20;changes&#x2e;&#x2e;&#x2e;" 
+    src="https://coastwatch.pfeg.noaa.gov/erddap/images/envelope.gif" ></a>
+<td nowrap>NASA/GSFC OBPG
+<td nowrap>erdMH1chlamday
+</tr>
+</table>
+<h2>The Dataset's Variables and Attributes</h2><table class="erd commonBGColor" cellspacing="0">
+<tr>
+<th>Row Type</th>
+<th>Variable Name</th>
+<th>Attribute Name</th>
+<th>Data Type</th>
+<th>Value</th>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>_CoordSysBuilder</td>
+<td>String</td>
+<td>ucar.nc2.dataset.conv.CF1Convention</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>_lastModified</td>
+<td>String</td>
+<td>2016-11-16T23:22:15.000Z</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>cdm_data_type</td>
+<td>String</td>
+<td>Grid</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>Conventions</td>
+<td>String</td>
+<td>CF-1.6, COARDS, ACDD-1.3</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>creator_email</td>
+<td>String</td>
+<td><a href="mailto:data&#x40;oceancolor&#x2e;gsfc&#x2e;nasa&#x2e;gov">data&#x40;oceancolor&#x2e;gsfc&#x2e;nasa&#x2e;gov</a></td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>creator_name</td>
+<td>String</td>
+<td>NASA/GSFC/OBPG</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>creator_type</td>
+<td>String</td>
+<td>group</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>creator_url</td>
+<td>String</td>
+<td><a href="https&#x3a;&#x2f;&#x2f;oceandata&#x2e;sci&#x2e;gsfc&#x2e;nasa&#x2e;gov">https&#x3a;&#x2f;&#x2f;oceandata&#x2e;sci&#x2e;gsfc&#x2e;nasa&#x2e;gov<img
+    src="https://coastwatch.pfeg.noaa.gov/erddap/images/external.png" align="bottom" alt=" (external link)"
+    title="This link to an external web site does not constitute an endorsement."/></a></td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>date_created</td>
+<td>String</td>
+<td>2016-11-16T23:22:15.000Z</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>Easternmost_Easting</td>
+<td>double</td>
+<td>179.9792</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>geospatial_lat_max</td>
+<td>double</td>
+<td>89.97916</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>geospatial_lat_min</td>
+<td>double</td>
+<td>-89.97918</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>geospatial_lat_units</td>
+<td>String</td>
+<td>degrees_north</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>geospatial_lon_max</td>
+<td>double</td>
+<td>179.9792</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>geospatial_lon_min</td>
+<td>double</td>
+<td>-179.9792</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>geospatial_lon_units</td>
+<td>String</td>
+<td>degrees_east</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>grid_mapping_name</td>
+<td>String</td>
+<td>latitude_longitude</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>history</td>
+<td>String</td>
+<td>Files downloaded daily from https://oceandata.sci.gsfc.nasa.gov/MODIS-Aqua/L3SMI to NOAA SWFSC ERD (erd.data@noaa.gov)<br>ERD uses .ncml to add a time dimension.<br>Direct read of HDF4 file through CDM library</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>identifier_product_doi</td>
+<td>String</td>
+<td>10.5067/AQUA/MODIS_OC.2014.0</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>identifier_product_doi_authority</td>
+<td>String</td>
+<td><a href="https&#x3a;&#x2f;&#x2f;dx&#x2e;doi&#x2e;org">https&#x3a;&#x2f;&#x2f;dx&#x2e;doi&#x2e;org<img
+    src="https://coastwatch.pfeg.noaa.gov/erddap/images/external.png" align="bottom" alt=" (external link)"
+    title="This link to an external web site does not constitute an endorsement."/></a></td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>infoUrl</td>
+<td>String</td>
+<td><a href="https&#x3a;&#x2f;&#x2f;coastwatch&#x2e;pfeg&#x2e;noaa&#x2e;gov&#x2f;infog&#x2f;MH1&#x5f;chla&#x5f;las&#x2e;html">https&#x3a;&#x2f;&#x2f;coastwatch&#x2e;pfeg&#x2e;noaa&#x2e;gov&#x2f;infog&#x2f;MH1&#x5f;chla&#x5f;las&#x2e;html<img
+    src="https://coastwatch.pfeg.noaa.gov/erddap/images/external.png" align="bottom" alt=" (external link)"
+    title="This link to an external web site does not constitute an endorsement."/></a></td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>institution</td>
+<td>String</td>
+<td>NASA/GSFC OBPG</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>instrument</td>
+<td>String</td>
+<td>MODIS</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>keywords</td>
+<td>String</td>
+<td>algorithm, biology, center, chemistry, chlor_a, chlorophyll, color, concentration, concentration_of_chlorophyll_in_sea_water, data, flight, goddard, group, gsfc, image, imaging, L3, level, level-3, mapped, moderate, modis, nasa, obpg, ocean, ocean color, oceans,<br>Earth Science &gt; Oceans &gt; Ocean Chemistry &gt; Chlorophyll,<br>Earth Science &gt; Oceans &gt; Ocean Chemistry &gt; Chlorophyll; Oceans &gt; Ocean Optics &gt; Ocean Color,<br>oci, optics, processing, resolution, sea, seawater, smi, space, spectroradiometer, standard, time, water</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>keywords_vocabulary</td>
+<td>String</td>
+<td>GCMD Science Keywords</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>l2_flag_names</td>
+<td>String</td>
+<td>ATMFAIL,LAND,HILT,HISATZEN,STRAYLIGHT,CLDICE,COCCOLITH,LOWLW,CHLWARN,CHLFAIL,NAVWARN,MAXAERITER,ATMWARN,HISOLZEN,NAVFAIL,FILTER,HIGLINT</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>license</td>
+<td>String</td>
+<td>https://science.nasa.gov/earth-science/earth-science-data/data-information-policy/<br>The data may be used and redistributed for free but is not intended<br>for legal use, since it may contain inaccuracies. Neither the data<br>Contributor, ERD, NOAA, nor the United States Government, nor any<br>of their employees or contractors, makes any warranty, express or<br>implied, including warranties of merchantability and fitness for a<br>particular purpose, or assumes any legal liability for the accuracy,<br>completeness, or usefulness, of this information.</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>map_projection</td>
+<td>String</td>
+<td>Equidistant Cylindrical</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>measure</td>
+<td>String</td>
+<td>Mean</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>naming_authority</td>
+<td>String</td>
+<td>gov.noaa.pfeg.coastwatch</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>Northernmost_Northing</td>
+<td>double</td>
+<td>89.97916</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>platform</td>
+<td>String</td>
+<td>Aqua</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>processing_control_input_parameters_apply_pal</td>
+<td>String</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>processing_control_input_parameters_central_meridian</td>
+<td>String</td>
+<td>-999</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>processing_control_input_parameters_deflate</td>
+<td>String</td>
+<td>4</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>processing_control_input_parameters_east</td>
+<td>String</td>
+<td>180.000</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>processing_control_input_parameters_fudge</td>
+<td>String</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>processing_control_input_parameters_ifile</td>
+<td>String</td>
+<td>A20162752016305.L3b_MO_CHL.nc</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>processing_control_input_parameters_interp</td>
+<td>String</td>
+<td>area</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>processing_control_input_parameters_north</td>
+<td>String</td>
+<td>90.000</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>processing_control_input_parameters_ofile</td>
+<td>String</td>
+<td>A20162752016305.L3m_MO_CHL_chlor_a_4km.nc</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>processing_control_input_parameters_oformat</td>
+<td>String</td>
+<td>2</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>processing_control_input_parameters_oformat2</td>
+<td>String</td>
+<td>png</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>processing_control_input_parameters_palette_dir</td>
+<td>String</td>
+<td>$OCDATAROOT/common/palette</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>processing_control_input_parameters_par</td>
+<td>String</td>
+<td>A20162752016305.L3m_MO_CHL_chlor_a_4km.nc.param</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>processing_control_input_parameters_product</td>
+<td>String</td>
+<td>chlor_a</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>processing_control_input_parameters_product_rgb</td>
+<td>String</td>
+<td>rhos_645,rhos_555,rhos_469</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>processing_control_input_parameters_projection</td>
+<td>String</td>
+<td>smi</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>processing_control_input_parameters_pversion</td>
+<td>String</td>
+<td>2014.0.1</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>processing_control_input_parameters_quiet</td>
+<td>String</td>
+<td>false</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>processing_control_input_parameters_resolution</td>
+<td>String</td>
+<td>4km</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>processing_control_input_parameters_south</td>
+<td>String</td>
+<td>-90.000</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>processing_control_input_parameters_threshold</td>
+<td>String</td>
+<td>0</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>processing_control_input_parameters_use_quality</td>
+<td>String</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>processing_control_input_parameters_use_rgb</td>
+<td>String</td>
+<td>no</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>processing_control_input_parameters_west</td>
+<td>String</td>
+<td>-180.000</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>processing_control_l2_flag_names</td>
+<td>String</td>
+<td>ATMFAIL,LAND,HILT,HISATZEN,STRAYLIGHT,CLDICE,COCCOLITH,LOWLW,CHLWARN,CHLFAIL,NAVWARN,MAXAERITER,ATMWARN,HISOLZEN,NAVFAIL,FILTER,HIGLINT</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>processing_control_software_name</td>
+<td>String</td>
+<td>l3mapgen</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>processing_control_software_version</td>
+<td>String</td>
+<td>1.0.1-r13111</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>processing_control_source</td>
+<td>String</td>
+<td>A20162752016305.L3b_MO_CHL.nc</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>processing_level</td>
+<td>String</td>
+<td>L3 Mapped</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>processing_version</td>
+<td>String</td>
+<td>2014.0.1</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>product_name</td>
+<td>String</td>
+<td>A20162752016305.L3m_MO_CHL_chlor_a_4km.nc</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>project</td>
+<td>String</td>
+<td>Ocean Biology Processing Group (NASA/GSFC/OBPG)</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>publisher_email</td>
+<td>String</td>
+<td><a href="mailto:erd&#x2e;data&#x40;noaa&#x2e;gov">erd&#x2e;data&#x40;noaa&#x2e;gov</a></td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>publisher_name</td>
+<td>String</td>
+<td>NOAA NMFS SWFSC ERD</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>publisher_type</td>
+<td>String</td>
+<td>institution</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>publisher_url</td>
+<td>String</td>
+<td><a href="https&#x3a;&#x2f;&#x2f;www&#x2e;pfeg&#x2e;noaa&#x2e;gov">https&#x3a;&#x2f;&#x2f;www&#x2e;pfeg&#x2e;noaa&#x2e;gov<img
+    src="https://coastwatch.pfeg.noaa.gov/erddap/images/external.png" align="bottom" alt=" (external link)"
+    title="This link to an external web site does not constitute an endorsement."/></a></td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>sourceUrl</td>
+<td>String</td>
+<td>(local files)</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>Southernmost_Northing</td>
+<td>double</td>
+<td>-89.97918</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>spatialResolution</td>
+<td>String</td>
+<td>4.64 km</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>standard_name_vocabulary</td>
+<td>String</td>
+<td>CF Standard Name Table v29</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>summary</td>
+<td>String</td>
+<td>This dataset has Level 3, Standard Mapped Image, 4km, chlorophyll-a concentration data from NASA&#39;s Aqua Spacecraft.  Measurements are gathered by the Moderate Resolution Imaging Spectroradiometer (MODIS) carried aboard the spacecraft.  This is Science Quality data.  This is the August 2015 version of this dataset.</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>temporal_range</td>
+<td>String</td>
+<td>month</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>time_coverage_end</td>
+<td>String</td>
+<td>2017-10-16T00:00:00Z</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>time_coverage_start</td>
+<td>String</td>
+<td>2003-01-16T00:00:00Z</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>title</td>
+<td>String</td>
+<td>Chlorophyll-a, Aqua MODIS, NPP, L3SMI, Global, 4km, Science Quality, 2003-present (Monthly Composite)</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>NC_GLOBAL</td>
+<td>Westernmost_Easting</td>
+<td>double</td>
+<td>-179.9792</td>
+</tr>
+<tr class="highlightBGColor">
+<td>dimension</td>
+<td>time</td>
+<td>&nbsp;</td>
+<td>double</td>
+<td>nValues=178, evenlySpaced=false, averageSpacing=30 days 10h 26m 26s</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>time</td>
+<td>_CoordinateAxisType</td>
+<td>String</td>
+<td>Time</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>time</td>
+<td>actual_range</td>
+<td>double</td>
+<td>1.0426752E9, 1.508112E9</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>time</td>
+<td>axis</td>
+<td>String</td>
+<td>T</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>time</td>
+<td>ioos_category</td>
+<td>String</td>
+<td>Time</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>time</td>
+<td>long_name</td>
+<td>String</td>
+<td>Centered Time</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>time</td>
+<td>standard_name</td>
+<td>String</td>
+<td>time</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>time</td>
+<td>time_origin</td>
+<td>String</td>
+<td>01-JAN-1970 00:00:00</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>time</td>
+<td>units</td>
+<td>String</td>
+<td>seconds since 1970-01-01T00:00:00Z</td>
+</tr>
+<tr class="highlightBGColor">
+<td>dimension</td>
+<td>latitude</td>
+<td>&nbsp;</td>
+<td>float</td>
+<td>nValues=4320, evenlySpaced=false, averageSpacing=-0.04166666821023385</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>latitude</td>
+<td>_CoordinateAxisType</td>
+<td>String</td>
+<td>Lat</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>latitude</td>
+<td>actual_range</td>
+<td>float</td>
+<td>89.97916, -89.97918</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>latitude</td>
+<td>axis</td>
+<td>String</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>latitude</td>
+<td>ioos_category</td>
+<td>String</td>
+<td>Location</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>latitude</td>
+<td>long_name</td>
+<td>String</td>
+<td>Latitude</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>latitude</td>
+<td>standard_name</td>
+<td>String</td>
+<td>latitude</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>latitude</td>
+<td>units</td>
+<td>String</td>
+<td>degrees_north</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>latitude</td>
+<td>valid_max</td>
+<td>float</td>
+<td>90.0</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>latitude</td>
+<td>valid_min</td>
+<td>float</td>
+<td>-90.0</td>
+</tr>
+<tr class="highlightBGColor">
+<td>dimension</td>
+<td>longitude</td>
+<td>&nbsp;</td>
+<td>float</td>
+<td>nValues=8640, evenlySpaced=false, averageSpacing=0.041666674383609215</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>longitude</td>
+<td>_CoordinateAxisType</td>
+<td>String</td>
+<td>Lon</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>longitude</td>
+<td>actual_range</td>
+<td>float</td>
+<td>-179.9792, 179.9792</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>longitude</td>
+<td>axis</td>
+<td>String</td>
+<td>X</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>longitude</td>
+<td>ioos_category</td>
+<td>String</td>
+<td>Location</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>longitude</td>
+<td>long_name</td>
+<td>String</td>
+<td>Longitude</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>longitude</td>
+<td>standard_name</td>
+<td>String</td>
+<td>longitude</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>longitude</td>
+<td>units</td>
+<td>String</td>
+<td>degrees_east</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>longitude</td>
+<td>valid_max</td>
+<td>float</td>
+<td>180.0</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>longitude</td>
+<td>valid_min</td>
+<td>float</td>
+<td>-180.0</td>
+</tr>
+<tr class="highlightBGColor">
+<td>variable</td>
+<td>chlorophyll</td>
+<td>&nbsp;</td>
+<td>float</td>
+<td>time, latitude, longitude</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>chlorophyll</td>
+<td>_FillValue</td>
+<td>float</td>
+<td>NaN</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>chlorophyll</td>
+<td>colorBarMaximum</td>
+<td>double</td>
+<td>30.0</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>chlorophyll</td>
+<td>colorBarMinimum</td>
+<td>double</td>
+<td>0.03</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>chlorophyll</td>
+<td>colorBarScale</td>
+<td>String</td>
+<td>Log</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>chlorophyll</td>
+<td>ioos_category</td>
+<td>String</td>
+<td>Ocean Color</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>chlorophyll</td>
+<td>long_name</td>
+<td>String</td>
+<td>Mean Chlorophyll a Concentration</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>chlorophyll</td>
+<td>references</td>
+<td>String</td>
+<td>Hu, C., Lee Z., and Franz, B.A. (2012). Chlorophyll-a algorithms for oligotrophic oceans: A novel approach based on three-band reflectance difference, J. Geophys. Res., 117, C01011, doi:10.1029/2011JC007395.</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>chlorophyll</td>
+<td>standard_name</td>
+<td>String</td>
+<td>concentration_of_chlorophyll_in_sea_water</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>chlorophyll</td>
+<td>units</td>
+<td>String</td>
+<td>mg m^-3</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>chlorophyll</td>
+<td>valid_max</td>
+<td>float</td>
+<td>100.0</td>
+</tr>
+<tr>
+<td>attribute</td>
+<td>chlorophyll</td>
+<td>valid_min</td>
+<td>float</td>
+<td>0.001</td>
+</tr>
+</table>
+
+<p>This information is also available in other file formats 
+(.csv, .htmlTable, .itx, .json, .jsonlCSV, .jsonlKVP, .mat, .nc, .nccsv, .tsv, .xhtml) <a rel="help" href="https://coastwatch.pfeg.noaa.gov/erddap/rest.html">via a RESTful web service</a>.
+
+<br>&nbsp;
+<hr>
+ERDDAP, Version 1.80
+<br><a href="https://coastwatch.pfeg.noaa.gov/erddap/legal.html">Disclaimers</a> | 
+    <a href="https://coastwatch.pfeg.noaa.gov/erddap/legal.html#privacyPolicy">Privacy Policy</a> |
+    <a href="https://coastwatch.pfeg.noaa.gov/erddap/legal.html#contact">Contact</a>
+</body>
+</html>
