@@ -118,13 +118,13 @@
 #' the file.
 #' 
 #' @details
-#' For 1981 to 2002, We used the Pathfinder Version 5.2
+#' For 1981 to 2003, We used the Pathfinder Version 5.2
 #'    (L3C) monthly day and night product on a 0.0417 degree grid.  These SST data use the Advanced Very-High Resolution
 #'   Radiometer (AVHRR) instrument on the Pathfinder satellites.  These data were provided by GHRSST
 #'   and the US National Oceanographic Data Center. This project
 #'   was supported in part by a grant from the NOAA Climate Data Record (CDR) Program for satellites.
 #'    
-#'    For 2003 to 2016, we used the NOAA CoastWatch sea surface temperature (SST) products 
+#'    For 2004 to 2016, we used the NOAA CoastWatch sea surface temperature (SST) products 
 #'    derived from NOAA's Polar Operational Environmental Satellites (POES). The SST estimates use the
 #'    Advanced Very-High Resolution Radiometer (AVHRR) instruments on the POES satellites and are 
 #'    on a 0.1 degree grid.  
