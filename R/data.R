@@ -150,6 +150,8 @@
 #' @references
 #' \insertRef{Caseyetal2010}{SardineForecast}
 #' 
+#' \insertRef{Waltonetal1998}{SardineForecast}
+#' 
 #' @examples
 #' \dontrun{
 #' # Show the R code that downloaded the data

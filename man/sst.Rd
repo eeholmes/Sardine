@@ -57,5 +57,7 @@ browseURL(system.file("docs", "kerala_study_area_with_inset.jpg", package="Sardi
 }
 \references{
 \insertRef{Caseyetal2010}{SardineForecast}
+
+\insertRef{Waltonetal1998}{SardineForecast}
 }
 \keyword{datasets}
