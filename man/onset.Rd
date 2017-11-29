@@ -3,15 +3,12 @@
 \docType{data}
 \name{onset}
 \alias{onset}
-\title{India Monsoon Onset Dates}
+\title{India monsoon onset dates}
 \format{A data frame with variables:
 \describe{
   \item{Year}{}
   \item{Onset}{The arrival date relative to June 1st.  Monsoon arrival is defined in the monsoon reports.}
-}
-
-#' @reference 
-Pai, D. S. and Bhan, S. C., editors. 2016. Monsoon: a report 2015. National Climate Centre. India Meteorological Department.}
+}}
 \usage{
 onset
 }
@@ -20,5 +17,8 @@ India monsoon onset dates relative to average June 1st arrival date into SW Indi
 }
 \details{
 The onset dates were extracted from the annual monsoon reports.  These reports contain a section on the 'Onset and Advance of the Southwest Monsoon' which gives the date that the southwest monsoon set in over Kerala. The onset is given as the number of days before or after June 1st.  0 indicates that the monsoon arrived on June 1st.  1 would indicate that it arrived on June 2nd. -1 indicates it arrived on May 31.
+}
+\references{
+\insertRef{PaiandBhan2016}{SardineForecast}
 }
 \keyword{datasets}
