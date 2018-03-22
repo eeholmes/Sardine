@@ -49,3 +49,5 @@ Temporary Items
 R/.Rhistory
 .Rproj.user
 SardineForecast.Rproj
+.RData
+.Rhistory
