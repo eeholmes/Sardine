@@ -47,3 +47,5 @@ Temporary Items
 .apdisk
 *.history
 R/.Rhistory
+.Rproj.user
+SardineForecast.Rproj
