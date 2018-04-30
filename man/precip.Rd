@@ -8,10 +8,10 @@
 \describe{
   \item{Year}{}
   \item{Month}{}
-  \item{precip.gpcp.kerala}{Monthly GPCP precipitation in the box off the Kerala coast.}
+  \item{precip.gpcp.kerala}{Monthly GPCP precipitation in the box off the Kerala coast. Remote-sensing precipitation product from the NOAA Global Precipitation Climatology Project.  This provides estimate of precipitation over the ocean using a global 2.5 degree grid.  We used the 2.5 by 2.5 degree box defined by latitude 8.75 to 11.25 and longitude 73.25 to 75.75 for the precipitation off the coast of Kerala.  These data are available from 1979 forward. Version 2.3 monthly product.  Data downloaded from the National Centers for Environmental Information. https://www.ncei.noaa.gov/data/global-precipitation-climatology-project-gpcp-monthly}
   \item{precip.gpcp.karnataka}{Monthly GPCP precipitation in the box off the Karnataka coast.}
   \item{PrecipTRMM}{Monthly precipitation estimates from the Tropical Rainfall Measuring Mission (TRMM).  Data are averaged in the boxes used for the other satellite data.}
-  \item{Precip.Kerala}{Monthly precipitation (mm) from landgauges.}
+  \item{Precip.Kerala}{Monthly precipitation (mm) from landgauges. Downloaded from data.gov.in "Area Weighted Monthly, Seasonal And Annual Rainfall (in mm) For 36 Meteorological Subdivisions from 1951 onwards. Subdivision rainfall data is calculated as area weighted average of district wise rainfall." KothawaleRajeevan2017}
 }}
 \usage{
 precip

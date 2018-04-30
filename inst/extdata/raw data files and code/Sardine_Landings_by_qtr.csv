@@ -5,22 +5,22 @@ Kerala,1958,71207,12089,8047,27628,,,,Table 13a
 Kerala,1959,33615,5657,5233,17531,,,,metric tonnes
 Kerala,1960,8068,1528,28802,147821,,,,many '-' in table.  I assume they are zeros since annual sum in table uses 0
 Kerala,1961,66009,17968,10496,71532,,,,Mysore state renamed Karnataka after 1956
-Kerala,1962,35070,5583,4858,45692,,,,
-Kerala,1963,26844,6750,3560,21796,,,1968-1978,Pillai 1982 Table 21 Oil sardine landings in metric tonnes. Data from CMFRI
-Kerala,1964,20923,1008,33604,134866,,,,
-Kerala,1965,92424,20626,33225,72895,,,1975-1984,Kerala data from
-Kerala,1966,37457,14353,57688,93302,,,,Jacob et al 1987. An Appraisal of the Marine Fisheries of Kerala
-Kerala,1967,70960,11664,27843,124943,,,,Table 1 & 2 in Appendix
-Kerala,1968,47319,4213,57895,137621,,,,
-Kerala,1969,34655,5374,14988,84966,,,,Karnataka data from
-Kerala,1970,30986,27244,46981,86472,,,,Kurup et al 1987. An Appraisal of the Marine Fishereis of Karnataka and Goa
-Kerala,1971,86150,7317,19378,82152,,,,Table 1 & 2 in Appendix
-Kerala,1972,40907,21566,11710,30243,,,,"Note Table 3 & 4 has Goa, but those are missing in the pdf posted online."
-Kerala,1973,27884,20701,18963,55285,,,,
-Kerala,1974,18594,20623,15269,47649,,,1985-2004,CMFRI
-Kerala,1975,41684,15932,12409,27158,,,,
-Kerala,1976,29078,19749,9173,65937,,,2005-2015,CMFRI (file originally from INCOIS)
-Kerala,1977,22033,20620,17084,57519,,,,
+Kerala,1962,35070,5583,4858,45692,,,,alt reference is CMFRI 1968 Bulletin; tables withing
+Kerala,1963,26844,6750,3560,21796,,,,
+Kerala,1964,20923,1008,33604,134866,,,1968-1978,Pillai 1982 Table 21 Oil sardine landings in metric tonnes. Data from CMFRI
+Kerala,1965,92424,20626,33225,72895,,,,
+Kerala,1966,37457,14353,57688,93302,,,1975-1984,Kerala data from
+Kerala,1967,70960,11664,27843,124943,,,,Jacob et al 1987. An Appraisal of the Marine Fisheries of Kerala
+Kerala,1968,47319,4213,57895,137621,,,,Table 1 & 2 in Appendix
+Kerala,1969,34655,5374,14988,84966,,,,
+Kerala,1970,30986,27244,46981,86472,,,,Karnataka data from
+Kerala,1971,86150,7317,19378,82152,,,,Kurup et al 1987. An Appraisal of the Marine Fishereis of Karnataka and Goa
+Kerala,1972,40907,21566,11710,30243,,,,Table 1 & 2 in Appendix
+Kerala,1973,27884,20701,18963,55285,,,,"Note Table 3 & 4 has Goa, but those are missing in the pdf posted online."
+Kerala,1974,18594,20623,15269,47649,,,,
+Kerala,1975,41684,15932,12409,27158,,,1985-2004,CMFRI
+Kerala,1976,29078,19749,9173,65937,,,,
+Kerala,1977,22033,20620,17084,57519,,,2005-2015,CMFRI (file originally from INCOIS)
 Kerala,1978,19873,7633,16836,75595,,,,
 Kerala,1979,27340,10665,25578,53251,,,,
 Kerala,1980,23766,14401,5952,25548,,,,
@@ -55,11 +55,11 @@ Kerala,2008,75024,32297,63362,60943,,,,
 Kerala,2009,38634,14852,74227,39716,,,,
 Kerala,2010,67473,31302,41522,119046,,,,
 Kerala,2011,94487,60646,60259,106710,,,,
-Kerala,2012,88556,44914,121986,144330,,,,19902
-Kerala,2013,107677,58013,20374,60777,,,,9412
-Kerala,2014,28199,18519,47073,61296,,,,26911
-Kerala,2015,19902,9412,26911,12206,,,,12206
-Kerala,2016,NA,NA,NA,NA,,,,
+Kerala,2012,88556,44914,121986,144330,,,,
+Kerala,2013,107677,58013,20374,60777,,,,19902
+Kerala,2014,28199,18519,47073,61296,,,,9412
+Kerala,2015,19902,9412,26911,12206,,,,26911
+Kerala,2016,NA,NA,NA,NA,,,,12206
 Karnataka,1956,0,0,0,1369,,,,
 Karnataka,1957,165,241,137,5236,,,,
 Karnataka,1958,366,9,0,94,,,,
@@ -117,11 +117,11 @@ Karnataka,2009,19362,6486,7568,23987,,,,
 Karnataka,2010,25672,4749,9492,36929,,,,
 Karnataka,2011,16795,22339,10312,34091,,,,
 Karnataka,2012,33421,9912,15420,60864,,,,
-Karnataka,2013,25560,15126,6217,51550,,,8162,
-Karnataka,2014,29949,28033,16688,68918,,,8917,
-Karnataka,2015,8162,8917,3075,23335,,,3075,
-Karnataka,2016,NA,NA,NA,NA,,,23335,
-Goa,1956,NA,NA,NA,NA,,,,
+Karnataka,2013,25560,15126,6217,51550,,,,
+Karnataka,2014,29949,28033,16688,68918,,,8162,
+Karnataka,2015,8162,8917,3075,23335,,,8917,
+Karnataka,2016,NA,NA,NA,NA,,,3075,
+Goa,1956,NA,NA,NA,NA,,,23335,
 Goa,1957,NA,NA,NA,NA,,,,
 Goa,1958,NA,NA,NA,NA,,,,
 Goa,1959,NA,NA,NA,NA,,,,
