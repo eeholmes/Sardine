@@ -215,11 +215,15 @@
 #' 
 #' @references
 #' 
-#' NASA Goddard Space Flight Center, Ocean Ecology Laboratory, Ocean Biology Processing Group; (2014): SeaWiFS Ocean Color Data; NASA Goddard Space Flight Center, Ocean Ecology Laboratory, Ocean Biology Processing Group. \url{https://dx.doi.org/10.5067/ORBVIEW-2/SEAWIFS_OC.2014.0}
+#' NASA Goddard Space Flight Center, Ocean Ecology Laboratory, 
+#' Ocean Biology Processing Group; (2014): SeaWiFS Ocean Color Data; 
+#' NASA Goddard Space Flight Center, Ocean Ecology Laboratory, 
+#' Ocean Biology Processing Group. \url{https://dx.doi.org/10.5067/ORBVIEW-2/SEAWIFS_OC.2014.0}
 #' 
 #' NASA Goddard Space Flight Center, Ocean Ecology Laboratory, Ocean 
 #' Biology Processing Group. Moderate-resolution Imaging 
-#' Spectroradiometer (MODIS) Aqua Chlorophyll Data; 2014 Reprocessing. NASA OB.DAAC, Greenbelt, MD, USA. \url{https://dx.doi.org/10.5067/AQUA/MODIS/L3M/CHL/2014}
+#' Spectroradiometer (MODIS) Aqua Chlorophyll Data; 2014 Reprocessing. 
+#' NASA OB.DAAC, Greenbelt, MD, USA. \url{https://dx.doi.org/10.5067/AQUA/MODIS/L3M/CHL/2014}
 #' 
 #' \insertRef{Huetal2012}{SardineForecast}
 #' 
