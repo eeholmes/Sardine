@@ -56,6 +56,13 @@ browseURL(system.file("docs", "kerala_study_area_with_inset.jpg", package="Sardi
 }
 }
 \references{
+These data were provided by GHRSST and the US National Oceanographic Data Center. 
+This project was supported in part by a grant from the NOAA Climate Data Record 
+(CDR) Program for satellites. The data were downloaded from NOAA CoastWatch-West 
+Coast Regional Node and Southwest Fisheries Science Center's Environmental 
+Research Division. To cite these data in a paper, please follow the instructions 
+in the license and at this 
+link: \href{https://coastwatch.pfeg.noaa.gov/erddap/information.html#citeDataset}
 \insertRef{Caseyetal2010}{SardineForecast}
 
 \insertRef{Waltonetal1998}{SardineForecast}
