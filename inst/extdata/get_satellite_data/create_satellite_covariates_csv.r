@@ -1,5 +1,5 @@
 # create Satellite_covariates.csv
-# with SST, CHL, Wind.UPW and SST.UPW
+# with SST, CHL, Wind.UPW, SST.UPW and UPW13.SST
 # set get_satellite_data as wd
 
 #set up file
@@ -80,6 +80,5 @@ for(fil in covfiles){
     monthly_cov[monthly_cov$Year==dat$Year[i] & monthly_cov$Month==dat$Month[i],covs.uniq]=dat[i,covs]
   }
 }
-
 
 write.csv(monthly_cov, row.names=FALSE, file="../raw data files and code/Satellite_covariates.csv")
