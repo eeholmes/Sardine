@@ -21,26 +21,25 @@ the file.
 }
 \details{
 For 1981 to 2003, We used the Pathfinder Version 5.2
-   (L3C) monthly day and night product on a 0.0417 degree grid.  These SST data use the Advanced Very-High Resolution
-  Radiometer (AVHRR) instrument on the Pathfinder satellites.  These data were provided by GHRSST
-  and the US National Oceanographic Data Center. This project
-  was supported in part by a grant from the NOAA Climate Data Record (CDR) Program for satellites.
+(L3C) monthly day and night product on a 0.0417 degree grid.  These SST data use the Advanced Very-High Resolution
+Radiometer (AVHRR) instrument on the Pathfinder satellites.  These data were provided by GHRSST
+and the US National Oceanographic Data Center. This project
+was supported in part by a grant from the NOAA Climate Data Record (CDR) Program for satellites.
    
-   For 2004 to 2016, we used the NOAA CoastWatch sea surface temperature (SST) products 
-   derived from NOAA's Polar Operational Environmental Satellites (POES). The SST estimates use the
-   Advanced Very-High Resolution Radiometer (AVHRR) instruments on the POES satellites and are 
-   on a 0.1 degree grid.  
+For 2004 to 2016, we used the NOAA CoastWatch sea surface temperature (SST) products 
+derived from NOAA's Polar Operational Environmental Satellites (POES). The SST estimates use the
+Advanced Very-High Resolution Radiometer (AVHRR) instruments on the POES satellites and are 
+on a 0.1 degree grid.  
    
-   Both SST data sets were downloaded from the NOAA ERDDAP server. See
-    \url{https://coastwatch.pfeg.noaa.gov/erddap/info/erdAGsstamday/index.html} and 
-    \url{https://coastwatch.pfeg.noaa.gov/erddap/info/erdPH2sstamday/index.html}.
+Both SST data sets were downloaded from the NOAA ERDDAP server. See
+\url{https://coastwatch.pfeg.noaa.gov/erddap/info/erdAGsstamday/index.html} and 
+\url{https://coastwatch.pfeg.noaa.gov/erddap/info/erdPH2sstamday/index.html}.
    
-   The R code used
+The R code used
 to download the data is in the \code{extdata/get_satelite_data} folder.  See examples
- for how to find and view the files.  The SST values were averaged across thirteen
-  1 degree by 1 degree boxes 
-  which roughly parallel the bathymetry.  See the figure in the examples below which shows
-   the boxes.
+for how to find and view the files.  The SST values were averaged across thirteen
+1 degree by 1 degree boxes which roughly parallel the bathymetry.  
+See the figure in the examples below which shows the boxes.
 }
 \examples{
 \dontrun{
@@ -61,8 +60,9 @@ This project was supported in part by a grant from the NOAA Climate Data Record
 (CDR) Program for satellites. The data were downloaded from NOAA CoastWatch-West 
 Coast Regional Node and Southwest Fisheries Science Center's Environmental 
 Research Division. To cite these data in a paper, please follow the instructions 
-in the license and at this 
-link: \href{https://coastwatch.pfeg.noaa.gov/erddap/information.html#citeDataset}
+in the license and at this link: 
+\url{https://coastwatch.pfeg.noaa.gov/erddap/information.html#citeDataset}
+
 \insertRef{Caseyetal2010}{SardineForecast}
 
 \insertRef{Waltonetal1998}{SardineForecast}

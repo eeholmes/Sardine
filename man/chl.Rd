@@ -37,12 +37,12 @@ Both CHL data sets were downloaded from the NOAA ERDDAP server. See
     \url{https://coastwatch.pfeg.noaa.gov/erddap/info/erdSW1chlamday/index.html} and 
     \url{https://coastwatch.pfeg.noaa.gov/erddap/info/erdMH1chlamday/index.html}.
    
-   The R code used
+The R code used
 to download the data is in the \code{extdata/get_satelite_data} folder.  See examples
- for how to find and view the files.  The CHL values were averaged across thirteen
-  1 degree by 1 degree boxes 
-  which roughly parallel the bathymetry.  See the figure in the examples below which shows
-   the boxes.
+for how to find and view the files.  The CHL values were averaged across thirteen
+1 degree by 1 degree boxes 
+which roughly parallel the bathymetry.  See the figure in the examples below which shows
+the boxes.
 }
 \examples{
 \dontrun{

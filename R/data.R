@@ -4,12 +4,12 @@
 #'
 #' @format A data frame 'oilsardine_qtr' with 6 variables:
 #' \describe{
-#'   \item{Site}{Kerala, Karnataka, Goa}
 #'   \item{Year}{Year}
-#'   \item{Q1}{Quarter 1 landings}
-#'   \item{Q1}{Quarter 2 landings}
-#'   \item{Q1}{Quarter 3 landings}
-#'   \item{Q1}{Quarter 4 landings}
+#'   \item{Qtr}{Quarter 1 to 4}
+#'   \item{Goa}{Goa landings}
+#'   \item{Karnataka}{Karnataka landings}
+#'   \item{Kerala}{Kerala landings}
+#'   \item{SWCoast}{SW Coast landings}
 #' }
 #' 
 #' @references 
@@ -25,6 +25,23 @@
 #' 
 #' 1985-2014 Provided by CMFRI directly via a data request.
 "oilsardine_qtr"
+
+#' Oil sardine landings in metric tons by quarter
+#'
+#' A dataset containing the calendar year (Jan-Dec) landings (in metric tons) of oil sardines in Kerala, Karnataka and Goa states 1956-2016.  The data are collected and processed into a total landings estimates based on a stratified sampling of landing sites along the SW coast of India throughout the year.  The program is run by the Central Marine Fisheries Research Institute (CMFRI) in Cochin, India.  The data were obtained from reports published by CMFRI; see references.
+#'
+#' @format A data frame 'oilsardine_qtr' with 6 variables:
+#' \describe{
+#'   \item{Year}{Year}
+#'   \item{Goa}{Goa landings}
+#'   \item{Karnataka}{Karnataka landings}
+#'   \item{Kerala}{Kerala landings}
+#' }
+#' 
+#' @references 
+#' See oilsardine_qtr for the 1956-2015 sources. 2016-present were taken from
+#' the Fish Catch Estimates provided on the CMFRI website
+"oilsardine_yr"
 
 
 #' ENSO Indices
@@ -119,26 +136,25 @@
 #' 
 #' @details
 #' For 1981 to 2003, We used the Pathfinder Version 5.2
-#'    (L3C) monthly day and night product on a 0.0417 degree grid.  These SST data use the Advanced Very-High Resolution
-#'   Radiometer (AVHRR) instrument on the Pathfinder satellites.  These data were provided by GHRSST
-#'   and the US National Oceanographic Data Center. This project
-#'   was supported in part by a grant from the NOAA Climate Data Record (CDR) Program for satellites.
+#' (L3C) monthly day and night product on a 0.0417 degree grid.  These SST data use the Advanced Very-High Resolution
+#' Radiometer (AVHRR) instrument on the Pathfinder satellites.  These data were provided by GHRSST
+#' and the US National Oceanographic Data Center. This project
+#' was supported in part by a grant from the NOAA Climate Data Record (CDR) Program for satellites.
 #'    
-#'    For 2004 to 2016, we used the NOAA CoastWatch sea surface temperature (SST) products 
-#'    derived from NOAA's Polar Operational Environmental Satellites (POES). The SST estimates use the
-#'    Advanced Very-High Resolution Radiometer (AVHRR) instruments on the POES satellites and are 
-#'    on a 0.1 degree grid.  
+#' For 2004 to 2016, we used the NOAA CoastWatch sea surface temperature (SST) products 
+#' derived from NOAA's Polar Operational Environmental Satellites (POES). The SST estimates use the
+#' Advanced Very-High Resolution Radiometer (AVHRR) instruments on the POES satellites and are 
+#' on a 0.1 degree grid.  
 #'    
-#'    Both SST data sets were downloaded from the NOAA ERDDAP server. See
-#'     \url{https://coastwatch.pfeg.noaa.gov/erddap/info/erdAGsstamday/index.html} and 
-#'     \url{https://coastwatch.pfeg.noaa.gov/erddap/info/erdPH2sstamday/index.html}.
+#' Both SST data sets were downloaded from the NOAA ERDDAP server. See
+#' \url{https://coastwatch.pfeg.noaa.gov/erddap/info/erdAGsstamday/index.html} and 
+#' \url{https://coastwatch.pfeg.noaa.gov/erddap/info/erdPH2sstamday/index.html}.
 #'    
-#'    The R code used
+#' The R code used
 #' to download the data is in the \code{extdata/get_satelite_data} folder.  See examples
-#'  for how to find and view the files.  The SST values were averaged across thirteen
-#'   1 degree by 1 degree boxes 
-#'   which roughly parallel the bathymetry.  See the figure in the examples below which shows
-#'    the boxes. 
+#' for how to find and view the files.  The SST values were averaged across thirteen
+#' 1 degree by 1 degree boxes which roughly parallel the bathymetry.  
+#' See the figure in the examples below which shows the boxes. 
 #' 
 #' @format A data frame with:
 #' \describe{
@@ -153,8 +169,9 @@
 #' (CDR) Program for satellites. The data were downloaded from NOAA CoastWatch-West 
 #' Coast Regional Node and Southwest Fisheries Science Center's Environmental 
 #' Research Division. To cite these data in a paper, please follow the instructions 
-#' in the license and at this 
-#' link: \href{https://coastwatch.pfeg.noaa.gov/erddap/information.html#citeDataset}
+#' in the license and at this link: 
+#' \url{https://coastwatch.pfeg.noaa.gov/erddap/information.html#citeDataset}
+#' 
 #' \insertRef{Caseyetal2010}{SardineForecast}
 #' 
 #' \insertRef{Waltonetal1998}{SardineForecast}
@@ -199,12 +216,12 @@
 #'     \url{https://coastwatch.pfeg.noaa.gov/erddap/info/erdSW1chlamday/index.html} and 
 #'     \url{https://coastwatch.pfeg.noaa.gov/erddap/info/erdMH1chlamday/index.html}.
 #'    
-#'    The R code used
+#' The R code used
 #' to download the data is in the \code{extdata/get_satelite_data} folder.  See examples
-#'  for how to find and view the files.  The CHL values were averaged across thirteen
-#'   1 degree by 1 degree boxes 
-#'   which roughly parallel the bathymetry.  See the figure in the examples below which shows
-#'    the boxes. 
+#' for how to find and view the files.  The CHL values were averaged across thirteen
+#' 1 degree by 1 degree boxes 
+#' which roughly parallel the bathymetry.  See the figure in the examples below which shows
+#' the boxes. 
 #' 
 #' @format A data frame with:
 #' \describe{
@@ -258,9 +275,9 @@
 #' it is common to apply the inverted barometer correction which uses
 #' the difference between the current air pressure and the mean air pressure.
 #' However Srinivas and Kumar (2006) found that for the Cochin tide height measurements,
-#'  "There is no significant difference between the seasonal march of the observed 
-#'  sea level and CSL [corrected sea level]". Therefore we use the raw sea level data with no
-#'  correction.
+#' "There is no significant difference between the seasonal march of the observed 
+#' sea level and CSL [corrected sea level]". Therefore we use the raw sea level data with no
+#' correction.
 #'  
 #' Srinivas et al. (2005) and Srinivas and Kumar (2006) found a positive correlation
 #' between the Southern Oscillation Index (SOI) and mean sea level for 1976-1993,

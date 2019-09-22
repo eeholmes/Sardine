@@ -33,9 +33,9 @@ Sea level measurements are affected by the local barometric pressure, and
 it is common to apply the inverted barometer correction which uses
 the difference between the current air pressure and the mean air pressure.
 However Srinivas and Kumar (2006) found that for the Cochin tide height measurements,
- "There is no significant difference between the seasonal march of the observed 
- sea level and CSL [corrected sea level]". Therefore we use the raw sea level data with no
- correction.
+"There is no significant difference between the seasonal march of the observed 
+sea level and CSL [corrected sea level]". Therefore we use the raw sea level data with no
+correction.
  
 Srinivas et al. (2005) and Srinivas and Kumar (2006) found a positive correlation
 between the Southern Oscillation Index (SOI) and mean sea level for 1976-1993,

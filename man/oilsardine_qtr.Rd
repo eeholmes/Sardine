@@ -6,12 +6,12 @@
 \title{Oil sardine landings in metric tons by quarter}
 \format{A data frame 'oilsardine_qtr' with 6 variables:
 \describe{
-  \item{Site}{Kerala, Karnataka, Goa}
   \item{Year}{Year}
-  \item{Q1}{Quarter 1 landings}
-  \item{Q1}{Quarter 2 landings}
-  \item{Q1}{Quarter 3 landings}
-  \item{Q1}{Quarter 4 landings}
+  \item{Qtr}{Quarter 1 to 4}
+  \item{Goa}{Goa landings}
+  \item{Karnataka}{Karnataka landings}
+  \item{Kerala}{Kerala landings}
+  \item{SWCoast}{SW Coast landings}
 }}
 \usage{
 oilsardine_qtr
