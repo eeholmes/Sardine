@@ -137,6 +137,7 @@
         <text variable="container-title" prefix=". "/>
         <text variable="volume" prefix=" "/>
         <text variable="page" prefix=":"/>
+        <text variable="doi" prefix=". "/>
       </if>
       <else-if type="bill book chapter graphic legal_case legislation motion_picture paper-conference report song" match="any">
         <group prefix=". " delimiter=" ">
