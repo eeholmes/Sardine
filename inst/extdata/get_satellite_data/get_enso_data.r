@@ -26,12 +26,22 @@ soi.vec[soi.vec==999.9]=NA
 soi.yr=rep(as.numeric(soi$Year),each=12)
 soi.mon=rep(1:12,length(soi$Year))
 
+#Dipole Mode Index
+#change nrow if you want data past 2018
+dmi=read.table("https://www.esrl.noaa.gov/psd/gcos_wgsp/Timeseries/Data/dmi.long.data", skip=1, nrows=149)
+colnames(dmi)=c("Year",month.abb)
+dmi.vec=as.matrix(dmi[,2:13])
+dmi.vec=as.numeric(t(dmi.vec))
+dmi.vec[dmi.vec== -999.000]=NA
+dmi.yr=rep(as.numeric(dmi$Year),each=12)
+dmi.mon=rep(1:12,length(dmi$Year))
+
 #set up enso dataframe
 startyear=min(as.numeric(soi$Year), as.numeric(oni$Year))
 endyear=max(as.numeric(soi$Year), as.numeric(oni$Year))
 enso.yr=rep(startyear:endyear, each=12)
 enso.mon=rep(1:12,length(startyear:endyear))
-enso=data.frame(Year=enso.yr, Month=enso.mon, ONI=NA, SOI=NA)
+enso=data.frame(Year=enso.yr, Month=enso.mon, ONI=NA, SOI=NA, DMI=NA)
 
 #fill the dataframe
 for(year in startyear:endyear){
@@ -39,11 +49,14 @@ for(year in startyear:endyear){
     filt1 = enso$Year==year & enso$Month==month
     filt2 = oni.yr==year & oni.mon==month
     filt3 = soi.yr==year & soi.mon==month
+    filt4 = dmi.yr==year & dmi.mon==month
     if(any(filt2)) enso$ONI[filt1]=oni.vec[filt2]
     if(any(filt3)) enso$SOI[filt1]=soi.vec[filt3]
+    if(any(filt4)) enso$DMI[filt1]=dmi.vec[filt4]
   }
 }
 fil="enso.csv"
-filename=read.csv(paste("inst/extdata/raw data files and code/",fil,sep=""))
-write.csv(precip_kerala, file=filename,row.names=FALSE)
+filename=paste0("inst/extdata/raw data files and code/",fil)
+write.csv(enso, file=filename, row.names=FALSE)
+save(enso, file="data/enso.rdata")
 

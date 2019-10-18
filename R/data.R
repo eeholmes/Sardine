@@ -47,7 +47,7 @@
 #' ENSO Indices
 #' 
 #' @description
-#' Oceanic Nino Index and Equatorial Southern Oscillation Index
+#' Oceanic Nino Index, Equatorial Southern Oscillation Index and Dipole Mode Index
 #'
 #' @details
 #' The ONI index is 3 month running mean of ERSST.v5 SST anomalies in the Niño 3.4 region (5oN-5oS, 120o-170oW)], based on centered 30-year base periods updated every 5 years.  The ONI was downloaded as follows:
@@ -61,14 +61,24 @@
 #' \preformatted{
 #' soi=read.table("http://www.cpc.ncep.noaa.gov/data/indices/reqsoi.for", stringsAsFactors=FALSE)
 #' }
+#' The DMI  is the monthly Dipole Mode Index.  The data were downloaded with the following code.
+#' \preformatted{
+#' dmi=read.table("https://www.esrl.noaa.gov/psd/gcos_wgsp/Timeseries/Data/dmi.long.data", skip=1, nrows=149)
+#' }
 #'
 #' @format A data frame with variables:
 #' \describe{
 #'   \item{Year}{}
-#'   \item{Month}{This is a 3-month average.  Jan value is average of Dec-Jan-Feb.  Qtr would be denoted JFM.}
+#'   \item{Month}{For ONI and SOI, this is a 3-month average.  Jan value is average of Dec-Jan-Feb.  Qtr would be denoted JFM.}
 #'   \item{ONI}{The ONI index value}
 #'   \item{SOI}{The SOI index value}
+#'   \item{DMI}{The DMI index value}
 #' }
+#' 
+#' @references
+#' 
+#' \insertRef{SajiYamagata2003}{SardineForecast}
+#' 
 "enso"
 
 #' Precipitation data
