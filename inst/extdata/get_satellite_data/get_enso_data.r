@@ -36,12 +36,22 @@ dmi.vec[dmi.vec== -999.000]=NA
 dmi.yr=rep(as.numeric(dmi$Year),each=12)
 dmi.mon=rep(1:12,length(dmi$Year))
 
+# Multivariate ENSO index
+#change nrow if you want data past 2018
+mei=read.table("https://www.esrl.noaa.gov/psd/enso/mei/data/meiv2.data", skip=1, nrows=41)
+colnames(mei)=c("Year",month.abb)
+mei.vec=as.matrix(mei[,2:13])
+mei.vec=as.numeric(t(mei.vec))
+mei.vec[mei.vec== -999.000]=NA
+mei.yr=rep(as.numeric(mei$Year),each=12)
+mei.mon=rep(1:12,length(mei$Year))
+
 #set up enso dataframe
 startyear=min(as.numeric(soi$Year), as.numeric(oni$Year))
 endyear=max(as.numeric(soi$Year), as.numeric(oni$Year))
 enso.yr=rep(startyear:endyear, each=12)
 enso.mon=rep(1:12,length(startyear:endyear))
-enso=data.frame(Year=enso.yr, Month=enso.mon, ONI=NA, SOI=NA, DMI=NA)
+enso=data.frame(Year=enso.yr, Month=enso.mon, ONI=NA, SOI=NA, DMI=NA, MEI=NA)
 
 #fill the dataframe
 for(year in startyear:endyear){
@@ -50,9 +60,11 @@ for(year in startyear:endyear){
     filt2 = oni.yr==year & oni.mon==month
     filt3 = soi.yr==year & soi.mon==month
     filt4 = dmi.yr==year & dmi.mon==month
+    filt5 = mei.yr==year & mei.mon==month
     if(any(filt2)) enso$ONI[filt1]=oni.vec[filt2]
     if(any(filt3)) enso$SOI[filt1]=soi.vec[filt3]
     if(any(filt4)) enso$DMI[filt1]=dmi.vec[filt4]
+    if(any(filt5)) enso$MEI[filt1]=mei.vec[filt5]
   }
 }
 fil="enso.csv"
