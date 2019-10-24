@@ -54,10 +54,11 @@ getdat = function(parameter, id, tag, box, width, clean=TRUE, save.csv=TRUE, inc
       avg <- mean(avg, na.rm=TRUE)
       mon.avg <- c(mon.avg, avg)
     }
-    dates<-tpos2
+    dates<-tpos2[1:(length(tpos2)-1)]
     if(i==1) alldat<-data.frame(dates=dates, stringsAsFactors=FALSE)
     
     alldat=cbind(alldat,mon.avg)
+    if(save.csv) write.csv(alldat, paste("tmp-", i, "-", parameter,"-", id,"-",yr1,"-",yr2,".csv",sep=""),row.names=FALSE)
   }
   #Create the data.frame with the Year, Month and covariates in each box
   covnames = paste(tag,1:ncol(box),sep="")
