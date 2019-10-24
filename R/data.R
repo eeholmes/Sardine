@@ -26,7 +26,7 @@
 #' 1985-2014 Provided by CMFRI directly via a data request.
 "oilsardine_qtr"
 
-#' Oil sardine landings in metric tons by quarter
+#' Oil sardine landings in metric tons by calendar year
 #'
 #' A dataset containing the calendar year (Jan-Dec) landings (in metric tons) of oil sardines in Kerala, Karnataka and Goa states 1956-2016.  The data are collected and processed into a total landings estimates based on a stratified sampling of landing sites along the SW coast of India throughout the year.  The program is run by the Central Marine Fisheries Research Institute (CMFRI) in Cochin, India.  The data were obtained from reports published by CMFRI; see references.
 #'
@@ -50,7 +50,9 @@
 #' Oceanic Nino Index, Equatorial Southern Oscillation Index and Dipole Mode Index
 #'
 #' @details
-#' The ONI index is 3 month running mean of ERSST.v5 SST anomalies in the Niño 3.4 region (5oN-5oS, 120o-170oW)], based on centered 30-year base periods updated every 5 years.  The ONI was downloaded as follows:
+#' The ONI index is 3 month running mean of ERSST.v5 SST anomalies in the Niño 3.4 region 
+#' (5°N-5°S, 120°-170°W)], based on centered 30-year base periods updated every 5 years.  
+#' The ONI was downloaded as follows:
 #' \preformatted{
 #' require(XML)
 #' require(RCurl)
@@ -61,11 +63,15 @@
 #' \preformatted{
 #' soi=read.table("http://www.cpc.ncep.noaa.gov/data/indices/reqsoi.for", stringsAsFactors=FALSE)
 #' }
-#' The DMI  is the monthly Dipole Mode Index.  The data were downloaded with the following code.
+#' The DMI  is the monthly Dipole Mode Index.  
+#' The DMI (also IOD index) is defined by the SSTA difference between the 
+#' western Indian Ocean (10°S–10°N, 50°E–70°E) and the southeastern Indian Ocean (10°S–0°, 90°E–110°E).
+#' The data were downloaded with the following code.
 #' \preformatted{
 #' dmi=read.table("https://www.esrl.noaa.gov/psd/gcos_wgsp/Timeseries/Data/dmi.long.data", skip=1, nrows=149)
 #' }
-#'
+#' The IOBM index is defined as the SSTA averaged over the tropical Indian Ocean (40°E–100°E, 20°S–20°N). 
+#' 
 #' @format A data frame with variables:
 #' \describe{
 #'   \item{Year}{}
@@ -73,6 +79,7 @@
 #'   \item{ONI}{The ONI index value}
 #'   \item{SOI}{The SOI index value}
 #'   \item{DMI}{The DMI index value}
+#'   \item{MEI}{The MEI index value}
 #' }
 #' 
 #' @references
@@ -406,3 +413,106 @@
 #' }
 #'  
 "tide_yr"
+
+
+#' Upwelling indices from remote-sensing products
+#'
+#' @description Three upwelling indices are in the 'upw' data object: a SST nearshore offshore
+#' differential, a wind-based index and the Bakun indices. 
+#' The upwelling indices and SST data were downloaded from the NOAA ERDDAP server using R Mendels
+#' \code{rerddapXtracto} R package which uses the ropensci \code{rerddap} R package.  The R code used
+#' to download the data is in the \code{extdata/get_satelite_data} folder.  See examples for how to find
+#' the file.
+#' 
+#' @details
+#' 
+#' The Wind-based monthly upwelling indices were downloaded from the NOAA ERDDAP server. The first is
+#' 1999-2009 on a 0.125 degree grid. The second is 2009 to present on a 0.25 degree grid.
+#'  and the second is See
+#'     \url{https://coastwatch.pfeg.noaa.gov/erddap/info/erdQSstressmday/index.html} and 
+#'     \url{https://coastwatch.pfeg.noaa.gov/erddap/info/erdQAstressmday/index.html}.
+#'    
+#' The SST differential upwelling indices were downloaded from the NOAA ERDDAP server. The first is
+#' 1981-2012 on a 0.0417 degree grid. The second is 2003-2016 on a 0.1 degree grid. Both are AVHRR so
+#' accurate for close to the coast.
+#'     \url{https://coastwatch.pfeg.noaa.gov/erddap/info/erdPH2sstamday/index.html} and 
+#'     \url{https://coastwatch.pfeg.noaa.gov/erddap/info/erdAGsstamday/index.html}.
+#' The UPW index is the difference between the coast box (1 to 5) and a box 3 degrees offshore at 
+#' the same latitude.
+#' 
+#' The Bakun index (The Bakun 1973) is calculated based upon Ekman's theory of mass transport
+#'  due to wind stress. The index is computed from the ektrx and ektry, which
+#'  are the x- and y- components of Ekman Transport obtained from the ERDDAP link 
+#'  below, and coast_angle is 158 degrees for the India west coast near Kochi.
+#'     \url{https://coastwatch.pfeg.noaa.gov/erddap/info/erdlasFnWPr/index.html}.
+#'  The function to compute the Bakun index is 
+#'  (from \url{https://oceanview.pfeg.noaa.gov/products/upwelling/bakun})
+#' \preformatted{
+#'  upwell <- function(ektrx, ektry, coast_angle) {
+#'  pi <- 3.1415927
+#'  degtorad <- pi/180.
+#'  alpha <- (360 - coast_angle) * degtorad
+#'  s1 <- cos(alpha)
+#'  t1 <- sin(alpha)
+#'  s2 <- -1 * t1
+#'  t2 <- s1
+#'  perp <- (s1 * ektrx) + (t1 * ektry)
+#'  para <- (s2 * ektrx) + (t2 * ektry)
+#'  return(perp/10)
+#'  }
+#'  }
+#'    
+#' The R code used
+#' to download the data is in the \code{extdata/get_satelite_data} folder. 
+#' 
+#' @format A data frame with:
+#' \describe{
+#'   \item{Year}{The year}
+#'   \item{Month}{The month}
+#'   \item{Wind.UPW.1 to Wind.UPW.5}{Average monthly UPW averaged over boxes 1 to 5.}
+#'   \item{SST.UPW.1 to SST.UPW.5}{Average monthly SST differential averaged over boxes 1 to 5.}
+#'   \item{Bakun.UPW}{Average monthly SST differential averaged over boxes 1 to 5.}
+#' }
+#' 
+#' @references
+#' 
+#' SST data: These data were provided by GHRSST and the US National Oceanographic Data Center. 
+#' This project was supported in part by a grant from the NOAA Climate Data Record (CDR) 
+#' Program for satellites. The data were downloaded from NOAA CoastWatch-West Coast 
+#' Regional Node and Southwest Fisheries Science Center's Environmental Research Division.
+#' 
+#' Wind-based UPW index: NOAA's CoastWatch Program distributes wind velocity measurements 
+#' derived from the Seawinds instrument aboard NASA's QuikSCAT satellite. The Seawinds instrument 
+#' is a dual-beam microwave scatterometer designed to measure wind magnitude and direction over the 
+#' global oceans. CoastWatch further processes these wind velocity measurements to wind stress 
+#' and wind stress curl. 
+#' 
+#' Bakun index: The Environmental Research Division (ERD), within NOAA Fisheries,
+#'  has long been a leader in development and calculation of upwelling and other 
+#'  environmental indices. ERD was originally established as the Pacific Environmental Group 
+#'  at the U.S. Navy Fleet Numerical Meteorology and Oceanography Center (FNMOC) in Monterey, 
+#'  California, to take advantage of the Navy's global oceanographic and meteorological models. 
+#'  FNMOC produces operational forecasts of the state of the atmosphere and the ocean several 
+#'  times daily. Before the advent of satellite oceanography, these forecasts provided global 
+#'  snapshots of ocean conditions for Navy operations, but were also invaluable for studies of 
+#'  fisheries climatology since they provided long time series of environmental conditions 
+#'  at a much higher resolution than was possible from direct measurement. 
+#'  The FNMOC sea-level pressure became the basis of the Bakun upwelling index calculation, 
+#'  and provides estimates of upwelling for the Northern Hemisphere starting in 1948 and 
+#'  globally since 1981.
+#' 
+#' \insertRef{Bakun1973}{SardineForecast}
+#' 
+#'  
+#' @examples
+#' \dontrun{
+#' # Show the R code that downloaded the data
+#' file.show(system.file("extdata/get_satellite_data", "get_sat_data.R", package="SardineForecast"))
+#' 
+#' # Show the R code that downloaded the data
+#' file.show(system.file("extdata/get_satellite_data", "get_bakun_upi_data.R", package="SardineForecast"))
+#' 
+#' # Show the boxes
+#' browseURL(system.file("docs", "kerala_study_area_with_inset.jpg", package="SardineForecast"))
+#' }
+"upw"

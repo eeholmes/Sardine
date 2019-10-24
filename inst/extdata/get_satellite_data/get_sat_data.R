@@ -104,13 +104,29 @@ parameter <-'chlorophyll'
 id <- 'erdMH1chlamday'
 tag <- "CHL."
 erdMH1chlamday=getdat(parameter, id, tag, boxes14, width)
+yr1=min(erdMH1chlamday$Year); yr2=max(erdMH1chlamday$Year)
+write.csv(erdMH1chlamday, paste("chlorophyll","-", id,"-",yr1,"-",yr2,".csv",sep=""),row.names=FALSE)
 
 # Define parameters for the sst 1a dataset 
-#https://coastwatch.pfeg.noaa.gov/erddap/info/erdPH2sstdmday/index.html; pathfinder to 2012; DAY Time
+#https://coastwatch.pfeg.noaa.gov/erddap/info/erdPH2sstdmday/index.html; pathfinder vs 2 1981 to 2012; 
+#https://coastwatch.pfeg.noaa.gov/erddap/info/erdPH53sstdmday/index.html; pathfinder vs 5.3 1981 to present; 
+# DAY Time; Science Quality
 parameter <-'sea_surface_temperature' 
-id <- 'erdPH2sstdmday'
+id <- 'erdPH53sstdmday'
 tag <- "SST."
-erdPH2sstdmday=getdat(parameter, id, tag, boxes14, width)
+Sys.setenv(RERDDAP_DEFAULT_URL="https://coastwatch.pfeg.noaa.gov/erddap/")
+erdPH53sstdmday=getdat(parameter, id, tag, boxes14, width)
+Sys.setenv(RERDDAP_DEFAULT_URL="https://upwell.pfeg.noaa.gov/erddap/")
+
+# Define parameters for the sst 1a dataset 
+#https://coastwatch.pfeg.noaa.gov/erddap/info/erdPH53sstnmday/index.html; pathfinder vs 5.3 1981 to present; 
+# NIGHT Time; Science Quality
+parameter <-'sea_surface_temperature' 
+id <- 'erdPH53sstnmday'
+tag <- "SST."
+Sys.setenv(RERDDAP_DEFAULT_URL="https://coastwatch.pfeg.noaa.gov/erddap/")
+erdPH53sstnmday=getdat(parameter, id, tag, boxes14, width)
+Sys.setenv(RERDDAP_DEFAULT_URL="https://upwell.pfeg.noaa.gov/erddap/")
 
 # Define parameters for the sst 1b dataset 
 #https://coastwatch.pfeg.noaa.gov/erddap/info/erdPH2sstdmday/index.html; pathfinder to 2012; NIGHT
@@ -124,15 +140,14 @@ erdPH2sstnmday=getdat(parameter, id, tag, boxes14, width)
 parameter <-'sea_surface_temperature' 
 id <- 'erdPH2sstamday'
 tag <- "SST."
-erdPH2sstnmday=getdat(parameter, id, tag, boxes14[,12:14], width)
-
+erdPH2sstamday=getdat(parameter, id, tag, boxes14, width)
 
 # Define parameters for the sst 3 dataset 
 #https://coastwatch.pfeg.noaa.gov/erddap/info/erdAGsstamday/index.html; avhrr 2003 to 2016; Day and Night
 parameter <-'sst' 
 id <- 'erdAGsstamday'
 tag <- "SST."
-erdAGsstamday=getdat(parameter, id, tag, boxes14, width)
+erdAGsstamday=getdat(parameter, id, tag, boxes14, width, include.z=TRUE)
 
 # ICOADS sst 1960 onward
 # Poor coastal estimates so not very useful for our purposes
@@ -140,6 +155,14 @@ parameter <-'sst'
 id <- 'esrlIcoads1ge' 
 tag <- "SST."
 esrlIcoads1ge=getdat(parameter, id, tag, boxes14, width, include.z=FALSE)
+
+# Optimum Interpolation Sea Surface Temperature (OISST)
+# from AVHRR but interpolated
+parameter <-'sst' 
+id <- 'ncdcOisst2Agg' 
+tag <- "SST."
+ncdcOisst2Agg=getdat(parameter, id, tag, boxes14[,1:2], width, include.z=TRUE)
+Sys.setenv(RERDDAP_DEFAULT_URL="https://upwell.pfeg.noaa.gov/erddap/")
 
 # Define parameters for the ssh dataset 
 #https://coastwatch.pfeg.noaa.gov/erddap/info/erdTAsshmday/index.html
@@ -253,3 +276,4 @@ parameter <-'upwelling'
  upw.sst.AG=upw.sst
  write.csv(upw.sst, paste("upw-sst","-", id,"-",yr1,"-",yr2,".csv",sep=""),row.names=FALSE)
  
+ # For upwelling bakun index, see get_bakun_upi_data.R

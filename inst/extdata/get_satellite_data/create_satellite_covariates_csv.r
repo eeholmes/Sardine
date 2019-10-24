@@ -3,7 +3,8 @@
 # set get_satellite_data as wd
 
 #set up file
-years=1956:2017
+current.year = as.numeric(format(Sys.Date(),"%Y"))
+years=1956:current.year
 monthly_cov = data.frame(Year = rep(years,each=12), Month=rep(1:12,length(years)))
 
 #SST 
@@ -38,7 +39,7 @@ for(fil in covfiles){
 #CHL; uses sw for 1997 to 2002; then mh for 2003 onward
 covfiles=c(
   "chlorophyll-erdSW1chlamday-1997-2010.csv",
-  "chlorophyll-erdMH1chlamday-2003-2017.csv"
+  "chlorophyll-erdMH1chlamday-2003-2019.csv"
 )
 for(fil in covfiles){
   dat=read.csv(fil)
@@ -79,6 +80,20 @@ for(fil in covfiles){
     if(!(fil=="upw-sst-erdAGsstamday-2003-2016.csv" & dat$Year[i]==2003))
     monthly_cov[monthly_cov$Year==dat$Year[i] & monthly_cov$Month==dat$Month[i],covs.uniq]=dat[i,covs]
   }
+}
+
+#UPW Bakun Index
+covfiles=c(
+  "upw-bakun-erdlasFnWPr-1967-2019.csv"
+)
+for(fil in covfiles){
+  dat=read.csv(fil)
+  covs=colnames(dat)[!(colnames(dat)%in%c("Year","Month","Dates"))]
+  covs.uniq=paste("Bakun.",covs,sep="")
+  for(icol in covs.uniq) if(is.null(monthly_cov[[icol]])) monthly_cov[[icol]]=NA
+  for(i in 1:dim(dat)[1])
+    monthly_cov[monthly_cov$Year==dat$Year[i] & monthly_cov$Month==dat$Month[i],covs.uniq]=
+    dat[i,covs]
 }
 
 write.csv(monthly_cov, row.names=FALSE, file="../raw data files and code/Satellite_covariates.csv")

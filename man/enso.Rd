@@ -11,6 +11,7 @@
   \item{ONI}{The ONI index value}
   \item{SOI}{The SOI index value}
   \item{DMI}{The DMI index value}
+  \item{MEI}{The MEI index value}
 }}
 \usage{
 enso
@@ -19,7 +20,9 @@ enso
 Oceanic Nino Index, Equatorial Southern Oscillation Index and Dipole Mode Index
 }
 \details{
-The ONI index is 3 month running mean of ERSST.v5 SST anomalies in the Niño 3.4 region (5oN-5oS, 120o-170oW)], based on centered 30-year base periods updated every 5 years.  The ONI was downloaded as follows:
+The ONI index is 3 month running mean of ERSST.v5 SST anomalies in the Niño 3.4 region 
+(5°N-5°S, 120°-170°W)], based on centered 30-year base periods updated every 5 years.  
+The ONI was downloaded as follows:
 \preformatted{
 require(XML)
 require(RCurl)
@@ -30,10 +33,14 @@ The SOI used is the Equatorial SOI monthly.  The data were downloaded with the f
 \preformatted{
 soi=read.table("http://www.cpc.ncep.noaa.gov/data/indices/reqsoi.for", stringsAsFactors=FALSE)
 }
-The DMI  is the monthly Dipole Mode Index.  The data were downloaded with the following code.
+The DMI  is the monthly Dipole Mode Index.  
+The DMI (also IOD index) is defined by the SSTA difference between the 
+western Indian Ocean (10°S–10°N, 50°E–70°E) and the southeastern Indian Ocean (10°S–0°, 90°E–110°E).
+The data were downloaded with the following code.
 \preformatted{
 dmi=read.table("https://www.esrl.noaa.gov/psd/gcos_wgsp/Timeseries/Data/dmi.long.data", skip=1, nrows=149)
 }
+The IOBM index is defined as the SSTA averaged over the tropical Indian Ocean (40°E–100°E, 20°S–20°N).
 }
 \references{
 \insertRef{SajiYamagata2003}{SardineForecast}

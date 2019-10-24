@@ -2,6 +2,7 @@
 
 #this creates data objects of monthly chl, sst, ssh, and upw
 #Put all the covariate data into one data frame
+library(stringr)
 fil="inst/extdata/raw data files and code/Satellite_covariates.csv"
 dat=read.csv(fil)
 years=unique(dat$Year)
@@ -16,6 +17,10 @@ for(covname in c("CHL","SST","SSH","UPW")){
   }
   assign(tolower(covname),tmp)
 }
+#standardize the Bakun UPW
+tmp=(upw$Bakun.UPW-mean(upw$Bakun.UPW,na.rm=TRUE))
+tmp=tmp/sqrt(var(tmp,na.rm=TRUE))
+upw$Bakun.UPW <- tmp
 
 save(chl, file="data/chl.rdata")
 save(sst, file="data/sst.rdata")
