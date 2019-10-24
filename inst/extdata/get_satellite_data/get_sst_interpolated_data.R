@@ -58,7 +58,7 @@ getdat = function(parameter, id, tag, box, width, clean=TRUE, save.csv=TRUE, inc
     if(i==1) alldat<-data.frame(dates=dates, stringsAsFactors=FALSE)
     
     alldat=cbind(alldat,mon.avg)
-    if(save.csv) write.csv(alldat, paste("tmp-", i, "-", parameter,"-", id,"-",yr1,"-",yr2,".csv",sep=""),row.names=FALSE)
+    if(save.csv) write.csv(alldat, paste("tmp-", i+2, "-", parameter,"-", id,"-",yr1,"-",yr2,".csv",sep=""),row.names=FALSE)
   }
   #Create the data.frame with the Year, Month and covariates in each box
   covnames = paste(tag,1:ncol(box),sep="")
@@ -86,4 +86,4 @@ getdat = function(parameter, id, tag, box, width, clean=TRUE, save.csv=TRUE, inc
 parameter <-'sst' 
 id <- 'ncdcOisst2Agg' 
 tag <- "SST."
-ncdcOisst2Agg=getdat(parameter, id, tag, boxes14[,1:2], width, include.z=TRUE)
+ncdcOisst2Agg=getdat(parameter, id, tag, boxes14[,3:14], width, include.z=TRUE)
