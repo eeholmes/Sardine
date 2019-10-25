@@ -24,6 +24,18 @@ boxes14<-matrix(c(74.7, 12.5,
 width<-rep(.5,times=14) #this is 1/2 width
 width[14]<-1.5
 
+boxes.upw<-matrix(c(74.7, 12.5,
+                    75.4, 11.5,
+                    75.8, 10.5,
+                    76, 9.5,
+                    76.8, 8.5,
+                    71.7, 12.5,
+                    72.4, 11.5,
+                    72.8, 10.5,
+                    73, 9.5,
+                    73.8, 8.5),ncol=10,nrow=2)
+width=rep(.5,10)
+
 # Define function for downloading and saving data
 getdat = function(parameter, id, tag, box, width, clean=TRUE, save.csv=TRUE, include.z=FALSE){
   dataInfo <- rerddap::info(id)
@@ -58,7 +70,7 @@ getdat = function(parameter, id, tag, box, width, clean=TRUE, save.csv=TRUE, inc
     if(i==1) alldat<-data.frame(dates=dates, stringsAsFactors=FALSE)
     
     alldat=cbind(alldat,mon.avg)
-    if(save.csv) write.csv(alldat, paste("tmp-", i+2, "-", parameter,"-", id,"-",yr1,"-",yr2,".csv",sep=""),row.names=FALSE)
+    if(save.csv) write.csv(alldat, paste("tmp-", i+4, "-", parameter,"-", id,"-",yr1,"-",yr2,".csv",sep=""),row.names=FALSE)
   }
   #Create the data.frame with the Year, Month and covariates in each box
   covnames = paste(tag,1:ncol(box),sep="")
@@ -86,4 +98,4 @@ getdat = function(parameter, id, tag, box, width, clean=TRUE, save.csv=TRUE, inc
 parameter <-'sst' 
 id <- 'ncdcOisst2Agg' 
 tag <- "SST."
-ncdcOisst2Agg=getdat(parameter, id, tag, boxes14[,3:14], width, include.z=TRUE)
+ncdcOisst2Agg=getdat(parameter, id, tag, boxes.upw[,5:10], width, include.z=TRUE)
