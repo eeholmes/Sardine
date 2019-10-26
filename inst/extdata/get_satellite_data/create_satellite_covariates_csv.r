@@ -23,6 +23,20 @@ for(fil in covfiles){
 }
 }
 
+#SST Interpolated
+covfiles=c(
+  "sst-ncdcOisst2Agg-1981-2019.csv"
+)
+for(fil in covfiles){
+  dat=read.csv(fil)
+  covs=colnames(dat)[!(colnames(dat)%in%c("Year","Month","Dates"))]
+  for(icol in covs) if(is.null(monthly_cov[[icol]])) monthly_cov[[icol]]=NA
+  for(i in 1:dim(dat)[1]){
+    monthly_cov[monthly_cov$Year==dat$Year[i] & monthly_cov$Month==dat$Month[i],covs]=
+      dat[i,covs]
+  }
+}
+
 #SSH
 covfiles=c(
   "ssh-erdTAsshmday-1992-2010.csv"

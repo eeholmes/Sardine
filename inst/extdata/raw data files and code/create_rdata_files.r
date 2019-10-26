@@ -22,6 +22,8 @@ tmp=(upw$Bakun.UPW-mean(upw$Bakun.UPW,na.rm=TRUE))
 tmp=tmp/sqrt(var(tmp,na.rm=TRUE))
 upw$Bakun.UPW <- tmp
 
+sst <- sst[,!str_detect(colnames(sst),"UPW")]
+
 save(chl, file="data/chl.rdata")
 save(sst, file="data/sst.rdata")
 save(ssh, file="data/ssh.rdata")

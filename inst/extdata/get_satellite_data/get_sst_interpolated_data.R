@@ -34,6 +34,7 @@ boxes.upw<-matrix(c(74.7, 12.5,
                     72.8, 10.5,
                     73, 9.5,
                     73.8, 8.5),ncol=10,nrow=2)
+colnames(boxes.upw)=c(1:5, paste0(1:5,"p3"))
 width=rep(.5,10)
 
 # Define function for downloading and saving data
@@ -49,7 +50,7 @@ getdat = function(parameter, id, tag, box, width, clean=TRUE, save.csv=TRUE, inc
     xpos=c(box[1,i]-width[i],box[1,i]+width[i])
     ypos=c(box[2,i]-width[i],box[2,i]+width[i])
     zpos <- 0.
-    print(paste("Extracting",parameter, id, "data from Box",i, sep=' '))
+    print(paste("Extracting",parameter, id, "data from Box",colnames(box)[i], sep=' '))
     mon.avg<-NULL
     for(t in 1:(length(tpos2)-1)){
       cat(" ", t)
@@ -70,10 +71,10 @@ getdat = function(parameter, id, tag, box, width, clean=TRUE, save.csv=TRUE, inc
     if(i==1) alldat<-data.frame(dates=dates, stringsAsFactors=FALSE)
     
     alldat=cbind(alldat,mon.avg)
-    if(save.csv) write.csv(alldat, paste("tmp-", i+4, "-", parameter,"-", id,"-",yr1,"-",yr2,".csv",sep=""),row.names=FALSE)
+    if(save.csv) write.csv(alldat, paste("tmp-", colnames(box)[i], "-", parameter,"-", id,"-",yr1,"-",yr2,".csv",sep=""),row.names=FALSE)
   }
   #Create the data.frame with the Year, Month and covariates in each box
-  covnames = paste(tag,1:ncol(box),sep="")
+  covnames = paste(tag,colnames(box),sep="")
   colnames(alldat)=c("Dates",covnames)
   yr1=format(as.Date(tt[2]),"%Y")
   yr2=format(as.Date(tt[1]),"%Y")
@@ -98,4 +99,32 @@ getdat = function(parameter, id, tag, box, width, clean=TRUE, save.csv=TRUE, inc
 parameter <-'sst' 
 id <- 'ncdcOisst2Agg' 
 tag <- "SST."
-ncdcOisst2Agg=getdat(parameter, id, tag, boxes.upw[,5:10], width, include.z=TRUE)
+ncdcOisst2Agg=getdat(parameter, id, tag, boxes.upw, width, include.z=TRUE)
+
+dataInfo <- rerddap::info(id)
+#get data range from dataset
+global <- dataInfo$alldata$NC_GLOBAL
+tt <- global[global$attribute_name %in% c("time_coverage_end", "time_coverage_start"), "value", ]
+for(i in colnames(boxes.upw)){
+fil=paste0("tmp-",i,"-sst-ncdcOisst2Agg-2003-2019.csv")
+tmp=read.csv(fil, stringsAsFactors = FALSE)
+if(i==1) alldat = tmp
+if(i!=1) alldat = cbind(alldat, tmp[,ncol(tmp)])
+}
+colnames(alldat)=c("Dates",paste0("SSTOI.", colnames(boxes.upw)))
+covnames = paste0("SSTOI.", colnames(boxes.upw))
+yr1=format(as.Date(tt[2]),"%Y")
+yr2=format(as.Date(tt[1]),"%Y")
+#create data.frame with all months are present and file starts with Jan and ends with Dec
+fullalldat=data.frame(Year=rep(yr1:yr2,each=12),Month=rep(1:12,length(yr1:yr2)))
+fullalldat[covnames]=NA #add on covariates
+#add year and month to alldat
+alldat = cbind(Year=as.numeric(format(as.Date(alldat$Dates),"%Y")),
+               Month=as.numeric(format(as.Date(alldat$Dates),"%m")),
+               alldat)
+#make sure each month is present in each year and file starts with Jan and ends with Dec
+for(irow in 1:dim(alldat)[1]){
+  fullalldat[fullalldat$Year==alldat$Year[irow] & fullalldat$Month==alldat$Month[irow],covnames]=
+    alldat[irow,covnames]
+}
+write.csv(fullalldat, paste(parameter,"-", id,"-",yr1,"-",yr2,".csv",sep=""),row.names=FALSE)
