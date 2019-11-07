@@ -4,10 +4,12 @@
 \alias{loogam}
 \title{Leave one out cross-validation on gam object}
 \usage{
-loogam(mod)
+loogam(mod, k = 1)
 }
 \arguments{
 \item{mod}{A model returned by a gam fit}
+
+\item{k}{samples. k=1 is LOO, k=2 is LTO}
 }
 \value{
 A list with predictions (fitted), actual, errors (fitted-actual), MAE and RMSE.
