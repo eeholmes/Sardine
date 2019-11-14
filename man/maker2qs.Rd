@@ -4,8 +4,13 @@
 \alias{maker2qs}
 \title{Get R2 values for linear regression of log catch anomalies vs covariates}
 \usage{
-maker2qs(region = "Kerala", covname = "Precip", boxes = 1:14,
-  rm.trend = TRUE, rm.season = TRUE)
+maker2qs(
+  region = "Kerala",
+  covname = "Precip",
+  boxes = 1:14,
+  rm.trend = TRUE,
+  rm.season = TRUE
+)
 }
 \arguments{
 \item{region}{region ("Kerala", "Karnataka", "Goa") in quotes.}

@@ -4,8 +4,14 @@
 \alias{retfit.qtr}
 \title{Fit linear regression with covariate value in specific quarter as the covariate for all quarter of a year}
 \usage{
-retfit.qtr(covname, catch.qtr = 1:4, yearlag = 0, cov.qtr = 1,
-  boxes = 1:14, qtr.effect = FALSE)
+retfit.qtr(
+  covname,
+  catch.qtr = 1:4,
+  yearlag = 0,
+  cov.qtr = 1,
+  boxes = 1:14,
+  qtr.effect = FALSE
+)
 }
 \arguments{
 \item{covname}{name of the covariate.  Must be a colname in seio_covariates_qtr.  If one of the covariates is from the boxes, then specify the part of the name in front of the number.}

@@ -4,7 +4,7 @@
 \alias{loogam}
 \title{Leave one out cross-validation on gam object}
 \usage{
-loogam(mod, k = 1)
+loogam(mod, k = 1, n = 100)
 }
 \arguments{
 \item{mod}{A model returned by a gam fit}

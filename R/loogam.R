@@ -12,11 +12,12 @@
 #' dat <- mgcv::gamSim(6,n=100,scale=.5)[,1:2]
 #' m <- mgcv::gam(y~s(x0), data=dat)
 #' loogam(m)$MAE
-loogam <- function(mod, k=1){
+loogam <- function(mod, k=1, n=100){
   dat <- mod$model
   mod.formula <- mod$formula
   pred <- actual <- NULL
   val <- utils::combn(dim(dat)[1], k)
+  if(n < ncol(val)) val <- val[,sample(ncol(val), n)]
   for(j in 1:ncol(val)){
     i <- val[,j]
     m <- mgcv::gam(mod.formula, data=dat[-1*i,])
