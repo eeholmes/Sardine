@@ -1,8 +1,8 @@
 Package: SardineForecast
 Type: Package
 Title: Indian Oil Sardine Data, Code and References for Papers on Forecasting
-Version: 1.7
-Date: 2019-10-22
+Version: 1.8
+Date: 2019-11-14
 Depends: R (>= 2.15.0), stringr, forecast, rmarkdown, knitr, bibtex, gbRd, mgcv, maps, mapdata
 Imports: Rdpack
 Author: Eli Holmes, NOAA, Seattle, USA
