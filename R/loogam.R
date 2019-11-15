@@ -20,8 +20,8 @@ loogam <- function(mod, k=1, n=100){
   if(n < ncol(val)) val <- val[,sample(ncol(val), n)]
   for(j in 1:ncol(val)){
     i <- val[,j]
-    m <- mgcv::gam(mod.formula, data=dat[-1*i,])
-    pred <- c(pred, mgcv::predict.gam(m, newdata=dat[i,]))
+    m <- mgcv::gam(mod.formula, data=dat[-1*i,,drop=FALSE])
+    pred <- c(pred, mgcv::predict.gam(m, newdata=dat[i,,drop=FALSE]))
     actual <- c(actual, dat[i,1])
   }
   err <- pred - actual
