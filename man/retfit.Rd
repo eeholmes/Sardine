@@ -4,15 +4,8 @@
 \alias{retfit}
 \title{Fit linear regression with covariate value lagged}
 \usage{
-retfit(
-  covname,
-  catch.qtr = 1:4,
-  lag = 0,
-  boxes = 1:14,
-  qtr.effect = FALSE,
-  startyear = 1956,
-  endyear = 2016
-)
+retfit(covname, catch.qtr = 1:4, lag = 0, boxes = 1:14,
+  qtr.effect = FALSE, startyear = 1956, endyear = 2016)
 }
 \arguments{
 \item{covname}{name of the covariate.  Must be a colname in seio_covariates_qtr.  If one of the covariates is from the boxes, then specify the part of the name in front of the number.}

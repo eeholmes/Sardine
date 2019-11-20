@@ -4,18 +4,9 @@
 \alias{makedat}
 \title{Set up the catch and covariate data as anomalies.  It takes a covariate name.}
 \usage{
-makedat(
-  region = "Kerala",
-  covname = "Precip",
-  boxes = 1:14,
-  rm.trend = TRUE,
-  rm.season = TRUE,
-  startyear = 1956,
-  endyear = 2016,
-  lag = 0,
-  yearlag = 0,
-  cov.qtr = 1:4
-)
+makedat(region = "Kerala", covname = "Precip", boxes = 1:14,
+  rm.trend = TRUE, rm.season = TRUE, startyear = 1956,
+  endyear = 2016, lag = 0, yearlag = 0, cov.qtr = 1:4)
 }
 \arguments{
 \item{region}{"Kerala", "Karnataka", "Goa" or "SWCoast"}

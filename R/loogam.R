@@ -1,8 +1,8 @@
-#' Leave one out cross-validation on gam object
+#' Leave one out cross-validation on gam or lm object
 #'
-#' Helper function to do a LOOCV on a gam model
+#' Helper function to do a LOOCV on a gam or lm model
 #' 
-#' @param mod A model returned by a gam fit
+#' @param mod A model returned by a gam or lm fit
 #' @param k samples. k=1 is LOO, k=2 is LTO
 #' 
 #' @return A list with predictions (fitted), actual, errors (fitted-actual), MAE and RMSE.
@@ -21,15 +21,18 @@ loogam <- function(mod, k=1, n=100){
     a <- stringr::str_replace(a,"offset[(]","")
     a <- stringr::str_replace(a,"[)]","")
     colnames(dat1) <- a
+    if(class(mod)[1]=="lm") colnames(dat2) <- a
   }
-  mod.formula <- mod$formula
+  if(class(mod)[1]=="gam") mod.formula <- mod$formula
+  if(class(mod)[1]=="lm") mod.formula <- mod$terms
   pred <- actual <- NULL
   val <- utils::combn(dim(dat1)[1], k)
   if(n < ncol(val)) val <- val[,sample(ncol(val), n)]
   for(j in 1:ncol(val)){
     i <- val[,j]
-    m <- mgcv::gam(mod.formula, data=dat1[-1*i,,drop=FALSE])
-    pred <- c(pred, mgcv::predict.gam(m, newdata=dat2[i,,drop=FALSE]))
+    if(class(mod)[1]=="gam") m <- mgcv::gam(mod.formula, data=dat1[-1*i,,drop=FALSE])
+    if(class(mod)[1]=="lm") m <- lm(mod.formula, data=dat1[-1*i,,drop=FALSE])
+    pred <- c(pred, predict(m, newdata=dat2[i,,drop=FALSE]))
     actual <- c(actual, dat1[i,1])
   }
   err <- pred - actual

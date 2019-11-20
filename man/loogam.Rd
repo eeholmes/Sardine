@@ -2,12 +2,12 @@
 % Please edit documentation in R/loogam.R
 \name{loogam}
 \alias{loogam}
-\title{Leave one out cross-validation on gam object}
+\title{Leave one out cross-validation on gam or lm object}
 \usage{
 loogam(mod, k = 1, n = 100)
 }
 \arguments{
-\item{mod}{A model returned by a gam fit}
+\item{mod}{A model returned by a gam or lm fit}
 
 \item{k}{samples. k=1 is LOO, k=2 is LTO}
 }
@@ -15,7 +15,7 @@ loogam(mod, k = 1, n = 100)
 A list with predictions (fitted), actual, errors (fitted-actual), MAE and RMSE.
 }
 \description{
-Helper function to do a LOOCV on a gam model
+Helper function to do a LOOCV on a gam or lm model
 }
 \examples{
 # some simulated data with one cov

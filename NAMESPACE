@@ -6,7 +6,9 @@ maker2qs,
 forecast_figure1,
 retfit.qtr,
 retfit,
-ref
+ref,
+AICc,
+loogam
 )
 
 ## Imports
