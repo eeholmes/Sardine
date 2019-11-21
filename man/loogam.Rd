@@ -4,15 +4,21 @@
 \alias{loogam}
 \title{Leave one out cross-validation on gam or lm object}
 \usage{
-loogam(mod, k = 1, n = 100)
+loogam(mod, k = 1, n = 100, LOO = FALSE)
 }
 \arguments{
 \item{mod}{A model returned by a gam or lm fit}
 
-\item{k}{samples. k=1 is LOO, k=2 is LTO}
+\item{k}{folds. k=1 is LOO, k=2 is LTO}
+
+\item{n}{samples. How many folds to use.}
+
+\item{LOO.}{Whether to return the LOO RSME and MdAE for the LOO models. If set to TRUE, function will be slow.}
 }
 \value{
-A list with predictions (fitted), actual, errors (fitted-actual), MAE and RMSE.
+A list with predictions (fitted), actual, 
+errors (fitted-actual), MAE and RMSE. Also AIC and AICc are returned for the
+LOO models.
 }
 \description{
 Helper function to do a LOOCV on a gam or lm model

@@ -14,3 +14,5 @@ loogam
 ## Imports
 importFrom(Rdpack,reprompt)
 importFrom(forecast,ets)
+import(ggplot2)
+import(grid)

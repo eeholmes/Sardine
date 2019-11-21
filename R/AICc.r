@@ -15,5 +15,6 @@ AICc <- function(object){
   k <- attributes(logLik(object))$df
   aic <- AIC(object)
   n <- nrow(object$model)
+  if(class(object)[1]=="marssMLE") n <- object$samp.size
   return(aic+(2*k^2+2*k)/(n-k-1))
 }
