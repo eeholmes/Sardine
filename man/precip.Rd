@@ -37,5 +37,9 @@ NASA's Tropical Rainfall Measuring Mission (TRMM) website provides background on
 \insertRef{Adleretal2016}{SardineForecast}
 
 \insertRef{PurohitKaur2016}{SardineForecast}
+
+\insertRef{KothawaleRajeevan2017}{SardineForecast}
+
+\insertRef{NCEI2017}{SardineForecast}
 }
 \keyword{datasets}

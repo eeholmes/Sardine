@@ -122,6 +122,10 @@
 #' 
 #' \insertRef{PurohitKaur2016}{SardineForecast}
 #' 
+#' \insertRef{KothawaleRajeevan2017}{SardineForecast}
+#' 
+#' \insertRef{NCEI2017}{SardineForecast}
+
 "precip"
 
 
