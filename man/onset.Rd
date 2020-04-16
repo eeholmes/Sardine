@@ -4,11 +4,13 @@
 \name{onset}
 \alias{onset}
 \title{India monsoon onset dates}
-\format{A data frame with variables:
+\format{
+A data frame with variables:
 \describe{
   \item{Year}{}
   \item{Onset}{The arrival date relative to June 1st.  Monsoon arrival is defined in the monsoon reports.}
-}}
+}
+}
 \usage{
 onset
 }

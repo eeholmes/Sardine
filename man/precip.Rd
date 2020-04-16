@@ -4,15 +4,17 @@
 \name{precip}
 \alias{precip}
 \title{Precipitation data}
-\format{A data frame with:
+\format{
+A data frame with:
 \describe{
   \item{Year}{}
   \item{Month}{}
-  \item{precip.gpcp.kerala}{Monthly GPCP precipitation in the box off the Kerala coast.}
-  \item{precip.gpcp.karnataka}{Monthly GPCP precipitation in the box off the Karnataka coast.}
-  \item{PrecipTRMM}{Monthly precipitation estimates from the Tropical Rainfall Measuring Mission (TRMM).  Data are averaged in the boxes used for the other satellite data.}
+  \item{precip.gpcp.kerala}{Monthly GPCP precipitation in the box off the Kerala coast. Units are average mm/day.}
+  \item{precip.gpcp.karnataka}{Monthly GPCP precipitation in the box off the Karnataka coast.  Units are average mm/day.}
+  \item{PrecipTRMM}{Monthly precipitation estimates from the Tropical Rainfall Measuring Mission (TRMM).  Data are averaged in the boxes 1 to 13 used for the other satellite data.}
   \item{Precip.Kerala}{Monthly precipitation (mm) from landgauges.}
-}}
+}
+}
 \usage{
 precip
 }
@@ -20,7 +22,12 @@ precip
 Three precipition datasets off the SW coast of India.  Two are satellite derived and one is based on land gauges.
 }
 \details{
-The National Climatic Data Center provides basic information on the GPCP Precipitation dataset.  The dataset consists of monthly precipitation estimates (average mm/day) from January 1979 to the present. The precipitation estimates merge several satellite and in situ sources into a final product. Data are provided on a 2.5 degree grid.  The GPCP Precipitation data are provided by the NOAA/NCEI Global Precipitation Climatology Project and were downloaded from \url{https://www.ncei.noaa.gov/data/global-precipitation-climatology-project-gpcp-monthly}.  Two boxes were defined, one off the Kerala coast and one off the Karnataka coast, and the average values of all grid points within these boxes were used.
+The National Climatic Data Center provides basic information on the GPCP Precipitation dataset.  
+The dataset consists of monthly precipitation estimates (average mm/day) from January 1979 to 
+the present. The precipitation estimates merge several satellite and in situ sources into a 
+final product. Data are provided on a 2.5 degree grid.  The GPCP Precipitation data are 
+provided by the NOAA/NCEI Global Precipitation Climatology Project and were downloaded from 
+\url{https://www.ncei.noaa.gov/data/global-precipitation-climatology-project-gpcp-monthly}.  Two boxes were defined, one off the Kerala coast and one off the Karnataka coast, and the average values of all grid points within these boxes were used.
 \preformatted{
 The boxes are 
 Kerala Lat(8.75,  11.25), Lon(73.25,  75.75)

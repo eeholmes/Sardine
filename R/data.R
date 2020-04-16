@@ -93,7 +93,12 @@
 #' @description Three precipition datasets off the SW coast of India.  Two are satellite derived and one is based on land gauges.
 #' 
 #' @details
-#' The National Climatic Data Center provides basic information on the GPCP Precipitation dataset.  The dataset consists of monthly precipitation estimates (average mm/day) from January 1979 to the present. The precipitation estimates merge several satellite and in situ sources into a final product. Data are provided on a 2.5 degree grid.  The GPCP Precipitation data are provided by the NOAA/NCEI Global Precipitation Climatology Project and were downloaded from \url{https://www.ncei.noaa.gov/data/global-precipitation-climatology-project-gpcp-monthly}.  Two boxes were defined, one off the Kerala coast and one off the Karnataka coast, and the average values of all grid points within these boxes were used.
+#' The National Climatic Data Center provides basic information on the GPCP Precipitation dataset.  
+#' The dataset consists of monthly precipitation estimates (average mm/day) from January 1979 to 
+#' the present. The precipitation estimates merge several satellite and in situ sources into a 
+#' final product. Data are provided on a 2.5 degree grid.  The GPCP Precipitation data are 
+#' provided by the NOAA/NCEI Global Precipitation Climatology Project and were downloaded from 
+#' \url{https://www.ncei.noaa.gov/data/global-precipitation-climatology-project-gpcp-monthly}.  Two boxes were defined, one off the Kerala coast and one off the Karnataka coast, and the average values of all grid points within these boxes were used.
 #' \preformatted{
 #' The boxes are 
 #' Kerala Lat(8.75,  11.25), Lon(73.25,  75.75)
@@ -108,9 +113,9 @@
 #' \describe{
 #'   \item{Year}{}
 #'   \item{Month}{}
-#'   \item{precip.gpcp.kerala}{Monthly GPCP precipitation in the box off the Kerala coast.}
-#'   \item{precip.gpcp.karnataka}{Monthly GPCP precipitation in the box off the Karnataka coast.}
-#'   \item{PrecipTRMM}{Monthly precipitation estimates from the Tropical Rainfall Measuring Mission (TRMM).  Data are averaged in the boxes used for the other satellite data.}
+#'   \item{precip.gpcp.kerala}{Monthly GPCP precipitation in the box off the Kerala coast. Units are average mm/day.}
+#'   \item{precip.gpcp.karnataka}{Monthly GPCP precipitation in the box off the Karnataka coast.  Units are average mm/day.}
+#'   \item{PrecipTRMM}{Monthly precipitation estimates from the Tropical Rainfall Measuring Mission (TRMM).  Data are averaged in the boxes 1 to 13 used for the other satellite data.}
 #'   \item{Precip.Kerala}{Monthly precipitation (mm) from landgauges.}
 #' }
 #' 
@@ -150,10 +155,10 @@
 
 #' Sea surface temperature data from remote-sensing products
 #'
-#' @description The SST satellite data were downloaded from the NOAA ERDDAP server using R Mendels
-#' \code{rerddapXtracto} R package which uses the ropensci \code{rerddap} R package.  The R code used
+#' @description The SST satellite data were downloaded from the NOAA ERDDAP server using Roy Mendelssohn's
+#' \strong{rerddapXtracto} R package which uses the ropensci\strong{rerddap} R package available on CRAN.  The R code used
 #' to download the data is in the \code{extdata/get_satelite_data} folder.  See examples for how to find
-#' the file.
+#' the file. Units are degree Celcius.
 #' 
 #' @details
 #' For 1981 to 2003, We used the Pathfinder Version 5.2
@@ -181,7 +186,7 @@
 #' \describe{
 #'   \item{Year}{The year}
 #'   \item{Month}{The month}
-#'   \item{SST.1 to SST.13}{Average monthly SST averaged over boxes 1 to 13.}
+#'   \item{SST.1 to SST.13}{Average monthly SST averaged over boxes 1 to 13. Units are degree Celcius.}
 #' }
 #' 
 #' @references
@@ -196,6 +201,10 @@
 #' \insertRef{Caseyetal2010}{SardineForecast}
 #' 
 #' \insertRef{Waltonetal1998}{SardineForecast}
+#' 
+#' \insertRef{rerddap}{SardineForecast}
+#' 
+#' \insertRef{rerddapXtracto}{SardineForecast}
 #' 
 #' @examples
 #' \dontrun{
@@ -213,8 +222,9 @@
 
 #' Chlorophyll-a data from remote-sensing products
 #'
-#' @description The CHL satellite data were downloaded from the NOAA ERDDAP server using R Mendels
-#' \code{rerddapXtracto} R package which uses the ropensci \code{rerddap} R package.  The R code used
+#' @description The CHL satellite data (mg/m$^3$) were downloaded from the NOAA ERDDAP server using 
+#' Roy Mendelssohn's
+#'  \strong{rerddapXtracto} R package which uses the ropensci\strong{rerddap} R packages available on CRAN.  The R code used
 #' to download the data is in the \code{extdata/get_satelite_data} folder.  See examples for how to find
 #' the file.
 #' 
@@ -224,7 +234,7 @@
 #' Ocean Biology Processing Group in the Ocean Ecology Laboratory
 #' at the NASA Goddard Space Flight Center.
 #' 
-#' For 1997 to 2002, we used the Chlorophyll-a 2014.0 Reprocessing (R2014.0) product 
+#' For September 1997 to 2002, we used the Chlorophyll-a 2014.0 Reprocessing (R2014.0) product 
 #' from the Sea-viewing Wide Field-of-view 
 #' Sensor (SeaWiFS) on the Orbview-2 satellite. These data are on a 0.1 degree grid.  See reference below.
 #'    
@@ -248,7 +258,7 @@
 #' \describe{
 #'   \item{Year}{The year}
 #'   \item{Month}{The month}
-#'   \item{CHL.1 to CHL.13}{Average monthly CHL averaged over boxes 1 to 13.}
+#'   \item{CHL.1 to CHL.13}{Average monthly CHL averaged over boxes 1 to 13. Units are mg/m$^3$.}
 #' }
 #' 
 #' @references
@@ -263,7 +273,12 @@
 #' Spectroradiometer (MODIS) Aqua Chlorophyll Data; 2014 Reprocessing. 
 #' NASA OB.DAAC, Greenbelt, MD, USA. \url{https://dx.doi.org/10.5067/AQUA/MODIS/L3M/CHL/2014}
 #' 
+#' 
 #' \insertRef{Huetal2012}{SardineForecast}
+#' 
+#' \insertRef{rerddap}{SardineForecast}
+#' 
+#' \insertRef{rerddapXtracto}{SardineForecast}
 #' 
 #'  
 #' @examples
@@ -431,8 +446,8 @@
 #' @details
 #' 
 #' The Wind-based monthly upwelling indices were downloaded from the NOAA ERDDAP server. The first is
-#' 1999-2009 on a 0.125 degree grid. The second is 2009 to present on a 0.25 degree grid.
-#'  and the second is See
+#' 1999-2009 on a 0.125 degree grid. The second is 2009 to present on a 0.25 degree grid. Units are m/s.
+#' See
 #'     \url{https://coastwatch.pfeg.noaa.gov/erddap/info/erdQSstressmday/index.html} and 
 #'     \url{https://coastwatch.pfeg.noaa.gov/erddap/info/erdQAstressmday/index.html}.
 #'    
@@ -446,8 +461,8 @@
 #' 
 #' The Bakun index (The Bakun 1973) is calculated based upon Ekman's theory of mass transport
 #'  due to wind stress. The index is computed from the ektrx and ektry, which
-#'  are the x- and y- components of Ekman Transport obtained from the ERDDAP link 
-#'  below, and coast_angle is 158 degrees for the India west coast near Kochi.
+#'  are the x- and y- components of Ekman Transport (kg m$^{-1}$ s$^-1$) obtained from the ERDDAP link 
+#'  below, and coast_angle is 158 degrees for the India west coast near Kochi (74.5E 11.5N coast angle 158 degrees).
 #'     \url{https://coastwatch.pfeg.noaa.gov/erddap/info/erdlasFnWPr/index.html}.
 #'  The function to compute the Bakun index is 
 #'  (from \url{https://oceanview.pfeg.noaa.gov/products/upwelling/bakun})
@@ -473,9 +488,9 @@
 #' \describe{
 #'   \item{Year}{The year}
 #'   \item{Month}{The month}
-#'   \item{Wind.UPW.1 to Wind.UPW.5}{Average monthly UPW averaged over boxes 1 to 5.}
-#'   \item{SST.UPW.1 to SST.UPW.5}{Average monthly SST differential averaged over boxes 1 to 5.}
-#'   \item{Bakun.UPW}{Average monthly SST differential averaged over boxes 1 to 5.}
+#'   \item{Wind.UPW.1 to Wind.UPW.5}{Average monthly wind-based upwelling index averaged over boxes 1 to 5. Units are m/s.}
+#'   \item{SST.UPW.1 to SST.UPW.5}{Average monthly SST differential averaged over boxes 1 to 5. Units are degree Celcius.}
+#'   \item{Bakun.UPW}{Bakun index at 74.5E 11.5N (near Kochi, India) at a coast angle of 158 degrees. Units are kg m$^{-1}$ s$^-1$.}
 #' }
 #' 
 #' @references

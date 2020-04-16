@@ -5,13 +5,15 @@
 \alias{tide_yr}
 \title{Yearly mean tide height data from Cochin
 #'}
-\format{tide_yr is a data frame with:
+\format{
+tide_yr is a data frame with:
 \describe{
   \item{Year}{The year}
   \item{Month}{The month}
   \item{mean}{Calendar year mean of months in tide_mon}
   \item{anomalies}{mean with linear trend and mean level removed.}
-}}
+}
+}
 \usage{
 tide_yr
 }

@@ -1,8 +1,8 @@
 Package: SardineForecast
 Type: Package
 Title: Indian Oil Sardine Data, Code and References for Papers on Forecasting
-Version: 1.9
-Date: 2019-11-20
+Version: 1.10
+Date: 2020-04-11
 Depends: 
    R (>= 2.15.0), 
    stringr, 
@@ -16,7 +16,8 @@ Depends:
    mapdata,
    MARSS,
    ggplot2,
-   grid
+   grid,
+   here
 Imports: Rdpack
 Author: Eli Holmes, NOAA, Seattle, USA
 Maintainer: Elizabeth Holmes - NOAA Federal <eli.holmes@noaa.gov>
@@ -28,6 +29,6 @@ ByteCompile: TRUE
 RdMacros: Rdpack
 Suggests: XML, RCurl, httr, ncdf4
 VignetteBuilder: knitr
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
 Remotes: github::rstudio/rmarkdown
 Encoding: UTF-8

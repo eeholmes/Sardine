@@ -5,7 +5,8 @@
 \alias{tide_mon}
 \alias{tidelevel}
 \title{Monthly tide height data from Cochin}
-\format{tide_mon is a data frame with:
+\format{
+tide_mon is a data frame with:
 \describe{
   \item{Year}{The year}
   \item{Month}{The month}
@@ -16,7 +17,8 @@
   \item{anomalies13}{13 month running mean of anomalies as done in Srinivas et al. 2005 (Fig. 3).}
   \item{anomaliesb}{tide.level.interp with non-linear trend (via gam) and monthly means removed.}
   \item{anomalies13b}{13 month running mean of anomaliesb.}
-}}
+}
+}
 \usage{
 tide_mon
 }

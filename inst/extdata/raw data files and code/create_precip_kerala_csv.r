@@ -15,5 +15,5 @@ for(yr in years){
   }
 }
 fil="precip_kerala.csv"
-filename=read.csv(paste("inst/extdata/raw data files and code/",fil,sep=""))
+filename=paste("inst/extdata/raw data files and code/",fil,sep="")
 write.csv(precip_kerala, file=filename,row.names=FALSE)

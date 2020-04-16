@@ -4,7 +4,8 @@
 \name{enso}
 \alias{enso}
 \title{ENSO Indices}
-\format{A data frame with variables:
+\format{
+A data frame with variables:
 \describe{
   \item{Year}{}
   \item{Month}{For ONI and SOI, this is a 3-month average.  Jan value is average of Dec-Jan-Feb.  Qtr would be denoted JFM.}
@@ -12,7 +13,8 @@
   \item{SOI}{The SOI index value}
   \item{DMI}{The DMI index value}
   \item{MEI}{The MEI index value}
-}}
+}
+}
 \usage{
 enso
 }

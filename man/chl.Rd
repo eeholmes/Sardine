@@ -4,18 +4,21 @@
 \name{chl}
 \alias{chl}
 \title{Chlorophyll-a data from remote-sensing products}
-\format{A data frame with:
+\format{
+A data frame with:
 \describe{
   \item{Year}{The year}
   \item{Month}{The month}
-  \item{CHL.1 to CHL.13}{Average monthly CHL averaged over boxes 1 to 13.}
-}}
+  \item{CHL.1 to CHL.13}{Average monthly CHL averaged over boxes 1 to 13. Units are mg/m$^3$.}
+}
+}
 \usage{
 chl
 }
 \description{
-The CHL satellite data were downloaded from the NOAA ERDDAP server using R Mendels
-\code{rerddapXtracto} R package which uses the ropensci \code{rerddap} R package.  The R code used
+The CHL satellite data (mg/m$^3$) were downloaded from the NOAA ERDDAP server using 
+Roy Mendelssohn's
+ \strong{rerddapXtracto} R package which uses the ropensci\strong{rerddap} R packages available on CRAN.  The R code used
 to download the data is in the \code{extdata/get_satelite_data} folder.  See examples for how to find
 the file.
 }
@@ -24,7 +27,7 @@ The Chlorophyll-a products are developed by the
 Ocean Biology Processing Group in the Ocean Ecology Laboratory
 at the NASA Goddard Space Flight Center.
 
-For 1997 to 2002, we used the Chlorophyll-a 2014.0 Reprocessing (R2014.0) product 
+For September 1997 to 2002, we used the Chlorophyll-a 2014.0 Reprocessing (R2014.0) product 
 from the Sea-viewing Wide Field-of-view 
 Sensor (SeaWiFS) on the Orbview-2 satellite. These data are on a 0.1 degree grid.  See reference below.
    
@@ -68,6 +71,11 @@ Biology Processing Group. Moderate-resolution Imaging
 Spectroradiometer (MODIS) Aqua Chlorophyll Data; 2014 Reprocessing. 
 NASA OB.DAAC, Greenbelt, MD, USA. \url{https://dx.doi.org/10.5067/AQUA/MODIS/L3M/CHL/2014}
 
+
 \insertRef{Huetal2012}{SardineForecast}
+
+\insertRef{rerddap}{SardineForecast}
+
+\insertRef{rerddapXtracto}{SardineForecast}
 }
 \keyword{datasets}

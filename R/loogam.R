@@ -18,7 +18,7 @@
 #' loogam(m)$MAE
 loogam <- function(mod, k=1, n=100, LOO=FALSE){
   dat1 <- mod$model
-  dat2 <- mod$model
+  dat2 <- mod$model # needed because gam and lm deal with predict data differently
   # to allow it to work on models with offset
   if(any(stringr::str_detect(colnames(dat1),"offset"))){
     a <- colnames(dat1)
@@ -27,6 +27,22 @@ loogam <- function(mod, k=1, n=100, LOO=FALSE){
     colnames(dat1) <- a
     if(class(mod)[1]=="lm") colnames(dat2) <- a
   }
+  if(any(stringr::str_detect(colnames(dat1),"poly"))){
+    a <- colnames(dat1)
+    test1 <- stringr::str_detect(colnames(dat1),"poly") 
+    test2 <- stringr::str_detect(colnames(dat1),"raw = TRUE")
+    if(!isTRUE(all.equal(test1, test2))) stop("If poly used in loogam model, then raw=TRUE must be used")
+    for(i in which(test1 & test2)){
+      tmp <- dat1[,i][,1, drop=FALSE]
+      thename <- a[i]
+      thename <- stringr::str_split(thename,"[(]")[[1]][2]
+      thename <- stringr::str_split(thename, ",")[[1]][1]
+      colnames(tmp) <- thename
+      dat1 <- cbind(dat1, tmp)
+      if(class(mod)[1]=="lm") dat2 <- cbind(dat2, tmp)
+    }
+  }
+  
   if(class(mod)[1]=="gam") mod.formula <- mod$formula
   if(class(mod)[1]=="lm") mod.formula <- mod$terms
   pred <- actual <- aics <- aiccs <- r2s <- loos <- loomds <- NULL

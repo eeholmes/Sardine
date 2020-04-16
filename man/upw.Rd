@@ -4,14 +4,16 @@
 \name{upw}
 \alias{upw}
 \title{Upwelling indices from remote-sensing products}
-\format{A data frame with:
+\format{
+A data frame with:
 \describe{
   \item{Year}{The year}
   \item{Month}{The month}
-  \item{Wind.UPW.1 to Wind.UPW.5}{Average monthly UPW averaged over boxes 1 to 5.}
-  \item{SST.UPW.1 to SST.UPW.5}{Average monthly SST differential averaged over boxes 1 to 5.}
-  \item{Bakun.UPW}{Average monthly SST differential averaged over boxes 1 to 5.}
-}}
+  \item{Wind.UPW.1 to Wind.UPW.5}{Average monthly wind-based upwelling index averaged over boxes 1 to 5. Units are m/s.}
+  \item{SST.UPW.1 to SST.UPW.5}{Average monthly SST differential averaged over boxes 1 to 5. Units are degree Celcius.}
+  \item{Bakun.UPW}{Bakun index at 74.5E 11.5N (near Kochi, India) at a coast angle of 158 degrees. Units are kg m$^{-1}$ s$^-1$.}
+}
+}
 \usage{
 upw
 }
@@ -25,8 +27,8 @@ the file.
 }
 \details{
 The Wind-based monthly upwelling indices were downloaded from the NOAA ERDDAP server. The first is
-1999-2009 on a 0.125 degree grid. The second is 2009 to present on a 0.25 degree grid.
- and the second is See
+1999-2009 on a 0.125 degree grid. The second is 2009 to present on a 0.25 degree grid. Units are m/s.
+See
     \url{https://coastwatch.pfeg.noaa.gov/erddap/info/erdQSstressmday/index.html} and 
     \url{https://coastwatch.pfeg.noaa.gov/erddap/info/erdQAstressmday/index.html}.
    
@@ -40,8 +42,8 @@ the same latitude.
 
 The Bakun index (The Bakun 1973) is calculated based upon Ekman's theory of mass transport
  due to wind stress. The index is computed from the ektrx and ektry, which
- are the x- and y- components of Ekman Transport obtained from the ERDDAP link 
- below, and coast_angle is 158 degrees for the India west coast near Kochi.
+ are the x- and y- components of Ekman Transport (kg m$^{-1}$ s$^-1$) obtained from the ERDDAP link 
+ below, and coast_angle is 158 degrees for the India west coast near Kochi (74.5E 11.5N coast angle 158 degrees).
     \url{https://coastwatch.pfeg.noaa.gov/erddap/info/erdlasFnWPr/index.html}.
  The function to compute the Bakun index is 
  (from \url{https://oceanview.pfeg.noaa.gov/products/upwelling/bakun})

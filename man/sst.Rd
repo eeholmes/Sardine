@@ -4,20 +4,22 @@
 \name{sst}
 \alias{sst}
 \title{Sea surface temperature data from remote-sensing products}
-\format{A data frame with:
+\format{
+A data frame with:
 \describe{
   \item{Year}{The year}
   \item{Month}{The month}
-  \item{SST.1 to SST.13}{Average monthly SST averaged over boxes 1 to 13.}
-}}
+  \item{SST.1 to SST.13}{Average monthly SST averaged over boxes 1 to 13. Units are degree Celcius.}
+}
+}
 \usage{
 sst
 }
 \description{
-The SST satellite data were downloaded from the NOAA ERDDAP server using R Mendels
-\code{rerddapXtracto} R package which uses the ropensci \code{rerddap} R package.  The R code used
+The SST satellite data were downloaded from the NOAA ERDDAP server using Roy Mendelssohn's
+\strong{rerddapXtracto} R package which uses the ropensci\strong{rerddap} R package available on CRAN.  The R code used
 to download the data is in the \code{extdata/get_satelite_data} folder.  See examples for how to find
-the file.
+the file. Units are degree Celcius.
 }
 \details{
 For 1981 to 2003, We used the Pathfinder Version 5.2
@@ -66,5 +68,9 @@ in the license and at this link:
 \insertRef{Caseyetal2010}{SardineForecast}
 
 \insertRef{Waltonetal1998}{SardineForecast}
+
+\insertRef{rerddap}{SardineForecast}
+
+\insertRef{rerddapXtracto}{SardineForecast}
 }
 \keyword{datasets}

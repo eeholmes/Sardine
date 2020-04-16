@@ -7,8 +7,9 @@ covfiles=c(
   "precipitation_gpcp.csv",
   "precipitation_TRMM.csv",
   "enso.csv",
-  "precip_kerala.csv")
-current.year = as.numeric(format(Sys.Date(),"%Y"))
+  "precip_kerala.csv",
+  "tide_mon.csv")
+current.year = 2019
 years=1956:current.year
 
 #set up the data frame

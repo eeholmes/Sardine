@@ -4,13 +4,15 @@
 \name{oilsardine_yr}
 \alias{oilsardine_yr}
 \title{Oil sardine landings in metric tons by calendar year}
-\format{A data frame 'oilsardine_qtr' with 6 variables:
+\format{
+A data frame 'oilsardine_qtr' with 6 variables:
 \describe{
   \item{Year}{Year}
   \item{Goa}{Goa landings}
   \item{Karnataka}{Karnataka landings}
   \item{Kerala}{Kerala landings}
-}}
+}
+}
 \usage{
 oilsardine_yr
 }
