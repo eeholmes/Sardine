@@ -10,6 +10,7 @@ A data frame with:
   \item{Year}{The year}
   \item{Month}{The month}
   \item{SST.1 to SST.13}{Average monthly SST averaged over boxes 1 to 13. Units are degree Celcius.}
+  \item{SSTICOAD.1 to SSTICOAD.13}{Average monthly SST averaged over boxes 1 to 13. Units are degree Celcius.}
 }
 }
 \usage{
@@ -22,6 +23,9 @@ to download the data is in the \code{extdata/get_satelite_data} folder.  See exa
 the file. Units are degree Celcius.
 }
 \details{
+There are two SST data sets: AVHRR and ICOADS.
+
+\strong{AVHRR}
 For 1981 to 2003, We used the Pathfinder Version 5.2
 (L3C) monthly day and night product on a 0.0417 degree grid.  These SST data use the Advanced Very-High Resolution
 Radiometer (AVHRR) instrument on the Pathfinder satellites.  These data were provided by GHRSST
@@ -36,12 +40,20 @@ on a 0.1 degree grid.
 Both SST data sets were downloaded from the NOAA ERDDAP server. See
 \url{https://coastwatch.pfeg.noaa.gov/erddap/info/erdAGsstamday/index.html} and 
 \url{https://coastwatch.pfeg.noaa.gov/erddap/info/erdPH2sstamday/index.html}.
-   
+
+\strong{ICOADS}
+ The SST was extracted from the International Comprehensive Ocean-Atmosphere Data Set (ICOADS) 
+ collection of surface marine data
+ Data from 1960 onward were used, which are on a 1°x1° grid. 
+ 
+The ICOADS SST data were downloaded from the NOAA ERDDAP server.
+\url{https://coastwatch.pfeg.noaa.gov/erddap/info/esrlIcoads1ge/index.html}
+More information on the ICOADS data are available at
+\url{https://coastwatch.pfeg.noaa.gov/erddap/info/esrlIcoads1ge/index.html}
 The R code used
 to download the data is in the \code{extdata/get_satelite_data} folder.  See examples
 for how to find and view the files.  The SST values were averaged across thirteen
-1 degree by 1 degree boxes which roughly parallel the bathymetry.  
-See the figure in the examples below which shows the boxes.
+1 degree by 1 degree boxes which roughly parallel the bathymetry.
 }
 \examples{
 \dontrun{
@@ -57,13 +69,17 @@ browseURL(system.file("docs", "kerala_study_area_with_inset.jpg", package="Sardi
 }
 }
 \references{
-These data were provided by GHRSST and the US National Oceanographic Data Center. 
+The AVHRR data were provided by GHRSST and the US National Oceanographic Data Center. 
 This project was supported in part by a grant from the NOAA Climate Data Record 
 (CDR) Program for satellites. The data were downloaded from NOAA CoastWatch-West 
 Coast Regional Node and Southwest Fisheries Science Center's Environmental 
 Research Division. To cite these data in a paper, please follow the instructions 
 in the license and at this link: 
 \url{https://coastwatch.pfeg.noaa.gov/erddap/information.html#citeDataset}
+
+The ICOADS data were provided by the NOAA/OAR/ESRL PSD, Boulder, Colorado, USA,
+from their Web site at http://www.esrl.noaa.gov/psd/ (and downloaded via NOAA's
+CoastWatch data server.)
 
 \insertRef{Caseyetal2010}{SardineForecast}
 

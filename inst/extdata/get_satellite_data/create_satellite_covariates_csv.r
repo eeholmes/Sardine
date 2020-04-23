@@ -37,6 +37,23 @@ for(fil in covfiles){
   }
 }
 
+#SST Interpolated
+covfiles=c(
+  "sst-esrlIcoads1ge-1960-2017.csv"
+)
+for(fil in covfiles){
+  dat=read.csv(fil)
+  coln <- colnames(dat)
+  coln <- stringr::str_replace(coln, "SST", "SSTICOAD")
+  colnames(dat) <- coln
+  covs=colnames(dat)[!(colnames(dat)%in%c("Year","Month","Dates"))]
+  for(icol in covs) if(is.null(monthly_cov[[icol]])) monthly_cov[[icol]]=NA
+  for(i in 1:dim(dat)[1]){
+    monthly_cov[monthly_cov$Year==dat$Year[i] & monthly_cov$Month==dat$Month[i],covs]=
+      dat[i,covs]
+  }
+}
+
 #SSH
 covfiles=c(
   "ssh-erdTAsshmday-1992-2010.csv"
