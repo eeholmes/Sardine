@@ -19,8 +19,8 @@ Depends:
    grid,
    here
 Imports: Rdpack
-Author: Eli Holmes, NOAA, Seattle, USA
-Maintainer: Elizabeth Holmes - NOAA Federal <eli.holmes@noaa.gov>
+Author: Eli Holmes, UW SAFS, Seattle, USA
+Maintainer: El Holmes <eeholmes@uw.edu>
 Description: Code, figures and data for sardine forecasting paper.  
 License: GPL-2
 LazyData: yes
