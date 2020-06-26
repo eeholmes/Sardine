@@ -3,7 +3,7 @@ require(magrittr)
 require(stringr)
 dfc <- read.delim("tide-level-cochin-RLR-1939-2013.csv", stringsAsFactors=FALSE, skip=2, sep=";")
 tmp <- dfc$year %>% sapply(function(x){stringr::str_split(x, "[.]")[[1]][2]})
-tmp2 <- str_c("0.",tmp) %>% as.numeric()*12+0.51
+tmp2 <- stringr::str_c("0.",tmp) %>% as.numeric()*12+0.51
 mons <- floor(tmp2)
 yrs <- dfc$year %>% sapply(function(x){stringr::str_split(x, "[.]")[[1]][1]}) %>% as.numeric()
 vals <- dfc$corrected.tide.level.mm
@@ -23,7 +23,7 @@ write.csv(df.mon, file="psml-tide-level-1939-2013.csv", row.names = FALSE)
 
 dfc <- read.delim("tide-level-cochin-metric-psmsl-1939-2013.csv", stringsAsFactors=FALSE, skip=2, sep=";")
 tmp <- dfc$year %>% sapply(function(x){stringr::str_split(x, "[.]")[[1]][2]})
-tmp2 <- str_c("0.",tmp) %>% as.numeric()*12+0.51
+tmp2 <- stringr::str_c("0.",tmp) %>% as.numeric()*12+0.51
 mons <- floor(tmp2)
 yrs <- dfc$year %>% sapply(function(x){stringr::str_split(x, "[.]")[[1]][1]}) %>% as.numeric()
 vals <- dfc$tide.level.mm

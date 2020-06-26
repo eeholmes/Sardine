@@ -8,7 +8,7 @@ dat=read.csv(fil)
 years=unique(dat$Year)
 chl=sst=ssh=upw=data.frame(Year = rep(years,each=12), Month=rep(1:12,length(years)))
 for(covname in c("CHL","SST","SSH","UPW")){
-  covs=colnames(dat)[str_detect(colnames(dat),covname)]
+  covs=colnames(dat)[stringr::str_detect(colnames(dat),covname)]
   tmp=get(tolower(covname))
   tmp[covs]=NA
   for(i in 1:dim(dat)[1]){
@@ -22,7 +22,7 @@ tmp=(upw$Bakun.UPW-mean(upw$Bakun.UPW,na.rm=TRUE))
 tmp=tmp/sqrt(var(tmp,na.rm=TRUE))
 upw$Bakun.UPW <- tmp
 
-sst <- sst[,!str_detect(colnames(sst),"UPW")]
+sst <- sst[,!stringr::str_detect(colnames(sst),"UPW")]
 
 save(chl, file="data/chl.rdata")
 save(sst, file="data/sst.rdata")

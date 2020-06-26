@@ -21,7 +21,7 @@ Depends:
 Imports: Rdpack
 Author: Eli Holmes, UW SAFS, Seattle, USA
 Maintainer: El Holmes <eeholmes@uw.edu>
-Description: Code, figures and data for sardine forecasting paper.  
+Description: Code, figures and data for sardine forecasting papers.  
 License: GPL-2
 LazyData: yes
 BuildVignettes: yes

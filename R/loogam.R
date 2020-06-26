@@ -13,8 +13,9 @@
 #' 
 #' @examples
 #' # some simulated data with one cov
-#' dat <- mgcv::gamSim(6,n=100,scale=.5)[,1:2]
-#' m <- mgcv::gam(y~s(x0), data=dat)
+#' library(mgcv)
+#' dat <- gamSim(6,n=100,scale=.5)[,1:2]
+#' m <- gam(y~s(x0), data=dat)
 #' loogam(m)$MAE
 loogam <- function(mod, k=1, n=100, LOO=FALSE){
   dat1 <- mod$model
