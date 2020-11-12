@@ -1,0 +1,172 @@
+---
+title: "Compare wind products"
+author: "EE Holmes"
+date: "11/2/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+source(file.path(here::here(), "inst", "extdata", "get_satellite_data", "get_EMT_functions.R"))
+library(ggplot2)
+library(tidyr)
+library(dplyr)
+library(raster)
+library(rasterVis)
+library(plotrix)
+```
+
+# Comparison of daily winds across products
+
+Compare the wind estimates to that reported in other sources.
+
+```{r}
+dates <- c("2010-07-28", "2010-07-30")
+lats <- c(6, 20); lons <- c(68,72)
+wind1 <- getdata("erdlasFnPres6", date=dates, lat=lats, lon=lons)
+wind1 <- getwindfromP(wind1)
+wind1$date <- as.Date(wind1$time)
+wind1.day <- wind1 %>% 
+  group_by(date, latitude, longitude) %>% 
+  summarize(u = mean(u, na.rm=TRUE), v=mean(v, na.rm=TRUE))
+```
+
+Now get ASCAT wind. This is on a finer grid. 
+```{r}
+wind2 <- getdata("erdQAwind1day", pars=c("x_wind", "y_wind"), date=dates, lat=lats, lon=lons)
+wind2$date <- as.Date(wind2$time)
+res <- attr(wind2, "resolution")
+```
+
+```{r}
+wind2.day <- wind2[,c("date", "latitude", "longitude", "x_wind", "y_wind")]
+colnames(wind2.day) <- c("date", "latitude", "longitude", "u", "v")
+```
+
+Now get CCMP 6-hourly data and average to daily.
+```{r}
+wind3 <- getdata("jplCcmpL3Wind6Hourly", date=dates, lat=lats, lon=lons)
+wind3$date <- as.Date(wind3$time)
+wind3.day <- wind3 %>% 
+  group_by(date, latitude, longitude) %>% 
+  summarize(u = mean(uwnd, na.rm=TRUE), v=mean(vwnd, na.rm=TRUE))
+wind3.day$longitude <- wind3.day$longitude-0.125
+wind3.day$latitude <- wind3.day$latitude-0.125
+```
+
+### Plot data
+
+```{r}
+df <- rbind(data.frame(wind1.day, data="FNMOC"),
+            data.frame(wind2.day, data="ASCAT"),
+            data.frame(wind3.day, data="CCMP"))
+dfl <- df %>%
+  pivot_longer(!date & !latitude & !longitude & !data,
+                     names_to = "name",
+                     values_to = "wind")
+lon <- 69.5; thedate <- max(dfl$date)
+p1 <- ggplot(subset(dfl, longitude==lon & date==thedate), aes(x=latitude, y=wind, color=data)) + geom_line() +
+  facet_wrap(~name) + ggtitle(paste(thedate, "longitude =", lon))
+lon <- 71.5; thedate <- min(dfl$date)
+p2 <- ggplot(subset(dfl, longitude==lon & date==thedate), aes(x=latitude, y=wind, color=data)) + geom_line() +
+  facet_wrap(~name) + ggtitle(paste(thedate, "longitude =", lon))
+gridExtra::grid.arrange(p1,p2)
+```
+
+Plot the u and v across latitudes.
+```{r}
+p1 <- ggplot(subset(df, date==thedate), aes(x=latitude, y=u, color=as.factor(longitude))) + geom_line() + facet_wrap(~data) + theme(legend.position = "none")
+p2 <- ggplot(subset(df, date==thedate), aes(x=latitude, y=v, color=as.factor(longitude))) + geom_line() + facet_wrap(~data) + theme(legend.position = "none")
+gridExtra::grid.arrange(p1,p2)
+```
+
+# Test 2: Comparison of monthly winds 2010
+
+Compare the wind estimates to that reported in other sources.
+
+```{r}
+dates <- c("2010-01-01", "2011-01-01")
+lats <- c(6, 20); lons <- c(68,72)
+windmon1 <- getdata("erdlasFnWPr", date=dates, lat=lats, lon=lons)
+windmon1$date <- format(windmon1$time, "%Y-%m-01")
+colnames(windmon1) <- stringr::str_replace(colnames(windmon1), "_mean", "")
+windmon1 <- getEMT(windmon1)
+```
+
+Now get ASCAT monthly wind. This is on a finer grid. 
+```{r}
+#10m winds
+tmp <- getdata("erdQAwindmday", date=dates, lat=lats, lon=lons, altitude=10)
+windmon2 <- getdata("erdQAstressmday", date=dates, lat=lats, lon=lons, altitude=0)
+windmon2$u <- tmp$x_wind
+windmon2$v <- tmp$y_wind
+windmon2$uv_mag <- sqrt(tmp$y_wind^2 + tmp$x_wind^2)
+windmon2$date <- format(windmon2$time, "%Y-%m-01")
+res <- attr(windmon2, "resolution")
+windmon2 <- getEMT(windmon2)
+```
+
+Now get CCMP monthly.
+```{r}
+windmon3 <- getdata("jplCcmp35aWindMonthly", date=dates, lat=lats, lon=lons)
+windmon3$date <- format(windmon3$time, "%Y-%m-01")
+colnames(windmon3) <- stringr::str_replace(colnames(windmon3), "wnd", "")
+colnames(windmon3) <- stringr::str_replace(colnames(windmon3), "wspd", "uv_mag")
+windmon3$longitude <- windmon3$longitude-0.125
+windmon3$latitude <- windmon3$latitude-0.125
+windmon3 <- getEMT(windmon3)
+```
+
+### Plot wind data
+
+```{r}
+library(tidyr)
+cols <- c("date", "latitude", "longitude", "u", "v", "taux","tauy", "ektrx", "ektry")
+df <- rbind(data.frame(windmon1[,cols], data="FNMOC"),
+            data.frame(windmon2[,cols], data="ASCAT"),
+            data.frame(windmon3[,cols], data="CCMP"))
+dfl <- df %>%
+  pivot_longer(!date & !latitude & !longitude & !data,
+                     names_to = "name",
+                     values_to = "value")
+```
+
+Winds.
+```{r}
+library(ggplot2)
+thedate <- "2010-07-01"
+plotlons <- c(69.5, 71.5)
+pars <- c("u", "v")
+p1 <- ggplot(subset(dfl, longitude==plotlons[1] & date==thedate & name%in%pars), aes(x=latitude, y=value, color=data)) + geom_line() +
+  facet_wrap(~name) + ggtitle(paste(thedate, "longitude =", plotlons[1]))
+p2 <- ggplot(subset(dfl, longitude==plotlons[2] & date==thedate & name%in%pars), aes(x=latitude, y=value, color=data)) + geom_line() +
+  facet_wrap(~name) + ggtitle(paste(thedate, "longitude =", plotlons[2]))
+gridExtra::grid.arrange(p1,p2)
+```
+
+
+
+Wind stress
+```{r}
+thedate <- "2010-07-01"
+plotlons <- c(69.5, 71.5)
+pars <- c("taux", "tauy")
+p1 <- ggplot(subset(dfl, longitude==plotlons[1] & date==thedate & name%in%pars), aes(x=latitude, y=value, color=data)) + geom_line() +
+  facet_wrap(~name) + ggtitle(paste(thedate, "longitude =", plotlons[1]))
+p2 <- ggplot(subset(dfl, longitude==plotlons[2] & date==thedate & name%in%pars), aes(x=latitude, y=value, color=data)) + geom_line() +
+  facet_wrap(~name) + ggtitle(paste(thedate, "longitude =", plotlons[2]))
+gridExtra::grid.arrange(p1,p2)
+```
+
+Ekman Transport
+```{r}
+thedate <- "2010-07-01"
+plotlons <- c(69.5, 71.5)
+pars <- c("ektrx", "ektry")
+p1 <- ggplot(subset(dfl, longitude==plotlons[1] & date==thedate & name%in%pars), aes(x=latitude, y=value, color=data)) + geom_line() +
+  facet_wrap(~name, scales = "free_y") + ggtitle(paste(thedate, "longitude =", plotlons[1]))
+p2 <- ggplot(subset(dfl, longitude==plotlons[2] & date==thedate & name%in%pars), aes(x=latitude, y=value, color=data)) + geom_line() +
+  facet_wrap(~name, scales = "free_y") + ggtitle(paste(thedate, "longitude =", plotlons[2]))
+gridExtra::grid.arrange(p1,p2)
+```
+

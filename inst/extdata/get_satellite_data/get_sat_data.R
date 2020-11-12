@@ -277,3 +277,17 @@ parameter <-'upwelling'
  write.csv(upw.sst, paste("upw-sst","-", id,"-",yr1,"-",yr2,".csv",sep=""),row.names=FALSE)
  
  # For upwelling bakun index, see get_bakun_upi_data.R
+ 
+ # Define parameters for the wind based upwelling 1 dataset 
+ #https://coastwatch.pfeg.noaa.gov/erddap/info/jplCcmpL3Wind6Hourly/index.html
+ # not wind-based upwelling indices not used in paper
+ parameter <-'uwnd' 
+ id <- 'jplCcmpL3Wind6Hourly'
+ tag <- "CCMP."
+ jplCcmpL3Wind6Hourly=getdat(parameter, id, tag, boxes14, width, include.z=FALSE)
+ 
+ parameter <-'vwnd' 
+ id <- 'jplCcmpL3Wind6Hourly'
+ tag <- "CCMPv."
+ jplCcmpL3Wind6Hourly.v=getdat(parameter, id, tag, boxes14, width, include.z=FALSE)
+ 

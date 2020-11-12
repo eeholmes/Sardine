@@ -1,0 +1,192 @@
+---
+title: "Ekman Transport Calculations"
+author: "EE Holmes"
+date: "11/9/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+source(file.path(here::here(), "inst", "extdata", 
+                 "get_satellite_data", "Replicate_EMT", 
+                 "get_EMT_functions.R"))
+library(ggplot2)
+library(tidyr)
+library(dplyr)
+library(raster)
+library(rasterVis)
+```
+
+This report confirms that I am able to replicate the [upwelling calculations](https://oceanview.pfeg.noaa.gov/products/upwelling/bakun) provided by the Environmental Research Division at the Southwest Fisheries Science Center.
+
+# Get the data
+
+Get pressure, wind, and Ekman Transport from the Coastwatch ERDDAP server. This gets the data for the current month and has all the needed parameters. Current FNMOC grid resolution is 1 degree while older resolution was 2.5 degree and later interpolated to 1 degree.
+
+Get data from https://coastwatch.pfeg.noaa.gov/erddap/griddap/erdlasFnTransMon
+```{r getdata}
+dates <- c("2020-11-01T00:00:00Z", "2020-11-02T06:00:00Z")
+dat <- getdata("erdlasFnTransMon", date=dates)
+cat(colnames(dat))
+```
+
+# Calculations of wind from FNMOC winds
+
+Schwing, F. B., O'Farrell, M., Steger, J., and Baltz, K., 1996: Coastal Upwelling Indices, West Coast of North America 1946 - 1995, NOAA Technical Memorandum NMFS-SWFSC-231
+
+Schwing et al 1996 gives the calculations for computing the wind vector from the pressures reported by FNMOC. First the pressure differential in the $y$ (north-south) and $x$ (east-west) directions is computed. $y$ is the latitude center of the box. $x$ is the longitude center of the box. $P$ is in Pascals. Note the the pressure reported by FNMOC must be multiplied by 100 to get Pascals. $h$ is the resolution of the grid in radians ($ = \pi \times$ 1 degree / 180 degree). Equation 1 in Schwing et al 1996:
+
+\begin{equation}
+\frac{\Delta P}{\Delta x} = (P_{x+h,y}-P_{x-h,y})/2h \quad \quad
+\frac{\Delta P}{\Delta y} = (P_{x,y+h}-P_{x,y-h})/2h
+\end{equation}
+The east ($\vec{u}_g$) and north ($\vec{v}_g$) components of the geostrophic wind are (Equation 2 in Schwing et al 1996):
+
+\begin{align}
+&\vec{u}_g = -\frac{1}{f \, p_a \, R}\frac{\Delta P}{\Delta y}\\
+&\vec{v}_g = \frac{1}{f \, p_a \, R \, cos(\pi y/180)}\frac{\Delta P}{\Delta x}
+\end{align}
+In the equation, $p_a = 1.22 \, kg/m^3$ and $R$ is the radius of the earth in meters $= 6371000 \, m$. $f$ is the Coriolis parameters and is $2 \Omega sin(\pi y/180)$, where $\Omega - 7.272205 \times 10^{-5}$ and $y$ is the latitude of the center of the grid cell in degrees (and $\pi y/180$ is the latitude in radians). Positive $\vec{u}$ is wind blowing west to east. Positive $\vec{v}$ is wind blowing south to north (in the northern hemisphere). Notice the the east-west geostrophic wind is associated with the north-south pressure differential while the north-south wind is associated with the east-west differential.
+
+On the last line of page 7 in Schwing et al 1996, they state "To approximate frictional effects, the geostrophic wind at the sea surface is estimated by rotating the geostrophic wind 15 deg to the left and reducing its magnitude by 30%". The actual angle that the wind is rotated in the numbers provided by ERD however appears to be 30 degrees. The following equation rotates and reduces the magnitude. $\alpha$ is the angle in radians ($ =\pi \, 30/180 $).
+
+\begin{align}
+\vec{u} = 0.7 (cos(\alpha) \, u_g - sin(\alpha) \, v_g)\\
+\vec{v} = 0.7 (sin(\alpha) \, u_g + cos(\alpha) \, v_g)
+\end{align}
+The `getwindfromP()` function at the end of this report shows the R code for these calculations.
+
+```{r getwind, warning=FALSE}
+wind1 <- getwindfromP(dat)
+```
+
+## Compare to wind numbers reported by ERD
+
+Show that this is the same as what is reported by SWFSC-ERD.
+
+```{r plotwind, echo=FALSE, warning=FALSE}
+df <- wind1[, c("time", "latitude", "longitude", "u", "v")]
+df <- df %>% pivot_longer(!time & !latitude & !longitude,
+                     names_to = "name",
+                     values_to = "new")
+df2 <- wind1[, c("time", "latitude", "longitude", "u_orig", "v_orig")] %>%
+  pivot_longer(!time & !latitude & !longitude,
+                     names_to = "name",
+                     values_to = "original")
+df <- cbind(df, original=df2$original)
+ggplot(df, aes(x=new, y=original)) + geom_point() + 
+  geom_abline(col="red") + facet_wrap(~name)
+```
+
+# Calculations of Ekman Transport
+
+Wind stress (Newtons/$m^2$) and wind stress broken into its $x$ (east-west) and $y$ (north-south) components is (Equation 3 in Schwing et al 1996):
+
+\begin{gather}
+\vec{\tau} = p_a \, C_d \, |\vec{w}| \, \vec{w}\\
+\tau_x = p_a \, C_d \, |\vec{w}| \, \vec{u} \quad \quad \tau_y = p_a \, C_d \, w \, \vec{v}
+\end{gather}
+where $C_d$ is the coefficient of drag and $|\vec{w}|$ is the wind speed (in m/s) and $\vec{w}$ is the wind vector. $C_d$ is the empirical drag coefficient. It is a non-linear drag coefficient based on Large and Pond (1981) and modified for low wind speeds as in Trenberth et al. (1990), per discussion on the [ERD upwelling page](https://oceanview.pfeg.noaa.gov/products/upwelling/bakun).
+
+\begin{equation}
+    C_d = 
+\begin{cases}
+    2.18 \times 10^-3,& \text{if } |\vec{w}| < 1\\
+    (0.62 + \frac{1.56}{|\vec{w}|})  \times 10^-3& \text{if } 1 < |\vec{w}| < 3\\
+    1.14 \times 10^-3& \text{if } 3 \geq |\vec{w}| < 10\\
+    (0.49 + 0.065 |\vec{w}|)  \times 10^-3& \text{if } 10 \geq |\vec{w}|
+\end{cases}
+\end{equation}
+
+Ekman Mass Transport (EMT kg/ms) is perpendicular (rotated 90 degrees clockwise) to wind stress. The EMT in the $x$ and $y$ directions is (Equation 4 in  in Schwing et al 1996):
+\begin{equation}
+EMT_y = - \tau_x/f \quad\quad EMT_x = \tau_y/f
+\end{equation}
+
+The `getEMT()` and `Cd()` functions shows how to compute these. `coast_angle` is added here for the upwelling index discussed below.
+
+```{r get EMT, warning=FALSE}
+wind1 <- getEMT(wind1, coast_angle=158)
+```
+
+```{r plotEMT, warning=FALSE, echo=FALSE}
+df <- wind1[, c("time", "latitude", "longitude", "ektrx", "ektry")]
+df <- df %>% pivot_longer(!time & !latitude & !longitude,
+                     names_to = "name",
+                     values_to = "new")
+df2 <- wind1[, c("time", "latitude", "longitude", "ektrx_orig", "ektry_orig")] %>%
+  pivot_longer(!time & !latitude & !longitude,
+                     names_to = "name",
+                     values_to = "original")
+df <- cbind(df, original=df2$original)
+ggplot(df, aes(x=new, y=original)) + geom_point() + 
+  geom_abline(col="red") + facet_wrap(~name)
+```
+
+# Upwelling index
+
+[ERD's Bakun upwelling index](https://oceanview.pfeg.noaa.gov/products/upwelling/bakun) is the EMT that is perpendicular and away from the coast. This is computed by finding the EMT vector that is perpendicular to the coast and defining a positive vector as away from the coast and a negative vector as toward the coast. ERD then divides this value by 10. The coast angle is defined as the degrees rotation clockwise away from north-south with land to the west (see figure). The coast angle for the SW coast of India is 158 degrees.
+
+```{r plotcoast, echo=FALSE}
+library(plotrix)
+plot(0:1,0:1, type="n")
+polygon(c(0,0,1,1,0), c(.25,1,1,.75,.25), col="green")
+text(.25,.75,"LAND")
+abline(h=0.5, lty=2)
+abline(v=0.5, lty=2)
+draw.arc(0.5,0.5,0.1, 90*pi/180, 13*pi/180)
+text(0.65, 0.7, "+77 degrees")
+```
+
+The equation to rotate the EMT vector is the following with the coast angle $\theta$ in degrees.
+\begin{align}
+  &\alpha = (360 - \theta) \pi / 180 \\
+  &upi = \frac{EMT_x cos(\alpha) + EMT_y sin(\alpha)}{10}
+\end{align}
+  
+The `upwell()` function shows how to compute this from the coast angle and the EMT in the $x$ and $y$ directions. Here the upwelling index using the data from the ERD EMT values is added to the data frame.
+
+```{r}
+wind1$upi_orig <- upwell(wind1$ektrx_orig, wind1$ektry_orig, 158)
+```
+
+
+```{r plotupi, warning=FALSE, echo=FALSE}
+df <- wind1[, c("time", "latitude", "longitude", "upi")]
+df <- df %>% pivot_longer(!time & !latitude & !longitude,
+                     names_to = "name",
+                     values_to = "new")
+df2 <- wind1[, c("time", "latitude", "longitude", "upi_orig")] %>%
+  pivot_longer(!time & !latitude & !longitude,
+                     names_to = "name",
+                     values_to = "original")
+df <- cbind(df, original=df2$original)
+ggplot(df, aes(x=new, y=original)) + geom_point() + 
+  geom_abline(col="red") + facet_wrap(~name)
+```
+
+# Functions in R
+
+```{r echo=FALSE, asis=TRUE, comment=""}
+cat(paste("upwell <- ", paste(format(upwell), collapse="\n")))
+```
+
+```{r echo=FALSE, asis=TRUE, comment=""}
+cat(paste("Cd <- ", paste(format(Cd), collapse="\n")))
+```
+
+```{r echo=FALSE, asis=TRUE, comment=""}
+cat(paste("EMTperp <- ", paste(format(EMTperp), collapse="\n")))
+```
+
+```{r echo=FALSE, asis=TRUE, comment=""}
+cat(paste("getEMT <- ", paste(format(getEMT), collapse="\n")))
+```
+
+```{r echo=FALSE, asis=TRUE, comment=""}
+cat(paste("getwindfromP <- ", paste(format(getwindfromP), collapse="\n")))
+```
+
+```{r echo=FALSE, asis=TRUE, comment=""}
+cat(paste("getdata <- ", paste(format(getdata), collapse="\n")))
+```
