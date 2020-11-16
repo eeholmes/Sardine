@@ -309,6 +309,7 @@ axis(1, at=1:12, labels=month.abb)
 Perhaps they used only the nearshore EMT? No that does not seem to help.
 
 ```{r}
+load(file.path(here::here(), "inst", "extdata", "get_satellite_data", "Replicate_EMT", "indiashp.RData"))
 b=as(as(indiashp2, "SpatialLinesDataFrame"), "SpatialPointsDataFrame")
 b=subset(b, Line.NR==129)
 coastcoord=coordinates(b)

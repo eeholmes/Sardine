@@ -1,8 +1,10 @@
 ## FUNCTIONS
 
 # Get data from the Coastwatch ERDDAP server. General function. id is the name of the product
-getdata <- function(id, pars=NULL, lat=c(7,15), lon=c(70,78), date=NULL, altitude=10){
-    url <- paste0("https://coastwatch.pfeg.noaa.gov/erddap/info/", id, "/index.csv")
+getdata <- function(id, pars=NULL, lat=c(7,15), lon=c(70,78), date=NULL, 
+                    altitude=10, alt.name="altitude",
+                    eserver="https://coastwatch.pfeg.noaa.gov/erddap"){
+    url <- paste0(eserver, "/info/", id, "/index.csv")
     meta <- read.csv(url)
 
   if(!missing(date) && length(date)==1) date <- c(date, date)
@@ -17,13 +19,13 @@ getdata <- function(id, pars=NULL, lat=c(7,15), lon=c(70,78), date=NULL, altitud
   if(!file.exists(dfil)){
     if(missing(pars)){
       pars <- unique(meta$Variable.Name)
-      pars <- pars[!(pars %in% c("NC_GLOBAL", "time", "latitude", "longitude", "altitude"))]
+      pars <- pars[!(pars %in% c("NC_GLOBAL", "time", "latitude", "longitude", alt.name))]
     }
   # if altitude is req in url, add it
-  alttag <- ifelse("altitude" %in% meta$Variable.Name, paste0("[(",altitude,"):1:(",altitude,")]"), "")
+  alttag <- ifelse(alt.name %in% meta$Variable.Name, paste0("[(",altitude,"):1:(",altitude,")]"), "")
   val <- paste0("[(", date[1], "):1:(", date[2], ")]",alttag,"[(",lat1,"):1:(",lat2,")][(",lon1,"):1:(",lon2,")]")
   val2 <- paste0(pars, val, collapse=",")
-  url <- paste0("https://coastwatch.pfeg.noaa.gov/erddap/griddap/", id, ".csv?", val2)
+  url <- paste0(eserver, "/griddap/", id, ".csv?", val2)
   download.file(url, destfile=dfil)
   cat("data saved to", dfil, "\n")
   }else{
@@ -104,6 +106,48 @@ getwindfromP <- function(dat){
   return(dat)
 }
 
+getEPump <- function(dat){
+  if(is.null(attr(dat, "resolution"))) stop("need resolution in the data.frame")
+  if(!all(c("ektrx", "ektry") %in% colnames(dat))) stop("need ektrx and ektry in data")
+  for(i in c("We"))
+    if(any(colnames(dat)==i)){
+      warning(paste0(i, " is already in data. Changing to ", i, "_orig", "\n"))
+      colnames(dat)[colnames(dat)==i] <- paste0(i, "_orig")
+    }
+  
+  res <- attr(dat, "resolution")
+  lons <- sort(unique(dat$longitude))
+  lats <- sort(unique(dat$latitude))
+  dat$Wey <- NA; dat$Wex <- NA; dat$We <- NA
+
+  # constants
+  # h is grid resolution in meters
+  # https://gis.stackexchange.com/questions/75528/understanding-terms-in-length-of-degree-formula
+  h.meter <- function(lat){
+    m_per_deg_lat <- 111132.954 - 559.822 * cos( 2 * pi * lat/180 ) + 1.175 * cos( 4 * pi * lat / 180)
+   m_per_deg_lon <- 111132.954 * cos ( pi*lat/180 )
+   return(list(lat=m_per_deg_lat, lon=m_per_deg_lon))
+  }
+  psw <- 1023.6 #kg/m3 sea water
+
+  if(length(lats)>2)
+    for(lat in (min(lats)+res):(max(lats)-res)){
+      dEMTy.lat <- (dat$ektry[dat$latitude==(lat+res)]-dat$ektry[dat$latitude==(lat-res)])/(2*res*h.meter(lat)$lat)
+      Wey <- dEMTy.lat/psw
+      dat$Wey[dat$latitude==lat] <- Wey
+    }
+  if(length(lons)>2)
+    for(lon in (min(lons)+res):(max(lons)-res)){
+      dEMTx.lon <- (dat$ektrx[dat$longitude==(lon+res)]-dat$ektrx[dat$longitude==(lon-res)])/(2*res*h.meter(dat$latitude[dat$longitude==(lon+res)])$lon)
+      Wex <- dEMTx.lon/psw
+      dat$Wex[dat$longitude==lon] <- Wex
+    }
+  
+  dat$We <- dat$Wex+dat$Wey
+
+  return(dat)
+}
+
 # Get from u and v only
 # Schwing, F. B., O'Farrell, M., Steger, J., and Baltz, K., 1996: Coastal Upwelling Indices, West Coast of North America 1946 - 1995, NOAA Technical Memorandum NMFS-SWFSC-231 using the modified Cd
 getEMT <- function(dat, coast_angle=NULL){
@@ -140,6 +184,7 @@ getEMT <- function(dat, coast_angle=NULL){
   dat$EMT <- EMT
   dat$ektrx <- EMTx
   dat$ektry <- EMTy
+  dat$We <- getEPump(dat)$We
   if(!missing(coast_angle)){
     dat$EMTperp <- EMTperp(dat$ektrx, dat$ektry, coast_angle)$perp
     dat$upi <- upwell(dat$ektrx, dat$ektry, coast_angle)

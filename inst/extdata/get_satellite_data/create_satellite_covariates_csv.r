@@ -1,6 +1,7 @@
 # create Satellite_covariates.csv
 # with SST, CHL, Wind.UPW, SST.UPW and UPW13.SST
 # set get_satellite_data as wd
+setwd(file.path(here::here(), "inst", "extdata", "get_satellite_data"))
 
 #set up file
 current.year = as.numeric(format(Sys.Date(),"%Y"))
@@ -127,4 +128,20 @@ for(fil in covfiles){
     dat[i,covs]
 }
 
-write.csv(monthly_cov, row.names=FALSE, file="../raw data files and code/Satellite_covariates.csv")
+#EMTperp and Ekman Pumping
+covfiles=c(
+  "Ekman-ERA5-1979-2020.csv"
+)
+for(fil in covfiles){
+  dat=read.csv(fil)
+  covs=colnames(dat)[!(colnames(dat)%in%c("Year","Month","Dates"))]
+  covs.uniq=paste("ERA5.",covs,sep="")
+  for(icol in covs.uniq) if(is.null(monthly_cov[[icol]])) monthly_cov[[icol]]=NA
+  for(i in 1:dim(dat)[1])
+    monthly_cov[monthly_cov$Year==dat$Year[i] & monthly_cov$Month==dat$Month[i],covs.uniq]=
+    dat[i,covs]
+}
+
+write.csv(monthly_cov, row.names=FALSE, file=file.path(here::here(), "inst", "extdata", "raw data files and code", "Satellite_covariates.csv"))
+
+setwd(file.path(here::here()))

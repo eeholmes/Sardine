@@ -15,6 +15,10 @@
 # to download the enso data
 # and create a csv file
 
+# run get_EMTperp.R
+# to download the ERA5 wind data, compute Ekman Mass Trans perp and Ekman Pumping
+# and create a csv file
+
 # The file test sst cuts at 9-5 degN.r
 # tests how SST drops off as you go offshore.
 

@@ -7,7 +7,7 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-source(file.path(here::here(), "inst", "extdata", "get_satellite_data", "get_EMT_functions.R"))
+source(file.path(here::here(), "inst", "extdata", "get_satellite_data", "Replicate_EMT", "get_EMT_functions.R"))
 library(ggplot2)
 library(tidyr)
 library(dplyr)
@@ -90,7 +90,7 @@ lats <- c(6, 20); lons <- c(68,72)
 windmon1 <- getdata("erdlasFnWPr", date=dates, lat=lats, lon=lons)
 windmon1$date <- format(windmon1$time, "%Y-%m-01")
 colnames(windmon1) <- stringr::str_replace(colnames(windmon1), "_mean", "")
-windmon1 <- getEMT(windmon1)
+windmon1 <- getEMT(windmon1, coast_angle=158)
 ```
 
 Now get ASCAT monthly wind. This is on a finer grid. 
@@ -103,7 +103,7 @@ windmon2$v <- tmp$y_wind
 windmon2$uv_mag <- sqrt(tmp$y_wind^2 + tmp$x_wind^2)
 windmon2$date <- format(windmon2$time, "%Y-%m-01")
 res <- attr(windmon2, "resolution")
-windmon2 <- getEMT(windmon2)
+windmon2 <- getEMT(windmon2, coast_angle=158)
 ```
 
 Now get CCMP monthly.
@@ -114,17 +114,30 @@ colnames(windmon3) <- stringr::str_replace(colnames(windmon3), "wnd", "")
 colnames(windmon3) <- stringr::str_replace(colnames(windmon3), "wspd", "uv_mag")
 windmon3$longitude <- windmon3$longitude-0.125
 windmon3$latitude <- windmon3$latitude-0.125
-windmon3 <- getEMT(windmon3)
+windmon3 <- getEMT(windmon3, coast_angle=158)
+```
+
+Now get the Reanalysis Data ERA5 monthly wind product. 
+```{r}
+# the altitude is in millibar. air pressue at 10m is about 1000millibar
+#h=10 #meters
+#airmillibar <- 0.01*101325*(1 - 2.25577*10^-5*h)^5.25588 #pascal/100
+
+windmon4 <- getdata("hawaii_soest_66d3_10d8_0f3c", date=dates, lat=lats, lon=lons, 
+                    altitude=1000, eserver="http://apdrc.soest.hawaii.edu/erddap", alt.name="LEV")
+windmon4$date <- format(windmon4$time, "%Y-%m-01")
+windmon4 <- getEMT(windmon4, coast_angle=158)
 ```
 
 ### Plot wind data
 
 ```{r}
 library(tidyr)
-cols <- c("date", "latitude", "longitude", "u", "v", "taux","tauy", "ektrx", "ektry")
+cols <- c("date", "latitude", "longitude", "u", "v", "taux","tauy", "ektrx", "ektry", "EMTperp")
 df <- rbind(data.frame(windmon1[,cols], data="FNMOC"),
             data.frame(windmon2[,cols], data="ASCAT"),
-            data.frame(windmon3[,cols], data="CCMP"))
+            data.frame(windmon3[,cols], data="CCMP"),
+            data.frame(windmon4[,cols], data="ERA5"))
 dfl <- df %>%
   pivot_longer(!date & !latitude & !longitude & !data,
                      names_to = "name",
@@ -158,15 +171,111 @@ p2 <- ggplot(subset(dfl, longitude==plotlons[2] & date==thedate & name%in%pars),
 gridExtra::grid.arrange(p1,p2)
 ```
 
-Ekman Transport
-```{r}
+Ekman Mass Transport
+
+```{r emt.plot}
 thedate <- "2010-07-01"
 plotlons <- c(69.5, 71.5)
-pars <- c("ektrx", "ektry")
+pars <- c("ektrx", "ektry", "EMTperp")
 p1 <- ggplot(subset(dfl, longitude==plotlons[1] & date==thedate & name%in%pars), aes(x=latitude, y=value, color=data)) + geom_line() +
   facet_wrap(~name, scales = "free_y") + ggtitle(paste(thedate, "longitude =", plotlons[1]))
 p2 <- ggplot(subset(dfl, longitude==plotlons[2] & date==thedate & name%in%pars), aes(x=latitude, y=value, color=data)) + geom_line() +
   facet_wrap(~name, scales = "free_y") + ggtitle(paste(thedate, "longitude =", plotlons[2]))
 gridExtra::grid.arrange(p1,p2)
+```
+
+# Test 3: Comparison of EMT perpendicular using monthly winds 2000 to 2019
+
+
+```{r}
+b=as(as(indiashp2, "SpatialLinesDataFrame"), "SpatialPointsDataFrame")
+b=subset(b, Line.NR==129)
+coastcoord=coordinates(b)
+coastcoord <- coastcoord[coastcoord[,"x"]<77.5,]
+coastlats = unique(windmon3.mean$latitude)
+coastlons = c()
+for(i in coastlats){
+  tmp <- coastcoord[,"y"]
+  coastlons <- c(coastlons, min(coastcoord[,"x"][which(abs(tmp-i)==min(abs(tmp-i)))]))
+}
+```
+
+```{r}
+dates <- c("1999-08-16", "2009-10-16")
+lats <- c(8, 13); lons <- c(70,78)
+```
+
+```{r windmon3.coast, echo=FALSE, warning=FALSE}
+windmon1.coast <- windmon1[windmon3$latitude>7,]
+for(i in 1:length(coastlats)){
+  thelat <- coastlats[i]
+  thelon <- coastlons[i]
+  windmon3.coast <- windmon3.coast[!(windmon3.coast$latitude==thelat & windmon3.coast$longitude<(thelon-2)),]
+}
+windmon3.cmean <- windmon3.coast %>% 
+  group_by(month, latitude, longitude) %>% 
+  summarize(ektrx = mean(ektrx, na.rm=TRUE), 
+            ektry = mean(ektry, na.rm=TRUE),
+            upi = mean(upi, na.rm=TRUE),
+            v = mean(v, na.rm=TRUE),
+            u = mean(u, na.rm=TRUE),
+            EMT = mean(EMT, na.rm=TRUE),
+            EMTperp = mean(EMTperp, na.rm=TRUE)
+)
+```
+
+```{r windmon3.coast.plot, echo=FALSE, warning=FALSE}
+for(i in month.name){
+rdf <- subset(windmon3.cmean, month==i)
+rdf$x <- rdf$longitude
+rdf$y <- rdf$latitude
+rdf <- rdf[, c("x", "y", "EMTperp")]
+if(i=="January"){ rst <- rasterFromXYZ(rdf); names(rst) <- i }else{
+  tmp <- rasterFromXYZ(rdf); names(tmp) <- i
+  rst <- stack(rst, tmp)
+}
+}
+at=seq(-3000,2000,100)
+pal <- colorRampPalette(c("red","white","blue"))
+spplot(rst, col.regions=rev(pal(length(at))), at=at, zlim=c(-3000,500),
+       main="Average Monthly EMT perp to coast (+ in, - out)") + layer(sp.polygons(indiashp2))
+```
+
+
+```{r windmon3.coast.EMTx.plot, echo=FALSE, warning=FALSE}
+for(i in month.name){
+rdf <- subset(windmon3.cmean, month==i)
+rdf$x <- rdf$longitude
+rdf$y <- rdf$latitude
+rdf <- rdf[, c("x", "y", "ektrx")]
+if(i=="January"){ rstew <- rasterFromXYZ(rdf); names(rstew) <- i }else{
+  tmp <- rasterFromXYZ(rdf); names(tmp) <- i
+  rstew <- stack(rstew, tmp)
+}
+}
+at=seq(-3000,2000,100)
+pal <- colorRampPalette(c("red","white","blue"))
+spplot(rstew, col.regions=rev(pal(length(at))), at=at, zlim=c(-3000,500),
+       main="Average Monthly EMT East(+) West(-)") + layer(sp.polygons(indiashp2))
+```
+
+
+Mean Ekman Transport perpendicular to coast line.
+
+```{r echo=FALSE}
+plot(tapply(-1*windmon3.cmean$EMTperp, windmon3.cmean$month, mean, na.rm=TRUE)[month.name], type="l",
+     main="Mean Ekman Transport Perp to Coast 1999-2017 (+ = offshore)", ylab="-1 x EMT perp (kg/ms)", xlab="month",
+     xaxt="n")
+axis(1, at=1:12, labels=month.abb)
+```
+
+
+Mean Ekman Transport east-west.
+
+```{r echo=FALSE}
+plot(tapply(-1*windmon3.cmean$ektrx, windmon3.cmean$month, mean, na.rm=TRUE)[month.name], type="l",
+     main="Mean Ekman Transport East-West 1999-2017 (+ = offshore)", ylab="-1 x EMT perp (kg/ms)", xlab="month",
+     xaxt="n")
+axis(1, at=1:12, labels=month.abb)
 ```
 
