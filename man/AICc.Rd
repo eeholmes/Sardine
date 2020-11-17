@@ -17,7 +17,8 @@ Helper function compute AICc from a gam or lm object
 }
 \examples{
 # some simulated data with one cov
-dat <- mgcv::gamSim(6,n=20,scale=.5)[,1:2]
-m <- mgcv::gam(y~s(x0), data=dat)
+library(mgcv)
+dat <- gamSim(6,n=20,scale=.5)[,1:2]
+m <- gam(y~s(x0), data=dat)
 AICc(m)
 }

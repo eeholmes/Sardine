@@ -135,7 +135,7 @@ covfiles=c(
 for(fil in covfiles){
   dat=read.csv(fil)
   covs=colnames(dat)[!(colnames(dat)%in%c("Year","Month","Dates"))]
-  covs.uniq=paste("ERA5.",covs,sep="")
+  covs.uniq=paste(covs,".UPW", sep="")
   for(icol in covs.uniq) if(is.null(monthly_cov[[icol]])) monthly_cov[[icol]]=NA
   for(i in 1:dim(dat)[1])
     monthly_cov[monthly_cov$Year==dat$Year[i] & monthly_cov$Month==dat$Month[i],covs.uniq]=

@@ -29,6 +29,6 @@ ByteCompile: TRUE
 RdMacros: Rdpack
 Suggests: XML, RCurl, httr, ncdf4
 VignetteBuilder: knitr
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Remotes: github::rstudio/rmarkdown
 Encoding: UTF-8
