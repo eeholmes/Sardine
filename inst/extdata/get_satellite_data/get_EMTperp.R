@@ -43,10 +43,16 @@ EMTperp.cmean <- windmon.coast %>%
   group_by(Year, Month) %>% 
   summarize(EMTperp = mean(EMTperp, na.rm=TRUE)
   )
+# Get average coastal pumping
+We.cmean <- windmon.coast %>% 
+  group_by(Year, Month) %>% 
+  summarize(We = 1000000*mean(We, na.rm=TRUE)
+  )
+
 # Get average EMT pumping for each month
 windmon.tip <- windmon[windmon$latitude>=7 & windmon$latitude<=9 & 
                          windmon$longitude>=75 & windmon$longitude<=77,]
-Epump.cmean <- windmon.tip %>% 
+We.tmean <- windmon.tip %>% 
   group_by(Year, Month) %>% 
   summarize(We = 1000000*mean(We, na.rm=TRUE)
   )
@@ -54,7 +60,7 @@ Epump.cmean <- windmon.tip %>%
 
 yr1=min(windmon$Year); yr2=max(windmon$Year)
 id <- "ERA5"
-Ekman <- cbind(EMTperp.cmean[,c("Year", "Month", "EMTperp")], We=Epump.cmean$We)
+Ekman <- cbind(EMTperp.cmean[,c("Year", "Month", "EMTperp")], Wetip=We.tmean$We, Weperp=We.cmean$We)
 dfil <- file.path(here::here(), "inst", "extdata", "get_satellite_data",
                   paste0("Ekman","-", id,"-",yr1,"-",yr2,".csv"))
 write.csv(Ekman, file=dfil, row.names=FALSE)

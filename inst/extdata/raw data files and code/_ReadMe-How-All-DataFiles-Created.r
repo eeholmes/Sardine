@@ -21,6 +21,8 @@ setwd("../../..") #back to root
 # enso data
 #downloads and saves enso.csv file to raw data files and code
 #source("inst/extdata/get_satellite_data/get_enso_data.r") 
+#source("inst/extdata/get_satellite_data/get_bakun_upi_data.R") 
+#source("inst/extdata/get_satellite_data/get_EMTperp.R") 
 
 # For the non-satellite data
 #reads in the land guage data file and creates the precip_kerala.csv
@@ -32,4 +34,4 @@ source("inst/extdata/raw data files and code/create_precip_kerala_csv.r")
 source("inst/extdata/raw data files and code/create_monthly_covariates_csv.r")
 
 #3 Create all the rdata files in the data dir
-source("create_rdata_files.r")
+source("inst/extdata/raw data files and code/create_rdata_files.r")

@@ -1,4 +1,5 @@
 # create Satellite_covariates.csv
+# if update sat covariates, source this
 # with SST, CHL, Wind.UPW, SST.UPW and UPW13.SST
 # set get_satellite_data as wd
 setwd(file.path(here::here(), "inst", "extdata", "get_satellite_data"))

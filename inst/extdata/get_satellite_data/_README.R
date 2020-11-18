@@ -22,4 +22,6 @@
 # The file test sst cuts at 9-5 degN.r
 # tests how SST drops off as you go offshore.
 
+source("inst/extdata/get_satellite_data/create_satellite_covariates_csv.r")
 
+# Then go to read me in 'raw data files and code' and run the steps
