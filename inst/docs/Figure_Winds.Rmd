@@ -1,0 +1,73 @@
+---
+title: "Figure Winds"
+output:
+  pdf_document: default
+  html_document: default
+  word_document: default
+header-includes: \usepackage[labelformat=empty]{caption}
+---
+
+```{r child = file.path(here::here(),'setup.Rmd')}
+```
+
+```{r}
+knitr::opts_chunk$set(echo = FALSE, warning=FALSE, results='hide', message=FALSE,
+                      dev="postscript", dpi=300)
+```
+
+```{r}
+# the getdata() function
+source(file.path(here::here(), "inst", "extdata", "get_satellite_data", "Replicate_EMT", "get_EMT_functions.R"))
+load(file.path(here::here(), "inst", "extdata", "get_satellite_data", "Replicate_EMT", "indiashp.RData"))
+library(ggplot2)
+library(tidyr)
+library(dplyr)
+library(raster)
+library(rasterVis)
+```
+
+```{r}
+# Get monthly wind data
+#getdata("hawaii_soest_66d3_10d8_0f3c", lat=c(7,15), lon=c(70,78), 
+#       altitude=1000, eserver="http://apdrc.soest.hawaii.edu/erddap", alt.name="LEV")
+# dfil <- file.path(here::here(), "inst", "extdata", "get_satellite_data", "Replicate_EMT", "hawaii_soest_66d3_10d8_0f3c-7-15-70-78-1979-01-01-2020-06-01.csv")
+windmon <- getdata("hawaii_soest_66d3_10d8_0f3c", date=c("1979-01-01", "2020-06-01"), 
+        lat=c(7,15), lon=c(70,78), 
+        altitude=1000, eserver="http://apdrc.soest.hawaii.edu/erddap", alt.name="LEV")
+windmon$time <- as.Date(windmon$time)
+windmon$Month <- as.numeric(format(windmon$time, "%m"))
+windmon$Year <- as.numeric(format(windmon$time, "%Y"))
+```
+
+```{r windmon.mean}
+windmon.mean <- windmon %>% 
+  group_by(Month, latitude, longitude) %>% 
+  summarize(v = mean(v, na.rm=TRUE),
+            u = mean(u, na.rm=TRUE))
+```
+
+
+```{r windplots}
+for(i in 1:2){
+  field <- subset(windmon.mean, Month==i)[, c("longitude", "latitude", "u", "v")]
+  field <- rasterFromXYZ(field)
+  names(field) <- month.name[i]
+  if(i==1) s <- field else s <- stack(field, s)
+}
+```
+
+
+```{r windplots}
+plist=list()
+for(i in 1:12){
+  field <- subset(windmon.mean, Month==i)[, c("longitude", "latitude", "u", "v")]
+  field <- rasterFromXYZ(field)
+  field <- mask(field, indiashp2, inverse=TRUE)
+  p1 <- vectorplot(field, isField='dXY', region = FALSE, margin = FALSE, narrows = 100, length=unit(3e-2, 'npc'), main=month.name[i]) +  layer(sp.polygons(indiashp2))
+  plist[[month.name[i]]] <- p1
+}
+```
+
+```{r}
+gridExtra::grid.arrange(grobs=plist[1:3], ncol=3)
+```

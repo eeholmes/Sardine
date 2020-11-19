@@ -43,9 +43,11 @@ First step is to replicate the EMT figure in Smitha et al 2014 to show that I am
 
 ```{r echo=FALSE, eval=FALSE}
 indiashp <- raster::getData("GADM", country = "India", level = 0)
+indiashp1 <- raster::getData("GADM", country = "India", level = 1)
+kerala <- subset(indiashp1, NAME_1=="Kerala")
 indiashp2 <- crop(indiashp, extent(66,78,5,18))
 indiashp2 <- crop(indiashp, extent(65,79,5,19))
-save(indiashp, indiashp2, file="indiashp.RData")
+save(kerala, indiashp, indiashp2, file=file.path(here::here(), "inst", "extdata", "get_satellite_data", "Replicate_EMT", "indiashp.RData"))
 ```
 
 ```{r echo=FALSE}
