@@ -1,20 +1,17 @@
 ---
 title: "Figure Winds"
 output:
+  html_document:
+    df_print: paged
   pdf_document: default
-  html_document: default
-  word_document: default
-header-includes: \usepackage[labelformat=empty]{caption}
 ---
 
-```{r child = file.path(here::here(),'setup.Rmd')}
-```
-
-```{r}
+```{r echo=FALSE}
 knitr::opts_chunk$set(echo = FALSE, warning=FALSE, results='hide', message=FALSE,
                       dev="postscript", dpi=300)
 ```
 
+To create an eps file, make sure to knit to html. The eps created when using knit to pdf is very grainy. The file will be in the figures folder. EPS doesn't seem to respect transparency, fyi.
 ```{r}
 # the getdata() function
 source(file.path(here::here(), "inst", "extdata", "get_satellite_data", "Replicate_EMT", "get_EMT_functions.R"))
@@ -44,16 +41,13 @@ windmon.mean <- windmon %>%
   group_by(Month, latitude, longitude) %>% 
   summarize(v = mean(v, na.rm=TRUE),
             u = mean(u, na.rm=TRUE))
-```
-
-
-```{r windplots}
-for(i in 1:2){
-  field <- subset(windmon.mean, Month==i)[, c("longitude", "latitude", "u", "v")]
-  field <- rasterFromXYZ(field)
-  names(field) <- month.name[i]
-  if(i==1) s <- field else s <- stack(field, s)
-}
+windmon.mean$Season = windmon.mean$Month
+windmon.mean$Season[windmon.mean$Month %in% 6:9] <- "Summer Jun-Sep"
+windmon.mean$Season[windmon.mean$Month %in% 1:4] <- "Winter Jan-Apr"
+windmon.season <- windmon.mean %>% 
+  group_by(Season, latitude, longitude) %>% 
+  summarize(v = mean(v, na.rm=TRUE),
+            u = mean(u, na.rm=TRUE))
 ```
 
 
@@ -62,12 +56,27 @@ plist=list()
 for(i in 1:12){
   field <- subset(windmon.mean, Month==i)[, c("longitude", "latitude", "u", "v")]
   field <- rasterFromXYZ(field)
+  projection(field) <- CRS("+proj=longlat +datum=WGS84")
   field <- mask(field, indiashp2, inverse=TRUE)
-  p1 <- vectorplot(field, isField='dXY', region = FALSE, margin = FALSE, narrows = 100, length=unit(3e-2, 'npc'), main=month.name[i]) +  layer(sp.polygons(indiashp2))
+  p1 <- vectorplot(field, isField='dXY', region = FALSE, margin = FALSE, narrows = 100, length=0.04, main=month.name[i], key.arrow = list(size=10, label = 'm/s')) +
+    layer(sp.polygons(indiashp2)) + layer(sp.polygons(kerala, fill="grey"))
   plist[[month.name[i]]] <- p1
+}
+plist2=list()
+for(i in c("Summer Jun-Sep", "Winter Jan-Apr")){
+  field <- subset(windmon.season, Season==i & longitude>74 & latitude<13 & latitude>7.5)[, c("longitude", "latitude", "u", "v")]
+  field <- rasterFromXYZ(field)
+  projection(field) <- CRS("+proj=longlat +datum=WGS84")
+  field <- mask(field, indiashp2, inverse=TRUE)
+  field <- mask(field, kerala, inverse=TRUE)
+  p1 <- vectorplot(field, isField='dXY', region = FALSE, margin = FALSE, narrows = 125, length=0.04, main=i, key.arrow = list(size=10, label = 'm/s'), lwd.arrows=1.5) +
+    layer(sp.polygons(indiashp2, col="#585858"), under=TRUE) + layer(sp.polygons(kerala, fill="grey", col="#585858"), under=TRUE)
+  p1$par.settings$layout.heights$main.key.padding=-4
+  p1$main=list(i, x=0.6, just="center")
+  plist2[[i]] <- p1
 }
 ```
 
-```{r}
-gridExtra::grid.arrange(grobs=plist[1:3], ncol=3)
+```{r plotfig, fig.path='figures/', dev="postscript", dpi=300}
+gridExtra::grid.arrange(grobs=plist2[1:2], ncol=2)
 ```

@@ -17,10 +17,6 @@ for(covname in c("CHL","SST","SSH","UPW")){
   }
   assign(tolower(covname),tmp)
 }
-#standardize the Bakun UPW
-tmp=(upw$Bakun.UPW-mean(upw$Bakun.UPW,na.rm=TRUE))
-tmp=tmp/sqrt(var(tmp,na.rm=TRUE))
-upw$Bakun.UPW <- tmp
 
 sst <- sst[,!stringr::str_detect(colnames(sst),"UPW")]
 

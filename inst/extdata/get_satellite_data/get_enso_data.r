@@ -46,12 +46,31 @@ mei.vec[mei.vec== -999.000]=NA
 mei.yr=rep(as.numeric(mei$Year),each=12)
 mei.mon=rep(1:12,length(mei$Year))
 
+# NAO
+nao = read.table("ftp://ftp.cpc.ncep.noaa.gov/wd52dg/data/indices/nao_index.tim", skip=9, nrows=length(1950:2018)*12)
+colnames(nao) <- c("Year", "Month", "NAO")
+
+# PDO
+pdo = read.table("https://psl.noaa.gov/tmp/gcos_wgsp/data.143.131.2.6.325.11.4.55", skip=0, nrows=length(1948:2017)*12)
+pdo$Year <- floor(pdo[,1])
+pdo$Month <- round((pdo[,1]-pdo$Year)*12+1)
+pdo$PDO <- pdo[,2]
+pdo <- pdo[c("Year", "Month", "PDO")]
+
+#AMO
+amo <- read.table("https://psl.noaa.gov/tmp/gcos_wgsp/data.143.131.2.6.325.11.25.33", skip=0, nrows=length(1948:2017)*12)
+amo$Year <- floor(amo[,1])
+amo$Month <- round((amo[,1]-amo$Year)*12+1)
+amo$AMO <- amo[,2]
+amo <- amo[c("Year", "Month", "AMO")]
+
+
 #set up enso dataframe
 startyear=min(as.numeric(soi$Year), as.numeric(oni$Year))
 endyear=max(as.numeric(soi$Year), as.numeric(oni$Year))
 enso.yr=rep(startyear:endyear, each=12)
 enso.mon=rep(1:12,length(startyear:endyear))
-enso=data.frame(Year=enso.yr, Month=enso.mon, ONI=NA, SOI=NA, DMI=NA, MEI=NA)
+enso=data.frame(Year=enso.yr, Month=enso.mon, ONI=NA, SOI=NA, DMI=NA, MEI=NA, NAO=NA, PDO=NA, AMO=NA)
 
 #fill the dataframe
 for(year in startyear:endyear){
@@ -61,10 +80,16 @@ for(year in startyear:endyear){
     filt3 = soi.yr==year & soi.mon==month
     filt4 = dmi.yr==year & dmi.mon==month
     filt5 = mei.yr==year & mei.mon==month
+    filt6 = nao$Year==year & nao$Month==month
+    filt7 = pdo$Year==year & pdo$Month==month
+    filt8 = amo$Year==year & amo$Month==month
     if(any(filt2)) enso$ONI[filt1]=oni.vec[filt2]
     if(any(filt3)) enso$SOI[filt1]=soi.vec[filt3]
     if(any(filt4)) enso$DMI[filt1]=dmi.vec[filt4]
     if(any(filt5)) enso$MEI[filt1]=mei.vec[filt5]
+    if(any(filt6)) enso$NAO[filt1]=nao$NAO[filt6]
+    if(any(filt7)) enso$PDO[filt1]=pdo$PDO[filt7]
+    if(any(filt8)) enso$AMO[filt1]=amo$AMO[filt8]
   }
 }
 fil="enso.csv"
