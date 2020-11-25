@@ -44,7 +44,7 @@
 "oilsardine_yr"
 
 
-#' ENSO Indices
+#' Ocean Climate Indices
 #' 
 #' @description
 #' Oceanic Nino Index, Equatorial Southern Oscillation Index and Dipole Mode Index
@@ -66,11 +66,21 @@
 #' The DMI  is the monthly Dipole Mode Index.  
 #' The DMI (also IOD index) is defined by the SSTA difference between the 
 #' western Indian Ocean (10°S–10°N, 50°E–70°E) and the southeastern Indian Ocean (10°S–0°, 90°E–110°E).
-#' The data were downloaded with the following code.
+#' The data were downloaded from the NOAA Earth Systems Research Laboratories with the following code.
 #' \preformatted{
 #' dmi=read.table("https://www.esrl.noaa.gov/psd/gcos_wgsp/Timeseries/Data/dmi.long.data", skip=1, nrows=149)
 #' }
-#' The IOBM index is defined as the SSTA averaged over the tropical Indian Ocean (40°E–100°E, 20°S–20°N). 
+#' The NAO  is the monthly North Atlantic Oscillation Index.  
+#' The North Atlantic Oscillation (NAO) index is based on the surface sea-level pressure difference between the Subtropical (Azores) High and the Subpolar Low. 
+#' The data were downloaded from the NOAA Climate Prediction Center with the following code.
+#' \preformatted{
+#' nao = read.table("ftp://ftp.cpc.ncep.noaa.gov/wd52dg/data/indices/nao_index.tim", skip=9, nrows=length(1950:2018)*12)
+#' }
+#' The PDO  is the monthly Pacific Decadal Oscillation Index and the AMO is the Atlantic Multidecadal Oscillation.  The PDO is an index of the sea surface temperature anomalies over the North Pacific Ocean. The AMO is based on sea-surface temperature oscillations in the North Atlantic Ocean.  The data were downloaded from the NOAA Physical Sciences Laboratory with the following code.
+#' \preformatted{
+#' pdo = read.table("https://psl.noaa.gov/tmp/gcos_wgsp/data.143.131.2.6.325.11.4.55", skip=0, nrows=length(1948:2017)*12)
+#' amo <- read.table("https://psl.noaa.gov/tmp/gcos_wgsp/data.143.131.2.6.325.11.25.33", skip=0, nrows=length(1948:2017)*12)
+#' }
 #' 
 #' @format A data frame with variables:
 #' \describe{
@@ -80,11 +90,22 @@
 #'   \item{SOI}{The SOI index value}
 #'   \item{DMI}{The DMI index value}
 #'   \item{MEI}{The MEI index value}
+#'   \item{NAO}{The NAO index value}
+#'   \item{PDO}{The PDO index value}
+#'   \item{AMO}{The AMO index value}
 #' }
 #' 
 #' @references
 #' 
 #' \insertRef{SajiYamagata2003}{SardineForecast}
+#' 
+#' \insertRef{vandenDooletal2000}{SardineForecast}
+#' 
+#' \insertRef{Mantuaetal1997}{SardineForecast}
+#' 
+#' \insertRef{Newmanetal2016}{SardineForecast}
+#' 
+#' \insertRef{Enfieldetal2001}{SardineForecast}
 #' 
 "enso"
 
