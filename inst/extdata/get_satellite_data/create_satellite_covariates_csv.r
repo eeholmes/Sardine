@@ -71,8 +71,8 @@ for(fil in covfiles){
 
 #CHL; uses sw for 1997 to 2002; then mh for 2003 onward
 covfiles=c(
-  "chlorophyll-erdSW1chlamday-1997-2010.csv",
-  "chlorophyll-erdMH1chlamday-2003-2019.csv"
+  "chlorophyll-erdSW2018chlamday-1997-2010.csv",
+  "chlorophyll-erdMH1chlamday-2003-2020.csv"
 )
 for(fil in covfiles){
   dat=read.csv(fil)

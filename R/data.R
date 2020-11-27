@@ -273,17 +273,17 @@
 #' Ocean Biology Processing Group in the Ocean Ecology Laboratory
 #' at the NASA Goddard Space Flight Center.
 #' 
-#' For September 1997 to 2002, we used the Chlorophyll-a 2014.0 Reprocessing (R2014.0) product 
+#' For September 1997 to 2002, we used the Chlorophyll-a 2018.0 Reprocessing (R2018.0) product 
 #' from the Sea-viewing Wide Field-of-view 
-#' Sensor (SeaWiFS) on the Orbview-2 satellite. These data are on a 0.1 degree grid.  See reference below.
+#' Sensor (SeaWiFS) on the Orbview-2 satellite. These data are on a 0.083 degree grid.  See reference below.
 #'    
-#' For 2003 to 2017, we used the MODIS-Aqua product on a 4km grid. These CHL data are taken from measurements 
+#' For 2003 to 2017, we used the MODIS-Aqua R2018.1 product on a 0.0416 degree. These CHL data are taken from measurements 
 #' gathered by the Moderate 
 #' Resolution Imaging Spectroradiometer (MODIS) 
 #' on NASA's Aqua Spacecraft. See reference below.
 #'    
 #' Both CHL data sets were downloaded from the NOAA ERDDAP server. See
-#'     \url{https://coastwatch.pfeg.noaa.gov/erddap/info/erdSW1chlamday/index.html} and 
+#'     \url{https://coastwatch.pfeg.noaa.gov/erddap/info/erdSW2018chlamday/index.html} and 
 #'     \url{https://coastwatch.pfeg.noaa.gov/erddap/info/erdMH1chlamday/index.html}.
 #'    
 #' The R code used
@@ -303,14 +303,14 @@
 #' @references
 #' 
 #' NASA Goddard Space Flight Center, Ocean Ecology Laboratory, 
-#' Ocean Biology Processing Group; (2014): SeaWiFS Ocean Color Data; 
+#' Ocean Biology Processing Group; (2018): SeaWiFS Ocean Color Data; 
 #' NASA Goddard Space Flight Center, Ocean Ecology Laboratory, 
-#' Ocean Biology Processing Group. \url{https://dx.doi.org/10.5067/ORBVIEW-2/SEAWIFS_OC.2014.0}
+#' Ocean Biology Processing Group. \url{https://dx.doi.org/10.5067/ORBVIEW-2/SEAWIFS/L3B/CHL/2018}
 #' 
 #' NASA Goddard Space Flight Center, Ocean Ecology Laboratory, Ocean 
 #' Biology Processing Group. Moderate-resolution Imaging 
 #' Spectroradiometer (MODIS) Aqua Chlorophyll Data; 2014 Reprocessing. 
-#' NASA OB.DAAC, Greenbelt, MD, USA. \url{https://dx.doi.org/10.5067/AQUA/MODIS/L3M/CHL/2014}
+#' NASA OB.DAAC, Greenbelt, MD, USA. \url{https://dx.doi.org/10.5067/AQUA/MODIS/L3M/CHL/2018}
 #' 
 #' 
 #' \insertRef{Huetal2012}{SardineForecast}

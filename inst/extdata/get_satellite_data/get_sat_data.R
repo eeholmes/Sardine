@@ -17,6 +17,7 @@
 library(ncdf4)
 library(rerddap)
 library(rerddapXtracto)
+cdir <- file.path(here::here(), "inst", "extdata", "get_satellite_data")
 
 # Define boxes of timeseries to plot. These are the central locations of each box.
 # Each box is a 1 degree by 1 degree, except for box 14 which is 3 degree by 3 
@@ -97,6 +98,8 @@ parameter <-'chlorophyll'
 id <- 'erdSW1chlamday'
 tag <- "CHL."
 erdSW1chlamday=getdat(parameter, id, tag, boxes14, width)
+yr1=min(erdSW1chlamday$Year); yr2=max(erdSW1chlamday$Year)
+write.csv(erdMH1chlamday, paste("chlorophyll","-", id,"-",yr1,"-",yr2,".csv",sep=""),row.names=FALSE)
 
 #https://coastwatch.pfeg.noaa.gov/erddap/info/erdSW2018chlamday/index.html
 # update to the 2018 product
@@ -104,6 +107,8 @@ parameter <-'chlorophyll'
 id <- 'erdSW2018chlamday'
 tag <- "CHL."
 erdSW2018chlamday=getdat(parameter, id, tag, boxes14, width)
+yr1=min(erdSW2018chlamday$Year); yr2=max(erdSW2018chlamday$Year)
+write.csv(erdSW2018chlamday, file.path(cdir, paste0("chlorophyll","-", id,"-",yr1,"-",yr2,".csv")), row.names=FALSE)
 
 
 # Define parameters for the chlorophyll 2 dataset 
@@ -113,7 +118,7 @@ id <- 'erdMH1chlamday'
 tag <- "CHL."
 erdMH1chlamday=getdat(parameter, id, tag, boxes14, width)
 yr1=min(erdMH1chlamday$Year); yr2=max(erdMH1chlamday$Year)
-write.csv(erdMH1chlamday, paste("chlorophyll","-", id,"-",yr1,"-",yr2,".csv",sep=""),row.names=FALSE)
+write.csv(erdMH1chlamday, file.path(cdir, paste0("chlorophyll","-", id,"-",yr1,"-",yr2,".csv")),row.names=FALSE)
 
 # Define parameters for the sst 1a dataset 
 #https://coastwatch.pfeg.noaa.gov/erddap/info/erdPH2sstdmday/index.html; pathfinder vs 2 1981 to 2012; 
