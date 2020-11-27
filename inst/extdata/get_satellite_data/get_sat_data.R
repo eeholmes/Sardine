@@ -1,4 +1,4 @@
-#Make sure working director is get_satellite_data folder
+#Make sure working directory is get_satellite_data folder
 
 # This script goes and gets chl, sst, ssh and upwelling data from the 14 boxes 
 # defined at the Kochi workshop in September 2014. 
@@ -97,6 +97,14 @@ parameter <-'chlorophyll'
 id <- 'erdSW1chlamday'
 tag <- "CHL."
 erdSW1chlamday=getdat(parameter, id, tag, boxes14, width)
+
+#https://coastwatch.pfeg.noaa.gov/erddap/info/erdSW2018chlamday/index.html
+# update to the 2018 product
+parameter <-'chlorophyll' 
+id <- 'erdSW2018chlamday'
+tag <- "CHL."
+erdSW2018chlamday=getdat(parameter, id, tag, boxes14, width)
+
 
 # Define parameters for the chlorophyll 2 dataset 
 #https://coastwatch.pfeg.noaa.gov/erddap/info/erdMH1chlamday/index.html
