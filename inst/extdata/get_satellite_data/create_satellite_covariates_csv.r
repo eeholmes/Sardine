@@ -10,34 +10,48 @@ years=1956:current.year
 monthly_cov = data.frame(Year = rep(years,each=12), Month=rep(1:12,length(years)))
 
 #SST 
-covfiles=c(
-  "sea_surface_temperature-erdPH2sstamday-1981-2012.csv",
-  "sst-erdAGsstamday-2003-2016.csv"
+# First submission
+# covfiles=c(
+#   "sea_surface_temperature-erdPH2sstamday-1981-2012.csv",
+#   "sst-erdAGsstamday-2003-2016.csv"
+# )
+# for(fil in covfiles){
+#   dat=read.csv(fil)
+#   covs=colnames(dat)[!(colnames(dat)%in%c("Year","Month","Dates"))]
+#   for(icol in covs) if(is.null(monthly_cov[[icol]])) monthly_cov[[icol]]=NA
+#   for(i in 1:dim(dat)[1]){
+#     #don't use 2003 from POES data since only has 3 months in 2003
+#     if(!(fil=="sst-erdAGsstamday-2003-2016.csv" & dat$Year[i]==2003))
+#       monthly_cov[monthly_cov$Year==dat$Year[i] & monthly_cov$Month==dat$Month[i],covs]=dat[i,covs]
+#   }
+# }
+# Revision
+covfiles = c(
+  "sst-ncdcOisst21Agg-1981-2016.csv"
 )
 for(fil in covfiles){
   dat=read.csv(fil)
   covs=colnames(dat)[!(colnames(dat)%in%c("Year","Month","Dates"))]
   for(icol in covs) if(is.null(monthly_cov[[icol]])) monthly_cov[[icol]]=NA
   for(i in 1:dim(dat)[1]){
-    #don't use 2003 from POES data since only has 3 months in 2003
-    if(!(fil=="sst-erdAGsstamday-2003-2016.csv" & dat$Year[i]==2003))
     monthly_cov[monthly_cov$Year==dat$Year[i] & monthly_cov$Month==dat$Month[i],covs]=dat[i,covs]
 }
 }
 
-#SST Interpolated
-covfiles=c(
-  "sst-ncdcOisst2Agg-1981-2019.csv"
-)
-for(fil in covfiles){
-  dat=read.csv(fil)
-  covs=colnames(dat)[!(colnames(dat)%in%c("Year","Month","Dates"))]
-  for(icol in covs) if(is.null(monthly_cov[[icol]])) monthly_cov[[icol]]=NA
-  for(i in 1:dim(dat)[1]){
-    monthly_cov[monthly_cov$Year==dat$Year[i] & monthly_cov$Month==dat$Month[i],covs]=
-      dat[i,covs]
-  }
-}
+# #SST Interpolated
+# 11-22-20 I think this file is bad as getdat() needs monthly data and this is daily
+# covfiles=c(
+#   "sst-ncdcOisst2Agg-1981-2019.csv"
+# )
+# for(fil in covfiles){
+#   dat=read.csv(fil)
+#   covs=colnames(dat)[!(colnames(dat)%in%c("Year","Month","Dates"))]
+#   for(icol in covs) if(is.null(monthly_cov[[icol]])) monthly_cov[[icol]]=NA
+#   for(i in 1:dim(dat)[1]){
+#     monthly_cov[monthly_cov$Year==dat$Year[i] & monthly_cov$Month==dat$Month[i],covs]=
+#       dat[i,covs]
+#   }
+# }
 
 #SST Interpolated
 covfiles=c(
@@ -99,19 +113,34 @@ for(fil in covfiles){
 }
 
 #UPW SST based; pathfinder 1981-2002, then POES
+# First submission
+# covfiles=c(
+#   "upw-sst-erdPH2sstamday-1981-2012.csv",
+#   "upw-sst-erdAGsstamday-2003-2016.csv"
+#   )
+# for(fil in covfiles){
+#   dat=read.csv(fil)
+#   covs=colnames(dat)[!(colnames(dat)%in%c("Year","Month","Dates"))]
+#   covs.uniq=paste("SST.",covs,sep="")
+#   for(icol in covs.uniq) if(is.null(monthly_cov[[icol]])) monthly_cov[[icol]]=NA
+#   for(i in 1:dim(dat)[1]){
+#     #use POES from 2004 onward since 2003 only has 3 months
+#     if(!(fil=="upw-sst-erdAGsstamday-2003-2016.csv" & dat$Year[i]==2003))
+#     monthly_cov[monthly_cov$Year==dat$Year[i] & monthly_cov$Month==dat$Month[i],covs.uniq]=dat[i,covs]
+#   }
+# }
+
+# Revision use oiSST data
 covfiles=c(
-  "upw-sst-erdPH2sstamday-1981-2012.csv",
-  "upw-sst-erdAGsstamday-2003-2016.csv"
-  )
+  "upw-sst-ncdcOisst21Agg-1982-2016.csv"
+)
 for(fil in covfiles){
   dat=read.csv(fil)
   covs=colnames(dat)[!(colnames(dat)%in%c("Year","Month","Dates"))]
   covs.uniq=paste("SST.",covs,sep="")
   for(icol in covs.uniq) if(is.null(monthly_cov[[icol]])) monthly_cov[[icol]]=NA
   for(i in 1:dim(dat)[1]){
-    #use POES from 2004 onward since 2003 only has 3 months
-    if(!(fil=="upw-sst-erdAGsstamday-2003-2016.csv" & dat$Year[i]==2003))
-    monthly_cov[monthly_cov$Year==dat$Year[i] & monthly_cov$Month==dat$Month[i],covs.uniq]=dat[i,covs]
+    monthly_cov[monthly_cov$Year==dat$Year[i] & monthly_cov$Month==dat$Month[i],covs.uniq] = dat[i,covs]
   }
 }
 

@@ -179,26 +179,23 @@
 #' @description The SST satellite data were downloaded from the NOAA ERDDAP server using Roy Mendelssohn's
 #' \strong{rerddapXtracto} R package which uses the ropensci\strong{rerddap} R package available on CRAN.  The R code used
 #' to download the data is in the \code{extdata/get_satelite_data} folder.  See examples for how to find
-#' the file. Units are degree Celcius.
+#' the file. Units are degree Celsius.
 #' 
 #' @details
 #' There are two SST data sets: AVHRR and ICOADS.
 #' 
 #' \strong{AVHRR}
-#' For 1981 to 2003, We used the Pathfinder Version 5.2
-#' (L3C) monthly day and night product on a 0.0417 degree grid.  These SST data use the Advanced Very-High Resolution
-#' Radiometer (AVHRR) instrument on the Pathfinder satellites.  These data were provided by GHRSST
-#' and the US National Oceanographic Data Center. This project
-#' was supported in part by a grant from the NOAA Climate Data Record (CDR) Program for satellites.
+#' The SST differential upwelling indices were computed from the SST Daily Optimum
+#' Interpolation (OI), AVHRR Only, Version 2.1, Final 0.25 degree grid, Global data
+#' downloaded from the NOAA ERDDAP server. These are daily data. They daily data were
+#' averaged over all days in each month to produce monthly averages.
+#' The SST estimates use the
+#' Advanced Very-High Resolution Radiometer (AVHRR) instruments. AVHRR is 
+#' accurate for close to the coast and thus could be used for our SST differential upwelling
+#' index.
 #'    
-#' For 2004 to 2016, we used the NOAA CoastWatch sea surface temperature (SST) products 
-#' derived from NOAA's Polar Operational Environmental Satellites (POES). The SST estimates use the
-#' Advanced Very-High Resolution Radiometer (AVHRR) instruments on the POES satellites and are 
-#' on a 0.1 degree grid.  
-#'    
-#' Both SST data sets were downloaded from the NOAA ERDDAP server. See
-#' \url{https://coastwatch.pfeg.noaa.gov/erddap/info/erdAGsstamday/index.html} and 
-#' \url{https://coastwatch.pfeg.noaa.gov/erddap/info/erdPH2sstamday/index.html}.
+#' The SST data were downloaded from the NOAA ERDDAP server. See
+#'     \url{https://coastwatch.pfeg.noaa.gov/erddap/info/ncdcOisst21Agg/index.html}.
 #'
 #' \strong{ICOADS}
 #'  The SST was extracted from the International Comprehensive Ocean-Atmosphere Data Set (ICOADS) 
@@ -476,32 +473,33 @@
 #' Upwelling indices from remote-sensing products
 #'
 #' @description Three upwelling indices are in the 'upw' data object: a SST nearshore offshore
-#' differential, a wind-based index and the Bakun indices. 
-#' The upwelling indices and SST data were downloaded from the NOAA ERDDAP server using R Mendels
+#' differential, a wind-based index, Ekman Mass Transport, and Ekman Pumping.
+#' The wind upwelling indices and SST data were downloaded from the NOAA ERDDAP server using R Mendels
 #' \code{rerddapXtracto} R package which uses the ropensci \code{rerddap} R package.  The R code used
 #' to download the data is in the \code{extdata/get_satelite_data} folder.  See examples for how to find
-#' the file.
+#' the file. The Ekman Mass Transport and Pumping were computed from winds from the ERA5 product.
 #' 
 #' @details
 #' 
-#' The Wind-based monthly upwelling indices were downloaded from the NOAA ERDDAP server. The first is
+#' The wind-based monthly upwelling indices were downloaded from the NOAA ERDDAP server. The first is
 #' 1999-2009 on a 0.125 degree grid. The second is 2009 to present on a 0.25 degree grid. Units are m/s.
 #' See
 #'     \url{https://coastwatch.pfeg.noaa.gov/erddap/info/erdQSstressmday/index.html} and 
 #'     \url{https://coastwatch.pfeg.noaa.gov/erddap/info/erdQAstressmday/index.html}.
 #'    
-#' The SST differential upwelling indices were downloaded from the NOAA ERDDAP server. The first is
-#' 1981-2012 on a 0.0417 degree grid. The second is 2003-2016 on a 0.1 degree grid. Both are AVHRR so
-#' accurate for close to the coast.
-#'     \url{https://coastwatch.pfeg.noaa.gov/erddap/info/erdPH2sstamday/index.html} and 
-#'     \url{https://coastwatch.pfeg.noaa.gov/erddap/info/erdAGsstamday/index.html}.
-#' The UPW index is the difference between the coast box (1 to 5) and a box 3 degrees offshore at 
-#' the same latitude.
+#' The SST differential upwelling indices were computed from the SST Daily Optimum
+#' Interpolation (OI), AVHRR Only, Version 2.1, Final 0.25 degree grid, Global data
+#' downloaded from the NOAA ERDDAP server. This is AVHRR so 
+#' accurate for close to the coast. These are daily data. They daily data was averaged over
+#' all days in each month to produce monthly averages.
+#'     \url{https://coastwatch.pfeg.noaa.gov/erddap/info/ncdcOisst21Agg/index.html}.
+#' The UPW index is the difference between the coast box (1 to 5) and a box 3 degrees
+#' offshore at the same latitude.
 #' 
 #' The Bakun index (The Bakun 1973) is calculated based upon Ekman's theory of mass transport
 #'  due to wind stress. The index is computed from the ektrx and ektry, which
 #'  are the x- and y- components of Ekman Transport (kg m$^{-1}$ s$^-1$) obtained from the ERDDAP link 
-#'  below, and coast_angle is 158 degrees for the India west coast near Kochi (74.5E 11.5N coast angle 158 degrees).
+#'  below, and coast_angle is 158 degrees for the India west coast near Kochi (74.5E 11.5N coast angle 158 degrees). The Bakun index was downloaded from
 #'     \url{https://coastwatch.pfeg.noaa.gov/erddap/info/erdlasFnWPr/index.html}.
 #'  The function to compute the Bakun index is 
 #'  (from \url{https://oceanview.pfeg.noaa.gov/products/upwelling/bakun})
@@ -521,8 +519,15 @@
 #'  }
 #'    
 #' The R code used
-#' to download the data is in the \code{extdata/get_satelite_data} folder. 
+#' to download the data is in the \code{extdata/get_satelite_data} folder.
 #' 
+#' The wind data are from the ERA5 Reanalysis Dataset
+#'     \url{https://confluence.ecmwf.int/display/CKB/ERA5}.
+#' downloaded from the Asia-Pacific Data-Research Center ERDDAP server 
+#'     \url{https://apdrc.soest.hawaii.edu/erddap/info/hawaii_soest_66d3_10d8_0f3c/index.html}.
+#'     
+#' The R code used to download the data is in \code{extdata/get_satelite_data/get_EMTperp.R} and the functions are in \code{extdata/get_satelite_data/Replicate_EMT/get_EMT_functions.R}.
+
 #' @format A data frame with:
 #' \describe{
 #'   \item{Year}{The year}

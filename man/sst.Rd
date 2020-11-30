@@ -20,26 +20,23 @@ sst
 The SST satellite data were downloaded from the NOAA ERDDAP server using Roy Mendelssohn's
 \strong{rerddapXtracto} R package which uses the ropensci\strong{rerddap} R package available on CRAN.  The R code used
 to download the data is in the \code{extdata/get_satelite_data} folder.  See examples for how to find
-the file. Units are degree Celcius.
+the file. Units are degree Celsius.
 }
 \details{
 There are two SST data sets: AVHRR and ICOADS.
 
 \strong{AVHRR}
-For 1981 to 2003, We used the Pathfinder Version 5.2
-(L3C) monthly day and night product on a 0.0417 degree grid.  These SST data use the Advanced Very-High Resolution
-Radiometer (AVHRR) instrument on the Pathfinder satellites.  These data were provided by GHRSST
-and the US National Oceanographic Data Center. This project
-was supported in part by a grant from the NOAA Climate Data Record (CDR) Program for satellites.
+The SST differential upwelling indices were computed from the SST Daily Optimum
+Interpolation (OI), AVHRR Only, Version 2.1, Final 0.25 degree grid, Global data
+downloaded from the NOAA ERDDAP server. These are daily data. They daily data were
+averaged over all days in each month to produce monthly averages.
+The SST estimates use the
+Advanced Very-High Resolution Radiometer (AVHRR) instruments. AVHRR is 
+accurate for close to the coast and thus could be used for our SST differential upwelling
+index.
    
-For 2004 to 2016, we used the NOAA CoastWatch sea surface temperature (SST) products 
-derived from NOAA's Polar Operational Environmental Satellites (POES). The SST estimates use the
-Advanced Very-High Resolution Radiometer (AVHRR) instruments on the POES satellites and are 
-on a 0.1 degree grid.  
-   
-Both SST data sets were downloaded from the NOAA ERDDAP server. See
-\url{https://coastwatch.pfeg.noaa.gov/erddap/info/erdAGsstamday/index.html} and 
-\url{https://coastwatch.pfeg.noaa.gov/erddap/info/erdPH2sstamday/index.html}.
+The SST data were downloaded from the NOAA ERDDAP server. See
+    \url{https://coastwatch.pfeg.noaa.gov/erddap/info/ncdcOisst21Agg/index.html}.
 
 \strong{ICOADS}
  The SST was extracted from the International Comprehensive Ocean-Atmosphere Data Set (ICOADS) 

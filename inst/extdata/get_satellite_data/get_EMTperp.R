@@ -3,6 +3,9 @@
 #monthly values of upwelling (coast angle 158 degrees)
 # Coast angle same as Supradba et al 2016, page 9153
 
+library(tidyr)
+library(dplyr)
+library(raster)
 
 source(file.path(here::here(), "inst", "extdata", "get_satellite_data", "Replicate_EMT", "get_EMT_functions.R"))
 
@@ -35,8 +38,8 @@ for(i in coastlats){
 windmon.coast <- windmon[windmon$latitude>=8 & windmon$latitude<=13,]
 for(i in 1:length(coastlats)){
   thelat <- coastlats[i]
-  thelon <- coastlons[i]
-  windmon.coast <- windmon.coast[!(windmon.coast$latitude==thelat & windmon.coast$longitude<(thelon-2)),]
+  thelon <- coastlons[i] # the coast
+  windmon.coast <- windmon.coast[!(windmon.coast$latitude==thelat & (windmon.coast$longitude<(thelon-2) | windmon.coast$longitude>(thelon-0.25))),]
 }
 # Get average coastal EMTperp for each month
 EMTperp.cmean <- windmon.coast %>% 

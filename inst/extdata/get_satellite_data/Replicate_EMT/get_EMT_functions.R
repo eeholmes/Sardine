@@ -82,14 +82,14 @@ getwindfromP <- function(dat){
   R <- 6371 * 1000 # meters https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html
 
   if(length(lats)>2)
-    for(lat in (min(lats)+res):(max(lats)-res)){
+    for(lat in seq(min(lats)+res, max(lats)-res,res)){
       dPdlat <- (dat$P[dat$latitude==(lat+res)]-dat$P[dat$latitude==(lat-res)])/(2*h)
       constant <- (f*pa*R)[dat$latitude==lat]
       ug <- -1*dPdlat/constant
       dat$ug[dat$latitude==lat] <- ug
     }
   if(length(lons)>2)
-    for(lon in (min(lons)+res):(max(lons)-res)){
+    for(lon in seq(min(lons)+res, max(lons)-res, res)){
       dPdlon <- (dat$P[dat$longitude==(lon+res)]-dat$P[dat$longitude==(lon-res)])/(2*h)
       constant <- (f*pa*R*cos(pi*dat$latitude/180))[dat$longitude==lon]
       vg <- dPdlon/constant
@@ -131,13 +131,13 @@ getEPump <- function(dat){
   psw <- 1023.6 #kg/m3 sea water
 
   if(length(lats)>2)
-    for(lat in (min(lats)+res):(max(lats)-res)){
+    for(lat in seq(min(lats)+res, max(lats)-res, res)){
       dEMTy.lat <- (dat$ektry[dat$latitude==(lat+res)]-dat$ektry[dat$latitude==(lat-res)])/(2*res*h.meter(lat)$lat)
       Wey <- dEMTy.lat/psw
       dat$Wey[dat$latitude==lat] <- Wey
     }
   if(length(lons)>2)
-    for(lon in (min(lons)+res):(max(lons)-res)){
+    for(lon in seq(min(lons)+res, max(lons)-res, res)){
       dEMTx.lon <- (dat$ektrx[dat$longitude==(lon+res)]-dat$ektrx[dat$longitude==(lon-res)])/(2*res*h.meter(dat$latitude[dat$longitude==(lon+res)])$lon)
       Wex <- dEMTx.lon/psw
       dat$Wex[dat$longitude==lon] <- Wex

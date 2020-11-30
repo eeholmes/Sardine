@@ -41,7 +41,7 @@ width<-rep(.5,times=14) #this is 1/2 width
 width[14]<-1.5
 
 # Define function for downloading and saving data
-getdat = function(parameter, id, tag, box, width, clean=TRUE, save.csv=TRUE, include.z=FALSE){
+getdat = function(parameter, id, tag, box, width, clean=TRUE, save.csv=TRUE, include.z=FALSE, zName = "altitude"){
   dataInfo <- rerddap::info(id)
   #get data range from dataset
   global <- dataInfo$alldata$NC_GLOBAL
@@ -54,7 +54,7 @@ getdat = function(parameter, id, tag, box, width, clean=TRUE, save.csv=TRUE, inc
     ypos=c(box[2,i]-width[i],box[2,i]+width[i])
     zpos <- 0.
     print(paste("Extracting",parameter, id, "data from Box",i, sep=' '))
-    if(include.z) dat<-rxtracto_3D(dataInfo,parameter,xcoord=xpos,ycoord=ypos,tcoord=tpos,zcoord=zpos)
+    if(include.z) dat<-rxtracto_3D(dataInfo,parameter,xcoord=xpos,ycoord=ypos,tcoord=tpos, zcoord=zpos, zName=zName)
     if(!include.z) dat<-rxtracto_3D(dataInfo,parameter,xcoord=xpos,ycoord=ypos,tcoord=tpos)
     if(include.z) dat[[parameter]]<-drop(dat[[parameter]])
     avg<-NULL
@@ -65,6 +65,8 @@ getdat = function(parameter, id, tag, box, width, clean=TRUE, save.csv=TRUE, inc
     avg[is.na(avg)]<-NA
     
     dates<-dat[["time"]]
+    z=diff(dates[1:2])
+    if(!(as.numeric(z, units = "days") >= 28)) stop("getdat() requires monthly data.")
     if(i==1) alldat<-data.frame(dates=dates, stringsAsFactors=FALSE)
     
     alldat=cbind(alldat,avg)
@@ -121,7 +123,7 @@ yr1=min(erdMH1chlamday$Year); yr2=max(erdMH1chlamday$Year)
 write.csv(erdMH1chlamday, file.path(cdir, paste0("chlorophyll","-", id,"-",yr1,"-",yr2,".csv")),row.names=FALSE)
 
 # Define parameters for the sst 1a dataset 
-#https://coastwatch.pfeg.noaa.gov/erddap/info/erdPH2sstdmday/index.html; pathfinder vs 2 1981 to 2012; 
+#https://coastwatch.pfeg.noaa.gov/erddap/info/erdPH2sstdmday/index.html; pathfinder vs 2 1981 to 2012;  DAY
 #https://coastwatch.pfeg.noaa.gov/erddap/info/erdPH53sstdmday/index.html; pathfinder vs 5.3 1981 to present; 
 # DAY Time; Science Quality
 parameter <-'sea_surface_temperature' 
@@ -148,7 +150,7 @@ id <- 'erdPH2sstnmday'
 tag <- "SST."
 erdPH2sstnmday=getdat(parameter, id, tag, boxes14, width)
 
-# Define parameters for the sst 1c dataset; use this
+# Define parameters for the sst 1c dataset; USE THIS
 #https://coastwatch.pfeg.noaa.gov/erddap/info/erdPH2sstamday/index.html; pathfinder to 2012; DAY and NIGHT
 parameter <-'sea_surface_temperature' 
 id <- 'erdPH2sstamday'
@@ -162,20 +164,38 @@ id <- 'erdAGsstamday'
 tag <- "SST."
 erdAGsstamday=getdat(parameter, id, tag, boxes14, width, include.z=TRUE)
 
+# Optimum Interpolation Sea Surface Temperature (OISST)
+# Define parameters for the ioSST dataset 
+#https://coastwatch.pfeg.noaa.gov/erddap/info/ncdcOisst21Agg/index.html; avhrr 1981 to present
+source(file.path(here::here(), "inst", "extdata", "get_satellite_data", "Replicate_EMT", "get_EMT_functions.R"))
+library(dplyr)
+parameter <-'sst' 
+id <- 'ncdcOisst21Agg'
+tag <- "SST."
+for(i in 1:ncol(boxes14)){
+  tmp2 <- c()
+  cat("\nReading in Box",i, "\n")
+  thedates <- c("1982-01-01T12:00:00Z", "2016-12-31T12:00:00Z")
+tmp <- getdata(id, lat=boxes14[2,i]+c(-width[i],+width[i]), lon=boxes14[1,i]+c(-width[i],+width[i]), altitude=0, alt.name="zlev", pars=parameter, date=thedates)
+tmp$Year <- format(tmp$time, "%Y")
+tmp$Month <- format(tmp$time, "%m")
+tmp <- tmp %>% group_by(Year, Month) %>% 
+  summarize(sst = mean(sst, na.rm=TRUE))
+colnames(tmp)[3] <- paste0(tag, i)
+if(i==1) ncdcOisst21Agg <- tmp else ncdcOisst21Agg <- cbind(ncdcOisst21Agg, tmp[3])
+}
+fil <- paste(parameter,"-", id,"-1981-2016.csv",sep="")
+dfil <- file.path(here::here(), "inst", "extdata", "get_satellite_data", fil)
+ncdcOisst21Agg$Year <- as.numeric(ncdcOisst21Agg$Year)
+ncdcOisst21Agg$Month <- as.numeric(ncdcOisst21Agg$Month)
+write.csv(ncdcOisst21Agg, file=dfil, row.names=FALSE)
+
 # ICOADS sst 1960 onward
 # Poor coastal estimates so not very useful for our purposes
 parameter <-'sst' 
 id <- 'esrlIcoads1ge' 
 tag <- "SST."
 esrlIcoads1ge=getdat(parameter, id, tag, boxes14, width, include.z=FALSE)
-
-# Optimum Interpolation Sea Surface Temperature (OISST)
-# from AVHRR but interpolated
-parameter <-'sst' 
-id <- 'ncdcOisst2Agg' 
-tag <- "SST."
-ncdcOisst2Agg=getdat(parameter, id, tag, boxes14[,1:2], width, include.z=TRUE)
-Sys.setenv(RERDDAP_DEFAULT_URL="https://upwell.pfeg.noaa.gov/erddap/")
 
 # Define parameters for the ssh dataset 
 #https://coastwatch.pfeg.noaa.gov/erddap/info/erdTAsshmday/index.html
@@ -289,6 +309,42 @@ parameter <-'upwelling'
  upw.sst.AG=upw.sst
  write.csv(upw.sst, paste("upw-sst","-", id,"-",yr1,"-",yr2,".csv",sep=""),row.names=FALSE)
  
+ 
+ # Optimum Interpolation Sea Surface Temperature (OISST)
+ # Define parameters for the ioSST dataset 
+ #https://coastwatch.pfeg.noaa.gov/erddap/info/ncdcOisst21Agg/index.html; avhrr 1981 to present
+ source(file.path(here::here(), "inst", "extdata", "get_satellite_data", "Replicate_EMT", "get_EMT_functions.R"))
+ library(dplyr)
+ parameter <-'sst' 
+ id <- 'ncdcOisst21Agg'
+ tag <- "SST."
+ thedates <- c("1982-01-01T12:00:00Z", "2016-12-31T12:00:00Z")
+ for(i in 1:ncol(boxes.upw)){
+   tmp2 <- c()
+   cat("\nReading in Box",i, "\n")
+   tmp <- getdata(id, lat=boxes.upw[2,i]+c(-width[i],+width[i]), lon=boxes.upw[1,i]+c(-width[i],+width[i]), altitude=0, alt.name="zlev", pars=parameter, date=thedates)
+   tmp$Year <- format(tmp$time, "%Y")
+   tmp$Month <- format(tmp$time, "%m")
+   tmp <- tmp %>% group_by(Year, Month) %>% 
+     summarize(sst = mean(sst, na.rm=TRUE))
+   colnames(tmp)[3] <- paste0(tag, i)
+   if(i==1) sstupwelling <- tmp else sstupwelling <- cbind(sstupwelling, tmp[3])
+ }
+ upw.sst <- with(sstupwelling, 
+                data.frame(Year=Year, Month=Month, 
+                           UPW.1=SST.6-SST.1, 
+                           UPW.2=SST.7-SST.2,
+                           UPW.3=SST.8-SST.3,
+                           UPW.4=SST.9-SST.4,
+                           UPW.5=SST.10-SST.5))
+ yr1=min(upw.sst$Year); yr2=max(upw.sst$Year)
+ upw.sst$Year <- as.numeric(upw.sst$Year)
+ upw.sst$Month <- as.numeric(upw.sst$Month)
+ fil <- paste("upw-sst","-", id,"-",yr1,"-",yr2,".csv",sep="")
+ dfil <- file.path(here::here(), "inst", "extdata", "get_satellite_data", fil)
+ write.csv(upw.sst, file=dfil, row.names=FALSE)
+ 
+
  # For upwelling bakun index, see get_bakun_upi_data.R
  
  # Define parameters for the wind based upwelling 1 dataset 
