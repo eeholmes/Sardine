@@ -190,6 +190,34 @@ ncdcOisst21Agg$Year <- as.numeric(ncdcOisst21Agg$Year)
 ncdcOisst21Agg$Month <- as.numeric(ncdcOisst21Agg$Month)
 write.csv(ncdcOisst21Agg, file=dfil, row.names=FALSE)
 
+# Revision for 1981 use ERA5
+# http://apdrc.soest.hawaii.edu/erddap/griddap/hawaii_soest_d124_2bb9_c935
+require(dplyr)
+parameter <-'sst' 
+id <- 'hawaii_soest_d124_2bb9_c935'
+tag <- "SST."
+thedates <- c("1981-01-01", "1981-12-31")
+for(i in 1:ncol(boxes14)){
+  tmp2 <- c()
+  cat("\nReading in Box",i, "\n")
+  tmp <- getdata(id, lat=boxes14[2,i]+c(-width[i],+width[i]), lon=boxes14[1,i]+c(-width[i],+width[i]), altitude=0, alt.name="zlev", pars=parameter, date=thedates, 
+                 eserver="http://apdrc.soest.hawaii.edu/erddap")
+  tmp$Year <- format(tmp$time, "%Y")
+  tmp$Month <- format(tmp$time, "%m")
+  tmp$sst <- tmp$sst - 273.15
+  tmp <- tmp %>% group_by(Year, Month) %>% 
+    summarize(sst = mean(sst, na.rm=TRUE))
+  colnames(tmp)[3] <- paste0(tag, i)
+  if(i==1) era5sst <- tmp else era5sst <- cbind(era5sst, tmp[3])
+}
+era5sst$Year <- as.numeric(era5sst$Year)
+era5sst$Month <- as.numeric(era5sst$Month)
+era5sst <- subset(era5sst, Year==1981)
+yr1=min(era5sst$Year); yr2=max(era5sst$Year)
+fil <- paste("sst","-era5sst-",yr1,"-",yr2,".csv",sep="")
+dfil <- file.path(here::here(), "inst", "extdata", "get_satellite_data", fil)
+write.csv(era5sst, file=dfil, row.names=FALSE)
+
 # ICOADS sst 1960 onward
 # Poor coastal estimates so not very useful for our purposes
 parameter <-'sst' 
@@ -337,14 +365,46 @@ parameter <-'upwelling'
                            UPW.3=SST.8-SST.3,
                            UPW.4=SST.9-SST.4,
                            UPW.5=SST.10-SST.5))
- yr1=min(upw.sst$Year); yr2=max(upw.sst$Year)
  upw.sst$Year <- as.numeric(upw.sst$Year)
  upw.sst$Month <- as.numeric(upw.sst$Month)
+ yr1=min(upw.sst$Year); yr2=max(upw.sst$Year)
  fil <- paste("upw-sst","-", id,"-",yr1,"-",yr2,".csv",sep="")
  dfil <- file.path(here::here(), "inst", "extdata", "get_satellite_data", fil)
  write.csv(upw.sst, file=dfil, row.names=FALSE)
  
-
+ # 1981 use ERA5
+ parameter <-'sst' 
+ id <- 'hawaii_soest_d124_2bb9_c935'
+ tag <- "SST."
+ thedates <- c("1981-01-01", "1981-12-31")
+ for(i in 1:ncol(boxes.upw)){
+   tmp2 <- c()
+   cat("\nReading in Box",i, "\n")
+   tmp <- getdata(id, lat=boxes.upw[2,i]+c(-width[i],+width[i]), lon=boxes.upw[1,i]+c(-width[i],+width[i]), altitude=0, alt.name="zlev", pars=parameter, date=thedates, 
+                  eserver="http://apdrc.soest.hawaii.edu/erddap")
+   tmp$Year <- format(tmp$time, "%Y")
+   tmp$Month <- format(tmp$time, "%m")
+   tmp$sst <- tmp$sst - 273.15
+   tmp <- tmp %>% group_by(Year, Month) %>% 
+     summarize(sst = mean(sst, na.rm=TRUE))
+   colnames(tmp)[3] <- paste0(tag, i)
+   if(i==1) era5sst <- tmp else era5sst <- cbind(era5sst, tmp[3])
+ }
+ upw.sst <- with(era5sst, 
+                 data.frame(Year=Year, Month=Month, 
+                            UPW.1=SST.6-SST.1, 
+                            UPW.2=SST.7-SST.2,
+                            UPW.3=SST.8-SST.3,
+                            UPW.4=SST.9-SST.4,
+                            UPW.5=SST.10-SST.5))
+ upw.sst$Year <- as.numeric(upw.sst$Year)
+ upw.sst$Month <- as.numeric(upw.sst$Month)
+ upw.sst <- subset(upw.sst, Year==1981)
+ yr1=min(upw.sst$Year); yr2=max(upw.sst$Year)
+ fil <- paste("upw-sst","-era5sst-",yr1,"-",yr2,".csv",sep="")
+ dfil <- file.path(here::here(), "inst", "extdata", "get_satellite_data", fil)
+ write.csv(upw.sst, file=dfil, row.names=FALSE)
+ 
  # For upwelling bakun index, see get_bakun_upi_data.R
  
  # Define parameters for the wind based upwelling 1 dataset 

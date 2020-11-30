@@ -27,7 +27,8 @@ monthly_cov = data.frame(Year = rep(years,each=12), Month=rep(1:12,length(years)
 # }
 # Revision
 covfiles = c(
-  "sst-ncdcOisst21Agg-1981-2016.csv"
+  "sst-era5sst-1981-1981.csv",
+  "sst-ncdcOisst21Agg-1982-2016.csv"
 )
 for(fil in covfiles){
   dat=read.csv(fil)
@@ -132,6 +133,7 @@ for(fil in covfiles){
 
 # Revision use oiSST data
 covfiles=c(
+  "upw-sst-era5sst-1981-1981.csv",
   "upw-sst-ncdcOisst21Agg-1982-2016.csv"
 )
 for(fil in covfiles){
