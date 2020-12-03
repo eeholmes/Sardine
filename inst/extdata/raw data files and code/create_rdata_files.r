@@ -37,6 +37,9 @@ source("inst/extdata/raw data files and code/create_precip_rdata.r")
 #creates the oilsardine_qtr.rdata file
 source("inst/extdata/raw data files and code/create_oilsardine_qtr_rdata.r")
 
+#creates the monthly file
+source("inst/extdata/raw data files and code/create_monthly_covariates_csv.r")
+
 #creates monthly .rdata file
 filename="inst/extdata/raw data files and code/monthly_covariates_with_anomalies.csv"
 seio_covariates_mon = read.csv(filename)
