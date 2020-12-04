@@ -7,6 +7,10 @@ output:
 ---
 
 ```{r echo=FALSE}
+# to make the 300dpi for submission
+# delete the eval=FALSE
+# knit to html
+# look in Figure_files/figure_html for the eps files
 knitr::opts_chunk$set(echo = FALSE, warning=FALSE, results='hide', message=FALSE,
                       dev="postscript", dpi=300)
 ```

@@ -1,8 +1,8 @@
 Package: SardineForecast
 Type: Package
 Title: Indian Oil Sardine Data, Code and References for Papers on Forecasting
-Version: 1.10
-Date: 2020-04-11
+Version: 1.11
+Date: 2020-12-05
 Depends: 
    R (>= 3.5.0), 
    stringr, 
