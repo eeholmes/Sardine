@@ -16,4 +16,4 @@
 *.rtf	 diff=astextplain
 *.RTF	 diff=astextplain
 
-inst/extdata/get_satellite_data/Replicate_EMT export-ignore
+# inst/extdata/get_satellite_data/Replicate_EMT export-ignore
