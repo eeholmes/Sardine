@@ -137,7 +137,7 @@
 #'   \item{precip.gpcp.kerala}{Monthly GPCP precipitation in the box off the Kerala coast. Units are average mm/day.}
 #'   \item{precip.gpcp.karnataka}{Monthly GPCP precipitation in the box off the Karnataka coast.  Units are average mm/day.}
 #'   \item{PrecipTRMM}{Monthly precipitation estimates from the Tropical Rainfall Measuring Mission (TRMM).  Data are averaged in the boxes 1 to 13 used for the other satellite data.}
-#'   \item{Precip.Kerala}{Monthly precipitation (mm) from landgauges.}
+#'   \item{Precip.Kerala}{Monthly precipitation (mm) from land gauges.}
 #' }
 #' 
 #' @references
@@ -151,6 +151,13 @@
 #' \insertRef{KothawaleRajeevan2017}{SardineForecast}
 #' 
 #' \insertRef{NCEI2017}{SardineForecast}
+#' @examples
+#' # Make a plot of the average monthly precip over Kerala
+#' library(dplyr)
+#' library(ggplot2)
+#' precip %>% group_by(Month) %>% summarize(avg=mean(Precip.Kerala, na.rm=TRUE)) %>% ggplot(aes(x=Month, y=avg)) + geom_bar(stat="identity") + ylab("Average Precipitation (mm)") + ggtitle("Precipitation over Kerala state")
+
+
 
 "precip"
 
