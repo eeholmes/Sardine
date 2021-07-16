@@ -19,7 +19,9 @@ Depends:
    grid,
    here
 Imports: Rdpack
-Author: Eli Holmes, UW SAFS, Seattle, USA
+Authors@R: person("Holmes", "Elizabeth", , "eli.holmes@noaa.gov", role = c("aut", "cre"))
+URL: https://eeholmes.github.io/SardineForecast, https://github.com/eeholmes/SardineForecast
+BugReports: https://github.com/eeholmes/SardineForecast/issues
 Maintainer: El Holmes <eeholmes@uw.edu>
 Description: Code, figures and data for sardine forecasting papers.  
 License: GPL-2

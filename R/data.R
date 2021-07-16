@@ -156,9 +156,6 @@
 #' library(dplyr)
 #' library(ggplot2)
 #' precip %>% group_by(Month) %>% summarize(avg=mean(Precip.Kerala, na.rm=TRUE)) %>% ggplot(aes(x=Month, y=avg)) + geom_bar(stat="identity") + ylab("Average Precipitation (mm)") + ggtitle("Precipitation over Kerala state")
-
-
-
 "precip"
 
 

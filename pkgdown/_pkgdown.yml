@@ -1,0 +1,32 @@
+navbar:
+  structure:
+    left:
+    - home
+    - reference
+    right: github
+    
+  components:
+    home:
+      icon: fas fa-home fa-lg
+      href: index.html
+
+    reference:
+      text: Functions
+      icon: far fa-file-code fa-lg
+      href: reference/index.html
+
+news:
+  releases:
+  - text: "Version 1.0"
+    description: "First draft 2017"
+    href: https://github.com/eeholmes/SardineForecast/releases/tag/v1.1
+  - text: "Version 1.10"
+    description: "Submitted to Fisheries Oceanography"
+    href: https://github.com/eeholmes/SardineForecast/releases/tag/v1.10
+  - text: "Version 1.11"
+    description: "Version used in published paper in Fisheries Oceanography"
+    href: https://github.com/eeholmes/SardineForecast/releases/tag/v1.11
+  - text: "Version 1.11-paper"
+    description: "Version used in published paper but without all the Replicate_EMT data"
+    href: https://github.com/eeholmes/SardineForecast/releases/tag/v1.11-paper
+
